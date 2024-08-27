@@ -9,31 +9,29 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 extension UTType {
-    static var exampleText: UTType {
-        UTType(importedAs: "com.example.plain-text")
-    }
+    static let quickArchitectDocument = UTType(exportedAs: "com.quickarchitect.qad")
 }
 
-struct QuickArchitectDocument: FileDocument {
+struct QuickArchitectDocument: FileDocument, Codable {
     var text: String
 
-    init(text: String = "Hello, world!") {
+    init(text: String = "") {
         self.text = text
     }
 
-    static var readableContentTypes: [UTType] { [.exampleText] }
+    static var readableContentTypes: [UTType] { [.quickArchitectDocument] }
 
     init(configuration: ReadConfiguration) throws {
-        guard let data = configuration.file.regularFileContents,
-              let string = String(data: data, encoding: .utf8)
-        else {
+        guard let data = configuration.file.regularFileContents else {
             throw CocoaError(.fileReadCorruptFile)
         }
-        text = string
+        let decoder = JSONDecoder()
+        self = try decoder.decode(QuickArchitectDocument.self, from: data)
     }
     
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        let data = text.data(using: .utf8)!
+        let encoder = JSONEncoder()
+        let data = try encoder.encode(self)
         return .init(regularFileWithContents: data)
     }
 }
