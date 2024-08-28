@@ -91,5 +91,7 @@
 			</dict>
 		</dict>
 	</array>
+	<key>CFBundleIdentifier</key>
+	<string></string>
 </dict>
 </plist>
