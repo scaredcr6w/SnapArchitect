@@ -9,8 +9,23 @@ import SwiftUI
 
 struct CanvasView: View {
     @StateObject private var viewModel = CanvasViewModel()
-    @State private var objects: [ClassRepresentation] = []
+    @Binding var document: QuickArchitectDocument
     
+    @ViewBuilder
+    private func representationView(_ representation: OOPElementRepresentation) -> some View {
+        switch representation.type {
+        case .classType:
+            ClassView(className: "ClassView")
+        case .structType:
+            ClassView(className: "StructView")
+        case .protocolType:
+            ClassView(className: "ProtocolView")
+        case .enumType:
+            ClassView(className: "EnumView")
+        case .extensionType:
+            ClassView(className: "ExtensionView")
+        }
+    }
     
     var body: some View {
         GeometryReader { windowGeo in
@@ -19,8 +34,8 @@ struct CanvasView: View {
             
             GeometryReader { canvasGeo in
                 ZStack {
-                    ForEach(objects) { object in
-                        ClassView(className: "ToolbarItemsViewModel")
+                    ForEach(document.entityRepresentations) { object in
+                        representationView(object)
                             .position(object.position)
                     }
                 }
@@ -34,8 +49,8 @@ struct CanvasView: View {
                         .onEnded { _ in
                             if let event = NSApp.currentEvent {
                                 let clickLocation = viewModel.getMouseClick(canvasGeo, event: event)
-                                objects.append(
-                                    ClassRepresentation(position: clickLocation)
+                                document.entityRepresentations.append(
+                                    OOPElementRepresentation(type: .classType, position: clickLocation)
                                 )
                             }
                         }
@@ -50,5 +65,5 @@ struct CanvasView: View {
 }
 
 #Preview {
-    CanvasView()
+    CanvasView(document: .constant(QuickArchitectDocument()))
 }

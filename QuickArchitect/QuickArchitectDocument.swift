@@ -13,10 +13,10 @@ extension UTType {
 }
 
 struct QuickArchitectDocument: FileDocument, Codable {
-    var text: String
+    var entityRepresentations: [OOPElementRepresentation]
 
-    init(text: String = "") {
-        self.text = text
+    init(entityRepresentations: [OOPElementRepresentation] = []) {
+        self.entityRepresentations = entityRepresentations
     }
 
     static var readableContentTypes: [UTType] { [.quickArchitectDocument] }

@@ -10,11 +10,8 @@ import SwiftUI
 @main
 struct QuickArchitectApp: App {
     var body: some Scene {
-//        DocumentGroup(newDocument: QuickArchitectDocument()) { file in
-//            ContentView(document: file.$document)
-//        }
-        WindowGroup {
-            ContentView()
+        DocumentGroup(newDocument: QuickArchitectDocument()) { file in
+            CanvasView(document: file.$document)
         }
     }
 }
