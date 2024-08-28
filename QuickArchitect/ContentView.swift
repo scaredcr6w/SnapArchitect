@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Binding var document: QuickArchitectDocument
+//    @Binding var document: QuickArchitectDocument
 
     var body: some View {
-        TextEditor(text: $document.text)
+        CanvasView()
     }
 }
 
 #Preview {
-    ContentView(document: .constant(QuickArchitectDocument()))
+    ContentView()
 }

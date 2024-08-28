@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0FC6ABE22C7F232B00986158 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABE12C7F232B00986158 /* CanvasView.swift */; };
+		0FC6ABE42C7F233500986158 /* CanvasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABE32C7F233500986158 /* CanvasViewModel.swift */; };
+		0FC6ABE62C7F308400986158 /* ToolbarItemsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABE52C7F308400986158 /* ToolbarItemsModel.swift */; };
+		0FC6ABE92C7F447800986158 /* ClassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABE82C7F447800986158 /* ClassView.swift */; };
 		0FD4DA042C7DAEC100A0279D /* QuickArchitectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD4DA032C7DAEC100A0279D /* QuickArchitectApp.swift */; };
 		0FD4DA062C7DAEC100A0279D /* QuickArchitectDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD4DA052C7DAEC100A0279D /* QuickArchitectDocument.swift */; };
 		0FD4DA082C7DAEC100A0279D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD4DA072C7DAEC100A0279D /* ContentView.swift */; };
@@ -35,6 +39,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0FC6ABE12C7F232B00986158 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
+		0FC6ABE32C7F233500986158 /* CanvasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModel.swift; sourceTree = "<group>"; };
+		0FC6ABE52C7F308400986158 /* ToolbarItemsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarItemsModel.swift; sourceTree = "<group>"; };
+		0FC6ABE82C7F447800986158 /* ClassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassView.swift; sourceTree = "<group>"; };
 		0FD4DA002C7DAEC100A0279D /* QuickArchitect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickArchitect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FD4DA032C7DAEC100A0279D /* QuickArchitectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickArchitectApp.swift; sourceTree = "<group>"; };
 		0FD4DA052C7DAEC100A0279D /* QuickArchitectDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickArchitectDocument.swift; sourceTree = "<group>"; };
@@ -75,6 +83,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0FC6ABDE2C7F08D300986158 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				0FC6ABE72C7F443900986158 /* ToolbarItems */,
+				0FC6ABE02C7F08E900986158 /* Canvas */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		0FC6ABE02C7F08E900986158 /* Canvas */ = {
+			isa = PBXGroup;
+			children = (
+				0FC6ABE12C7F232B00986158 /* CanvasView.swift */,
+				0FC6ABE32C7F233500986158 /* CanvasViewModel.swift */,
+			);
+			path = Canvas;
+			sourceTree = "<group>";
+		};
+		0FC6ABE72C7F443900986158 /* ToolbarItems */ = {
+			isa = PBXGroup;
+			children = (
+				0FC6ABEA2C7F476A00986158 /* Views */,
+				0FC6ABE52C7F308400986158 /* ToolbarItemsModel.swift */,
+			);
+			path = ToolbarItems;
+			sourceTree = "<group>";
+		};
+		0FC6ABEA2C7F476A00986158 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0FC6ABE82C7F447800986158 /* ClassView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		0FD4D9F72C7DAEC100A0279D = {
 			isa = PBXGroup;
 			children = (
@@ -98,6 +141,7 @@
 		0FD4DA022C7DAEC100A0279D /* QuickArchitect */ = {
 			isa = PBXGroup;
 			children = (
+				0FC6ABDE2C7F08D300986158 /* Components */,
 				0FD4DA032C7DAEC100A0279D /* QuickArchitectApp.swift */,
 				0FD4DA052C7DAEC100A0279D /* QuickArchitectDocument.swift */,
 				0FD4DA072C7DAEC100A0279D /* ContentView.swift */,
@@ -264,8 +308,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FC6ABE42C7F233500986158 /* CanvasViewModel.swift in Sources */,
 				0FD4DA062C7DAEC100A0279D /* QuickArchitectDocument.swift in Sources */,
 				0FD4DA042C7DAEC100A0279D /* QuickArchitectApp.swift in Sources */,
+				0FC6ABE92C7F447800986158 /* ClassView.swift in Sources */,
+				0FC6ABE22C7F232B00986158 /* CanvasView.swift in Sources */,
+				0FC6ABE62C7F308400986158 /* ToolbarItemsModel.swift in Sources */,
 				0FD4DA082C7DAEC100A0279D /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
