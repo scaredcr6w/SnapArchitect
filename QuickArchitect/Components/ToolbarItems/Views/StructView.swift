@@ -8,11 +8,33 @@
 import SwiftUI
 
 struct StructView: View {
+    var structName: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(spacing: 0) {
+            ZStack {
+                Rectangle()
+                    .fill(.clear)
+                    .frame(height: 30)
+                    .border(Color.black, width: 1)
+                VStack {
+                    Text("<< struct >>")
+                        .font(.caption)
+                        .foregroundStyle(Color.black)
+                    Text(structName)
+                        .font(.caption)
+                        .foregroundStyle(Color.black)
+                }
+            }
+            Rectangle()
+                .fill(.clear)
+                .frame(height: 100)
+                .border(Color.black, width: 1)
+        }
+        .frame(width: 100)
     }
 }
 
 #Preview {
-    StructView()
+    StructView(structName: "StructView")
 }

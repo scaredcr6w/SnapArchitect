@@ -17,13 +17,11 @@ struct CanvasView: View {
         case .classType:
             ClassView(className: "ClassView")
         case .structType:
-            ClassView(className: "StructView")
+            StructView(structName: "StructView")
         case .protocolType:
-            ClassView(className: "ProtocolView")
+            ProtocolView(protocolName: "ProtocolView")
         case .enumType:
-            ClassView(className: "EnumView")
-        case .extensionType:
-            ClassView(className: "ExtensionView")
+            EnumView(enumName: "EnumView")
         }
     }
     

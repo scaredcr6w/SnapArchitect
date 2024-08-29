@@ -14,15 +14,20 @@ struct ClassView: View {
         VStack(spacing: 0) {
             ZStack {
                 Rectangle()
-                    .background(.clear)
+                    .fill(.clear)
                     .frame(height: 30)
                     .border(Color.black, width: 1)
-                Text(className)
-                    .font(.caption)
-                    .foregroundStyle(Color.black)
+                VStack {
+                    Text("<< class >>")
+                        .font(.caption)
+                        .foregroundStyle(Color.black)
+                    Text(className)
+                        .font(.caption)
+                        .foregroundStyle(Color.black)
+                }
             }
             Rectangle()
-                .background(.clear)
+                .fill(.clear)
                 .frame(height: 100)
                 .border(Color.black, width: 1)
         }
