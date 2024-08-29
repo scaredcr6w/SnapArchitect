@@ -18,9 +18,6 @@ struct EditorView: View {
             CanvasView(viewModel: canvasViewModel, document: $document, selectedTool: $selectedTool)
             ToolbarView(viewModel: toolBarViewModel, selectedTool: $selectedTool)
         }
-        .onChange(of: selectedTool) { _, _ in
-            print("Selection changed to: \(selectedTool)")
-        }
     }
 }
 

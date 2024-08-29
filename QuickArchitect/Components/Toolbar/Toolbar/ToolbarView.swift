@@ -17,6 +17,7 @@ struct ToolbarCategory: Identifiable, Hashable {
 struct ToolbarView: View {
     let viewModel: ToolbarViewModel
     @Binding var selectedTool: OOPElementType?
+    @State private var expandedCategories: Set<String> = []
     
     let categories = [
         ToolbarCategory(
@@ -33,23 +34,45 @@ struct ToolbarView: View {
     var body: some View {
         ZStack(alignment: .leading) {
             Rectangle()
-                .foregroundStyle(.gray)
+                .foregroundStyle(Color.darkGray)
             VStack {
                 Text("Toolbar")
                     .font(.title)
                     .bold()
                     .foregroundStyle(.white)
-                List(categories, children: \.items) { row in
-                    Text(row.categoryName)
-                        .background(
-                            row.type == selectedTool ? .blue : .clear
-                        )
-                        .onTapGesture {
-                            selectedTool = row.type
+                List {
+                    ForEach(categories) { category in
+                        Section {
+                            if expandedCategories.contains(category.categoryName) {
+                                ForEach(category.items ?? []) { item in
+                                    Text(item.categoryName)
+                                        .background(
+                                            item.type == selectedTool ? Color.blue : Color.clear
+                                        )
+                                        .onTapGesture {
+                                            selectedTool = item.type
+                                        }
+                                }
+                            }
+                        } header: {
+                            Text(category.categoryName)
                         }
+                        .onTapGesture {
+                            toggleCategoryExpansion(category.categoryName)
+                        }
+                        
+                    }
                 }
             }
         }
-        .frame(width: 300, height: 500)
+        .frame(width: 300, height: 800)
+    }
+    
+    private func toggleCategoryExpansion(_ categoryName: String) {
+        if expandedCategories.contains(categoryName) {
+            expandedCategories.remove(categoryName)
+        } else {
+            expandedCategories.insert(categoryName)
+        }
     }
 }
