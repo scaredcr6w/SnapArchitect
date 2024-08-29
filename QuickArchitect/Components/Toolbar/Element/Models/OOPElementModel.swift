@@ -13,6 +13,13 @@ enum OOPElementType: String, Codable {
     case structType
     case protocolType
     case enumType
+    case association
+    case directedAssociation
+    case aggregation
+    case composition
+    case dependency
+    case generalization
+    case protocolRealization
 }
 
 protocol OOPElement: Identifiable, Hashable, Codable {

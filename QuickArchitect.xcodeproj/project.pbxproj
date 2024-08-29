@@ -114,13 +114,13 @@
 			path = Canvas;
 			sourceTree = "<group>";
 		};
-		0FC6ABE72C7F443900986158 /* ToolbarItems */ = {
+		0FC6ABE72C7F443900986158 /* Element */ = {
 			isa = PBXGroup;
 			children = (
 				0FC6ABEB2C7F53F400986158 /* Models */,
 				0FC6ABEA2C7F476A00986158 /* Views */,
 			);
-			path = ToolbarItems;
+			path = Element;
 			sourceTree = "<group>";
 		};
 		0FC6ABEA2C7F476A00986158 /* Views */ = {
@@ -154,7 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				0FC6ABFC2C8052F000986158 /* Toolbar */,
-				0FC6ABE72C7F443900986158 /* ToolbarItems */,
+				0FC6ABE72C7F443900986158 /* Element */,
 			);
 			path = Toolbar;
 			sourceTree = "<group>";

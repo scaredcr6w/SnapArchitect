@@ -23,6 +23,20 @@ struct CanvasView: View {
             ProtocolView(protocolName: "ProtocolView")
         case .enumType:
             EnumView(enumName: "EnumView")
+        case .association:
+            EmptyView()
+        case .directedAssociation:
+            EmptyView()
+        case .aggregation:
+            EmptyView()
+        case .composition:
+            EmptyView()
+        case .dependency:
+            EmptyView()
+        case .generalization:
+            EmptyView()
+        case .protocolRealization:
+            EmptyView()
         }
     }
     

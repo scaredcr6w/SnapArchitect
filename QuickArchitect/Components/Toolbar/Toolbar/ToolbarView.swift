@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ToolbarCategory: Identifiable, Hashable {
+struct ToolbarItem: Identifiable, Hashable {
     let id = UUID()
     let elementName: String
     var elementType: OOPElementType?
@@ -18,12 +18,36 @@ struct ToolbarView: View {
     @Binding var selectedTool: OOPElementType?
     @State private var expandedCategories: Set<String> = []
     
-    let basicCategories = [
-        ToolbarCategory(elementName: "Class", elementType: .classType),
-        ToolbarCategory(elementName: "Struct", elementType: .structType),
-        ToolbarCategory(elementName: "Protocol", elementType: .protocolType),
-        ToolbarCategory(elementName: "Enum", elementType: .enumType)
+    let basicClasses = [
+        ToolbarItem(elementName: "Class", elementType: .classType),
+        ToolbarItem(elementName: "Struct", elementType: .structType),
+        ToolbarItem(elementName: "Protocol", elementType: .protocolType),
+        ToolbarItem(elementName: "Enum", elementType: .enumType)
     ]
+    
+    let connections = [
+        ToolbarItem(elementName: "Association", elementType: .association),
+        ToolbarItem(elementName: "Directed Association", elementType: .directedAssociation),
+        ToolbarItem(elementName: "Aggregation", elementType: .aggregation),
+        ToolbarItem(elementName: "Composition", elementType: .composition),
+        ToolbarItem(elementName: "Dependency", elementType: .dependency),
+        ToolbarItem(elementName: "Generalization", elementType: .generalization),
+        ToolbarItem(elementName: "Protocol Realization", elementType: .protocolRealization)
+    ]
+    
+    @ViewBuilder
+    private func disclosureGroupItem(_ category: [ToolbarItem]) -> some View {
+        VStack (alignment: .leading, spacing: 10) {
+            ForEach(category) { toolbarItem in
+                Text(toolbarItem.elementName)
+                    .onTapGesture {
+                        selectedTool = toolbarItem.elementType
+                    }
+            }
+        }
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
     
     var body: some View {
         ZStack(alignment: .leading) {
@@ -31,29 +55,22 @@ struct ToolbarView: View {
                 .foregroundStyle(Color.primaryDarkGray)
             VStack {
                 Text("Toolbar")
-                    .font(.title)
-                    .bold()
-                    .foregroundStyle(.white)
-                DisclosureGroup("Basic") {
-                    ForEach(basicCategories) { category in
-                        Text(category.elementName)
-                            .onTapGesture {
-                                selectedTool = category.elementType
-                            }
-                    }
+                    .font(.title3)
+                    .foregroundStyle(.gray)
+                Divider()
+                DisclosureGroup("Basic Classes") {
+                    disclosureGroupItem(basicClasses)
                 }
+                Divider()
+                DisclosureGroup("Connections") {
+                    disclosureGroupItem(connections)
+                }
+                Divider()
+                Spacer()
             }
             .padding()
         }
         .frame(width: 270)
         .frame(maxWidth: .infinity, alignment: .trailing)
-    }
-    
-    private func toggleCategoryExpansion(_ categoryName: String) {
-        if expandedCategories.contains(categoryName) {
-            expandedCategories.remove(categoryName)
-        } else {
-            expandedCategories.insert(categoryName)
-        }
     }
 }
