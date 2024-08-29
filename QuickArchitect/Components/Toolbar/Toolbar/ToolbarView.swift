@@ -39,7 +39,10 @@ struct ToolbarView: View {
     private func disclosureGroupItem(_ category: [ToolbarItem]) -> some View {
         VStack (alignment: .leading, spacing: 10) {
             ForEach(category) { toolbarItem in
-                Text(toolbarItem.elementName)
+                ToolbarItemView(
+                    toolbarItem.elementName,
+                    toolbarItem.elementType == selectedTool
+                )
                     .onTapGesture {
                         selectedTool = toolbarItem.elementType
                     }

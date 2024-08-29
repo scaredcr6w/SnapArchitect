@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F01733F2C80C82B0051FD9A /* ToolbarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F01733E2C80C82B0051FD9A /* ToolbarItemView.swift */; };
 		0FC6ABE22C7F232B00986158 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABE12C7F232B00986158 /* CanvasView.swift */; };
 		0FC6ABE42C7F233500986158 /* CanvasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABE32C7F233500986158 /* CanvasViewModel.swift */; };
 		0FC6ABE62C7F308400986158 /* OOPElementModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABE52C7F308400986158 /* OOPElementModel.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0F01733E2C80C82B0051FD9A /* ToolbarItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarItemView.swift; sourceTree = "<group>"; };
 		0FC6ABE12C7F232B00986158 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		0FC6ABE32C7F233500986158 /* CanvasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModel.swift; sourceTree = "<group>"; };
 		0FC6ABE52C7F308400986158 /* OOPElementModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOPElementModel.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 			children = (
 				0FC6ABFA2C80523700986158 /* ToolbarView.swift */,
 				0FC6ABFD2C8052FF00986158 /* ToolbarViewModel.swift */,
+				0F01733E2C80C82B0051FD9A /* ToolbarItemView.swift */,
 			);
 			path = Toolbar;
 			sourceTree = "<group>";
@@ -363,6 +366,7 @@
 				0FD4DA062C7DAEC100A0279D /* QuickArchitectDocument.swift in Sources */,
 				0FC6ABF22C7FBCF800986158 /* ProtocolView.swift in Sources */,
 				0FC6ABF62C7FBD4500986158 /* EnumView.swift in Sources */,
+				0F01733F2C80C82B0051FD9A /* ToolbarItemView.swift in Sources */,
 				0FD4DA042C7DAEC100A0279D /* QuickArchitectApp.swift in Sources */,
 				0FC6ABE92C7F447800986158 /* ClassView.swift in Sources */,
 				0FC6ABF42C7FBD3400986158 /* StructView.swift in Sources */,
