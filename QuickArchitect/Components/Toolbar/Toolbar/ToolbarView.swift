@@ -9,9 +9,8 @@ import SwiftUI
 
 struct ToolbarCategory: Identifiable, Hashable {
     let id = UUID()
-    let categoryName: String
-    var type: OOPElementType?
-    var items: [ToolbarCategory]?
+    let elementName: String
+    var elementType: OOPElementType?
 }
 
 struct ToolbarView: View {
@@ -19,54 +18,35 @@ struct ToolbarView: View {
     @Binding var selectedTool: OOPElementType?
     @State private var expandedCategories: Set<String> = []
     
-    let categories = [
-        ToolbarCategory(
-            categoryName: "Basic",
-            items: [
-                ToolbarCategory(categoryName: "Class", type: .classType),
-                ToolbarCategory(categoryName: "Struct", type: .structType),
-                ToolbarCategory(categoryName: "Protocol", type: .protocolType),
-                ToolbarCategory(categoryName: "Enum", type: .enumType)
-            ]
-        )
+    let basicCategories = [
+        ToolbarCategory(elementName: "Class", elementType: .classType),
+        ToolbarCategory(elementName: "Struct", elementType: .structType),
+        ToolbarCategory(elementName: "Protocol", elementType: .protocolType),
+        ToolbarCategory(elementName: "Enum", elementType: .enumType)
     ]
     
     var body: some View {
         ZStack(alignment: .leading) {
             Rectangle()
-                .foregroundStyle(Color.darkGray)
+                .foregroundStyle(Color.primaryDarkGray)
             VStack {
                 Text("Toolbar")
                     .font(.title)
                     .bold()
                     .foregroundStyle(.white)
-                List {
-                    ForEach(categories) { category in
-                        Section {
-                            if expandedCategories.contains(category.categoryName) {
-                                ForEach(category.items ?? []) { item in
-                                    Text(item.categoryName)
-                                        .background(
-                                            item.type == selectedTool ? Color.blue : Color.clear
-                                        )
-                                        .onTapGesture {
-                                            selectedTool = item.type
-                                        }
-                                }
+                DisclosureGroup("Basic") {
+                    ForEach(basicCategories) { category in
+                        Text(category.elementName)
+                            .onTapGesture {
+                                selectedTool = category.elementType
                             }
-                        } header: {
-                            Text(category.categoryName)
-                        }
-                        .onTapGesture {
-                            toggleCategoryExpansion(category.categoryName)
-                        }
-                        
                     }
                 }
             }
+            .padding()
         }
-        .frame(width: 300)
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(width: 270)
+        .frame(maxWidth: .infinity, alignment: .trailing)
     }
     
     private func toggleCategoryExpansion(_ categoryName: String) {

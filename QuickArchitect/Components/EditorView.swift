@@ -25,6 +25,7 @@ struct EditorView: View {
                     .frame(height: windowHeight)
             }
         }
+        .frame(minWidth: 800, minHeight: 600)
     }
 }
 

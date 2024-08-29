@@ -98,6 +98,7 @@
 		0FC6ABDE2C7F08D300986158 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				0FC6ABFF2C80534200986158 /* EditorView.swift */,
 				0FC6ABF92C80518300986158 /* Toolbar */,
 				0FC6ABE02C7F08E900986158 /* Canvas */,
 			);
@@ -192,7 +193,6 @@
 			children = (
 				0FC6ABDE2C7F08D300986158 /* Components */,
 				0FC6ABEC2C7F540700986158 /* Extensions */,
-				0FC6ABFF2C80534200986158 /* EditorView.swift */,
 				0FD4DA032C7DAEC100A0279D /* QuickArchitectApp.swift */,
 				0FD4DA052C7DAEC100A0279D /* QuickArchitectDocument.swift */,
 				0FD4DA092C7DAEC300A0279D /* Assets.xcassets */,
