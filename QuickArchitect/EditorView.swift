@@ -14,9 +14,16 @@ struct EditorView: View {
     @State var selectedTool: OOPElementType? = nil
     
     var body: some View {
-        ZStack {
-            CanvasView(viewModel: canvasViewModel, document: $document, selectedTool: $selectedTool)
-            ToolbarView(viewModel: toolBarViewModel, selectedTool: $selectedTool)
+        GeometryReader { windowGeo in
+            let windowWidth = windowGeo.size.width
+            let windowHeight = windowGeo.size.height
+            
+            ZStack {
+                CanvasView(viewModel: canvasViewModel, document: $document, selectedTool: $selectedTool)
+                    .frame(width: windowWidth, height: windowHeight)
+                ToolbarView(viewModel: toolBarViewModel, selectedTool: $selectedTool)
+                    .frame(height: windowHeight)
+            }
         }
     }
 }

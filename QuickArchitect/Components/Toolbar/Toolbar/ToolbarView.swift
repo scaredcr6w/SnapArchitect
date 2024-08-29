@@ -65,7 +65,8 @@ struct ToolbarView: View {
                 }
             }
         }
-        .frame(width: 300, height: 800)
+        .frame(width: 300)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     private func toggleCategoryExpansion(_ categoryName: String) {

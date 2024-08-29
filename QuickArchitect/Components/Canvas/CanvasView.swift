@@ -27,20 +27,18 @@ struct CanvasView: View {
     }
     
     var body: some View {
-        GeometryReader { windowGeo in
-            let canvasWidth = windowGeo.size.width
-            let canvasHeight = windowGeo.size.height
-            
-            GeometryReader { canvasGeo in
+        GeometryReader { canvasGeo in
+            ScrollView([.horizontal, .vertical]) {
                 ZStack {
                     ForEach(document.entityRepresentations) { object in
                         representationView(object)
                             .position(object.position)
                     }
                 }
+                
                 .frame(
-                    width: canvasWidth,
-                    height: canvasHeight
+                    width: 3000,
+                    height: 3000
                 )
                 .background(.white)
                 .gesture(
@@ -55,10 +53,7 @@ struct CanvasView: View {
                         }
                 )
             }
-            .frame(
-                width: canvasWidth,
-                height: canvasHeight
-            )
+            .scrollIndicators(.hidden)
         }
     }
 }
