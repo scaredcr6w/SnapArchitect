@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct CanvasView: View {
-    @StateObject private var viewModel = CanvasViewModel()
+    let viewModel: CanvasViewModel
     @Binding var document: QuickArchitectDocument
+    @Binding var selectedTool: OOPElementType?
     
     @ViewBuilder
     private func representationView(_ representation: OOPElementRepresentation) -> some View {
@@ -45,10 +46,10 @@ struct CanvasView: View {
                 .gesture(
                     TapGesture()
                         .onEnded { _ in
-                            if let event = NSApp.currentEvent {
+                            if let event = NSApp.currentEvent, let type = selectedTool {
                                 let clickLocation = viewModel.getMouseClick(canvasGeo, event: event)
                                 document.entityRepresentations.append(
-                                    OOPElementRepresentation(type: .classType, position: clickLocation)
+                                    OOPElementRepresentation(type: type, position: clickLocation)
                                 )
                             }
                         }
@@ -60,8 +61,4 @@ struct CanvasView: View {
             )
         }
     }
-}
-
-#Preview {
-    CanvasView(document: .constant(QuickArchitectDocument()))
 }

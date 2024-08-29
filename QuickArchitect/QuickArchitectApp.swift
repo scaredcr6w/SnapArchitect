@@ -11,7 +11,7 @@ import SwiftUI
 struct QuickArchitectApp: App {
     var body: some Scene {
         DocumentGroup(newDocument: QuickArchitectDocument()) { file in
-            CanvasView(document: file.$document)
+            EditorView(document: file.$document)
                 .onAppear {
                     if let window = NSApplication.shared.windows.last {
                         maximizeWindow(window)
