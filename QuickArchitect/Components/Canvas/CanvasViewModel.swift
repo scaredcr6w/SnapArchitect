@@ -9,9 +9,15 @@ import Foundation
 import SwiftUI
 
 final class CanvasViewModel: ObservableObject {
+    @Published var xScrollOffset: CGFloat = 0
+    @Published var yScrollOffset: CGFloat = 0
+    
     func getMouseClick(_ geo: GeometryProxy, event: NSEvent) -> CGPoint {
-        let windowlocation = event.locationInWindow
-        let clickPosition = CGPoint(x: windowlocation.x, y: geo.size.height - windowlocation.y)
+        let windowLocation = event.locationInWindow
+        let clickPosition = CGPoint(
+            x: (windowLocation.x - xScrollOffset),
+            y: (geo.size.height - windowLocation.y - yScrollOffset)
+        )
         return clickPosition
     }
 }

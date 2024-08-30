@@ -41,33 +41,50 @@ struct CanvasView: View {
     }
     
     var body: some View {
-        GeometryReader { canvasGeo in
+        GeometryReader { geo in
             ScrollView([.horizontal, .vertical]) {
-                ZStack {
-                    ForEach(document.entityRepresentations) { object in
-                        representationView(object)
-                            .position(object.position)
-                    }
-                }
-                
-                .frame(
-                    width: 3000,
-                    height: 3000
-                )
-                .background(.white)
-                .gesture(
-                    TapGesture()
-                        .onEnded { _ in
-                            if let event = NSApp.currentEvent, let type = selectedTool {
-                                let clickLocation = viewModel.getMouseClick(canvasGeo, event: event)
-                                document.entityRepresentations.append(
-                                    OOPElementRepresentation(type: type, position: clickLocation)
-                                )
+                ScrollViewReader { scrollViewProxy in
+                    VStack {
+                        ZStack {
+                            ForEach(document.entityRepresentations) { object in
+                                representationView(object)
+                                    .position(object.position)
                             }
                         }
-                )
+                        .frame(width: geo.size.width * 3, height: geo.size.height * 3)
+                    }
+                    .background(.white)
+                    .background(GeometryReader { innerGeo in
+                        Color.clear
+                            .onAppear {
+                                updateScrollOffsets(geo: innerGeo)
+                            }
+                            .onChange(of: innerGeo.frame(in: .global)) {
+                                updateScrollOffsets(geo: innerGeo)
+                            }
+                    })
+                    .gesture(
+                        TapGesture()
+                            .onEnded{ _ in
+                                if let event = NSApp.currentEvent, let type = selectedTool {
+                                    let clickLocation = viewModel.getMouseClick(geo, event: event)
+                                    document.entityRepresentations.append(
+                                        OOPElementRepresentation(type: type, position: clickLocation)
+                                    )
+                                }
+                            }
+                    )
+                }
             }
             .scrollIndicators(.hidden)
         }
+        
+    }
+    
+    private func updateScrollOffsets(geo: GeometryProxy) {
+        viewModel.xScrollOffset = geo.frame(in: .global).minX
+        viewModel.yScrollOffset = geo.frame(in: .global).minY
+        
+        print("x: \(viewModel.xScrollOffset), y: \(viewModel.yScrollOffset)")
     }
 }
