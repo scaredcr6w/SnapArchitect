@@ -31,6 +31,7 @@ struct ClassView: View {
                 .frame(height: 100)
                 .border(Color.black, width: 1)
         }
+        .background(.white)
         .frame(width: 100)
     }
 }

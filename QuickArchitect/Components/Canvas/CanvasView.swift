@@ -8,9 +8,23 @@
 import SwiftUI
 
 struct CanvasView: View {
-    let viewModel: CanvasViewModel
+    @StateObject var viewModel: CanvasViewModel
     @Binding var document: QuickArchitectDocument
     @Binding var selectedTool: OOPElementType?
+    
+    private func updateScrollOffsets(geo: GeometryProxy) {
+        viewModel.xScrollOffset = geo.frame(in: .global).minX
+        viewModel.yScrollOffset = geo.frame(in: .global).minY
+    }
+    
+    private func placeEntity(_ geo: GeometryProxy) {
+        if let event = NSApp.currentEvent, let type = selectedTool {
+            let clickLocation = viewModel.getMouseClick(geo, event: event)
+            document.entityRepresentations.append(
+                OOPElementRepresentation(type: type, position: clickLocation)
+            )
+        }
+    }
     
     @ViewBuilder
     private func representationView(_ representation: OOPElementRepresentation) -> some View {
@@ -46,9 +60,15 @@ struct CanvasView: View {
                 ScrollViewReader { scrollViewProxy in
                     VStack {
                         ZStack {
-                            ForEach(document.entityRepresentations) { object in
+                            ForEach($document.entityRepresentations) { $object in
                                 representationView(object)
                                     .position(object.position)
+                                    .gesture(
+                                        DragGesture()
+                                            .onChanged { value in
+                                                object.position = value.location
+                                            }
+                                    )
                             }
                         }
                         .frame(width: geo.size.width * 3, height: geo.size.height * 3)
@@ -66,12 +86,7 @@ struct CanvasView: View {
                     .gesture(
                         TapGesture()
                             .onEnded{ _ in
-                                if let event = NSApp.currentEvent, let type = selectedTool {
-                                    let clickLocation = viewModel.getMouseClick(geo, event: event)
-                                    document.entityRepresentations.append(
-                                        OOPElementRepresentation(type: type, position: clickLocation)
-                                    )
-                                }
+                                placeEntity(geo)
                             }
                     )
                 }
@@ -79,12 +94,5 @@ struct CanvasView: View {
             .scrollIndicators(.hidden)
         }
         
-    }
-    
-    private func updateScrollOffsets(geo: GeometryProxy) {
-        viewModel.xScrollOffset = geo.frame(in: .global).minX
-        viewModel.yScrollOffset = geo.frame(in: .global).minY
-        
-        print("x: \(viewModel.xScrollOffset), y: \(viewModel.yScrollOffset)")
     }
 }

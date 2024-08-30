@@ -23,6 +23,7 @@ struct ProtocolView: View {
                 .frame(height: 1)
                 .foregroundStyle(.black)
         }
+        .background(.white)
         .frame(width: 100)
     }
 }
