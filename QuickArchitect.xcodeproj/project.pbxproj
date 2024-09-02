@@ -26,6 +26,7 @@
 		0FD4DA192C7DAEC300A0279D /* QuickArchitectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD4DA182C7DAEC300A0279D /* QuickArchitectTests.swift */; };
 		0FD4DA232C7DAEC300A0279D /* QuickArchitectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD4DA222C7DAEC300A0279D /* QuickArchitectUITests.swift */; };
 		0FD4DA252C7DAEC300A0279D /* QuickArchitectUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD4DA242C7DAEC300A0279D /* QuickArchitectUITestsLaunchTests.swift */; };
+		0FEA43902C85D88C00FB8B1D /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FEA438F2C85D88C00FB8B1D /* View+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		0FD4DA1E2C7DAEC300A0279D /* QuickArchitectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickArchitectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FD4DA222C7DAEC300A0279D /* QuickArchitectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickArchitectUITests.swift; sourceTree = "<group>"; };
 		0FD4DA242C7DAEC300A0279D /* QuickArchitectUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickArchitectUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		0FEA438F2C85D88C00FB8B1D /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				0FC6ABED2C7F542400986158 /* CGPoint+Hashable.swift */,
+				0FEA438F2C85D88C00FB8B1D /* View+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 				0FC6ABFE2C8052FF00986158 /* ToolbarViewModel.swift in Sources */,
 				0FC6ABEE2C7F542400986158 /* CGPoint+Hashable.swift in Sources */,
 				0FC6ABE22C7F232B00986158 /* CanvasView.swift in Sources */,
+				0FEA43902C85D88C00FB8B1D /* View+.swift in Sources */,
 				0FC6ABE62C7F308400986158 /* OOPElementModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
