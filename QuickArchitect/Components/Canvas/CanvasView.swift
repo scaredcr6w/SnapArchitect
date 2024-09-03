@@ -22,22 +22,22 @@ struct CanvasView: View {
         if let event = NSApp.currentEvent, let type = selectedTool {
             let clickLocation = viewModel.getMouseClick(geo, event: event)
             document.entityRepresentations.append(
-                OOPElementRepresentation(type: type, position: clickLocation)
+                OOPElementRepresentation("IDK", type, position: clickLocation, size: CGSize(width: 100, height: 150))
             )
         }
     }
     
     @ViewBuilder
-    private func representationView(_ representation: OOPElementRepresentation) -> some View {
-        switch representation.type {
+    private func representationView(_ representation: Binding<OOPElementRepresentation>) -> some View {
+        switch representation.wrappedValue.type {
         case .classType:
-            ClassView(isSelected: selectedEntity == representation.id, className: "ClassView")
+            ClassView(representation: representation)
         case .structType:
-            StructView(structName: "StructView")
+            StructView(representation: representation)
         case .protocolType:
-            ProtocolView(protocolName: "ProtocolView")
+            ProtocolView(representation: representation)
         case .enumType:
-            EnumView(enumName: "EnumView")
+            EnumView(representation: representation)
         case .association:
             EmptyView()
         case .directedAssociation:
@@ -62,7 +62,7 @@ struct CanvasView: View {
                     VStack {
                         ZStack {
                             ForEach($document.entityRepresentations) { $object in
-                                representationView(object)
+                                representationView($object)
                                     .position(object.position)
                                     .onTapGesture {
                                         selectedEntity = object.id

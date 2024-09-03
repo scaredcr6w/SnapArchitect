@@ -29,12 +29,16 @@ protocol OOPElement: Identifiable, Hashable, Codable {
 
 struct OOPElementRepresentation: OOPElement {
     var id = UUID()
+    var name: String
     var type: OOPElementType
     var position: CGPoint
+    var size: CGSize
     
-    init(type: OOPElementType, position: CGPoint) {
+    init(_ name: String, _ type: OOPElementType, position: CGPoint, size: CGSize) {
+        self.name = name
         self.type = type
         self.position = position
+        self.size = size
     }
 }
 

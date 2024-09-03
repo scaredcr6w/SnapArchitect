@@ -14,3 +14,10 @@ extension CGPoint: Hashable {
         hasher.combine(y)
     }
 }
+
+extension CGSize: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(width)
+        hasher.combine(height)
+    }
+}
