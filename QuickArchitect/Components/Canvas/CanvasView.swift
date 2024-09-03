@@ -11,6 +11,7 @@ struct CanvasView: View {
     @StateObject var viewModel: CanvasViewModel
     @Binding var document: QuickArchitectDocument
     @Binding var selectedTool: OOPElementType?
+    @State private var selectedElement: UUID?
     
     private func updateScrollOffsets(geo: GeometryProxy) {
         viewModel.xScrollOffset = geo.frame(in: .global).minX
@@ -30,13 +31,13 @@ struct CanvasView: View {
     private func representationView(_ representation: Binding<OOPElementRepresentation>) -> some View {
         switch representation.wrappedValue.type {
         case .classType:
-            ClassView(representation: representation)
+            ClassView(representation: representation, isSelected: selectedElement == representation.id)
         case .structType:
-            StructView(representation: representation)
+            StructView(representation: representation, isSelected: selectedElement == representation.id)
         case .protocolType:
-            ProtocolView(representation: representation)
+            ProtocolView(representation: representation, isSelected: selectedElement == representation.id)
         case .enumType:
-            EnumView(representation: representation)
+            EnumView(representation: representation, isSelected: selectedElement == representation.id)
         case .association:
             EmptyView()
         case .directedAssociation:
@@ -63,10 +64,15 @@ struct CanvasView: View {
                             ForEach($document.entityRepresentations) { $object in
                                 representationView($object)
                                     .position(object.position)
+                                    .onTapGesture {
+                                        selectedElement = object.id
+                                    }
                                     .gesture(
                                         DragGesture()
                                             .onChanged { value in
-                                                object.position = value.location
+                                                if object.id == selectedElement {
+                                                    object.position = value.location
+                                                }
                                             }
                                     )
                             }
@@ -86,7 +92,9 @@ struct CanvasView: View {
                     .gesture(
                         TapGesture()
                             .onEnded{ _ in
+                                selectedElement = nil
                                 placeEntity(geo)
+                                selectedTool = nil
                             }
                     )
                 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProtocolView: View {
     @Binding var representation: OOPElementRepresentation
+    var isSelected: Bool
     
     var body: some View {
         VStack {
@@ -26,19 +27,23 @@ struct ProtocolView: View {
         .background(.white)
         .frame(width: representation.size.width)
         .overlay(
-            // Draggable handle at the bottom-right corner
-            Rectangle()
-                .fill(Color.gray.opacity(0.4))
-                .frame(width: 20, height: 20)
-                .gesture(
-                    DragGesture()
-                        .onChanged { value in
-                            // Update the size based on the drag amount
-                            let newWidth = max(100, representation.size.width + value.translation.width)
-                            let newHeight = max(50, representation.size.height + value.translation.height)
-                            representation.size = CGSize(width: newWidth, height: newHeight)
-                        }
-                ),
+            // Conditionally show the draggable handle
+            Group {
+                if isSelected {
+                    Rectangle()
+                        .fill(.accent.opacity(0.4))
+                        .frame(width: 20, height: 20)
+                        .gesture(
+                            DragGesture()
+                                .onChanged { value in
+                                    // Update the size based on the drag amount
+                                    let newWidth = max(100, representation.size.width + value.translation.width)
+                                    let newHeight = max(50, representation.size.height + value.translation.height)
+                                    representation.size = CGSize(width: newWidth, height: newHeight)
+                                }
+                        )
+                }
+            },
             alignment: .bottomTrailing
         )
     }
