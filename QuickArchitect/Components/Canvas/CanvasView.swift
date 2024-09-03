@@ -11,7 +11,6 @@ struct CanvasView: View {
     @StateObject var viewModel: CanvasViewModel
     @Binding var document: QuickArchitectDocument
     @Binding var selectedTool: OOPElementType?
-    @State private var selectedEntity: UUID?
     
     private func updateScrollOffsets(geo: GeometryProxy) {
         viewModel.xScrollOffset = geo.frame(in: .global).minX
@@ -64,15 +63,10 @@ struct CanvasView: View {
                             ForEach($document.entityRepresentations) { $object in
                                 representationView($object)
                                     .position(object.position)
-                                    .onTapGesture {
-                                        selectedEntity = object.id
-                                    }
                                     .gesture(
                                         DragGesture()
                                             .onChanged { value in
-                                                if selectedEntity == object.id {
-                                                    object.position = value.location
-                                                }
+                                                object.position = value.location
                                             }
                                     )
                             }
@@ -80,9 +74,6 @@ struct CanvasView: View {
                         .frame(width: geo.size.width * 3, height: geo.size.height * 3)
                     }
                     .background(.white)
-                    .onTapGesture {
-                        selectedEntity = nil
-                    }
                     .background(GeometryReader { innerGeo in
                         Color.clear
                             .onAppear {
