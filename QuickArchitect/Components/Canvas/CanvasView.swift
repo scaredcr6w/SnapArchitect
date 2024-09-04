@@ -22,7 +22,7 @@ struct CanvasView: View {
         if let event = NSApp.currentEvent, let type = selectedTool {
             let clickLocation = viewModel.getMouseClick(geo, event: event)
             document.entityRepresentations.append(
-                OOPElementRepresentation("IDK", type, position: clickLocation, size: CGSize(width: 100, height: 150))
+                OOPElementRepresentation("IDK", type, clickLocation, CGSize(width: 100, height: 100))
             )
         }
     }

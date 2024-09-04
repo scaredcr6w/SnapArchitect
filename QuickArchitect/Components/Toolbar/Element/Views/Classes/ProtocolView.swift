@@ -1,5 +1,5 @@
 //
-//  ClassView.swift
+//  ProtocolView.swift
 //  QuickArchitect
 //
 //  Created by Anda Levente on 28/08/2024.
@@ -7,30 +7,22 @@
 
 import SwiftUI
 
-struct ClassView: View {
+struct ProtocolView: View {
     @Binding var representation: OOPElementRepresentation
     var isSelected: Bool
     
     var body: some View {
-        VStack(spacing: 0) {
-            ZStack {
-                Rectangle()
-                    .fill(.clear)
-                    .frame(height: representation.size.height * 0.3)
-                    .border(Color.black, width: 1)
-                VStack {
-                    Text("<< class >>")
-                        .font(.caption)
-                        .foregroundStyle(Color.black)
-                    Text(representation.name)
-                        .font(.caption)
-                        .foregroundStyle(Color.black)
-                }
-            }
-            Rectangle()
+        VStack {
+            Circle()
                 .fill(.clear)
-                .frame(height: representation.size.height * 0.7)
-                .border(Color.black, width: 1)
+                .stroke(.black, lineWidth: 1)
+                .frame(height: representation.size.height * 0.3)
+            Text(representation.name)
+                .font(.caption)
+                .foregroundStyle(Color.black)
+            Rectangle()
+                .frame(height: 1)
+                .foregroundStyle(.black)
         }
         .background(.white)
         .frame(width: representation.size.width)
@@ -39,8 +31,8 @@ struct ClassView: View {
             Group {
                 if isSelected {
                     Rectangle()
-                        .fill(.accent.opacity(0.4))
-                        .frame(width: 20, height: 20)
+                        .fill(.accent.opacity(0.7))
+                        .frame(width: 10, height: 10)
                         .gesture(
                             DragGesture()
                                 .onChanged { value in

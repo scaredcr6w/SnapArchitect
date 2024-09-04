@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+ 
 struct EditorView: View {
     @Binding var document: QuickArchitectDocument
     @StateObject var canvasViewModel = CanvasViewModel()
