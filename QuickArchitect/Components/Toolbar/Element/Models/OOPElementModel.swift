@@ -28,8 +28,14 @@ protocol OOPElement: Identifiable, Hashable, Codable {
     var type: OOPElementType { get set }
     var position: CGPoint { get set }
     var size: CGSize { get set }
-    var attributes: [String]? { get set }
-    var functions: [OOPElementFunction]? { get set }
+    var attributes: [OOPElementAttribute] { get set }
+    var functions: [OOPElementFunction] { get set }
+}
+
+struct OOPElementAttribute: Identifiable, Hashable, Codable {
+    var id = UUID()
+    var name: String
+    var type: String
 }
 
 struct OOPElementFunction: Identifiable, Hashable, Codable {
@@ -44,16 +50,16 @@ struct OOPElementRepresentation: OOPElement {
     var type: OOPElementType
     var position: CGPoint
     var size: CGSize
-    var attributes: [String]?
-    var functions: [OOPElementFunction]?
+    var attributes: [OOPElementAttribute]
+    var functions: [OOPElementFunction]
     
     init(
         _ name: String,
         _ type: OOPElementType,
         _ position: CGPoint,
         _ size: CGSize,
-        _ attributes: [String]? = nil,
-        _ functions: [OOPElementFunction]? = nil
+        _ attributes: [OOPElementAttribute] = [],
+        _ functions: [OOPElementFunction] = []
     ) {
         self.name = name
         self.type = type
@@ -61,6 +67,24 @@ struct OOPElementRepresentation: OOPElement {
         self.size = size
         self.attributes = attributes
         self.functions = functions
+    }
+    
+    mutating func update(
+        name: String
+    ) {
+        self.name = name
+    }
+    
+    mutating func update(
+        attribute: OOPElementAttribute
+    ) {
+        self.attributes.append(attribute)
+    }
+    
+    mutating func update(
+        function: OOPElementFunction
+    ) {
+        self.functions.append(function)
     }
 }
 

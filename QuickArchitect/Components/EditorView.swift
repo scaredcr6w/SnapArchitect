@@ -20,7 +20,7 @@ struct EditorView: View {
             ZStack {
                 CanvasView(document: $document, selectedTool: $selectedTool, selectedElement: $selectedElement)
                     .frame(width: windowWidth, height: windowHeight)
-                ToolbarView(selectedTool: $selectedTool)
+                ToolbarView(selectedTool: $selectedTool, selectedElement: $selectedElement)
                     .frame(height: windowHeight)
             }
         }

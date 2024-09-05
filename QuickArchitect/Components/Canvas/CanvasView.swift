@@ -75,6 +75,11 @@ struct CanvasView: View {
                                                 }
                                             }
                                     )
+                                    .onChange(of: selectedElement) {
+                                        if let element = selectedElement {
+                                            object = element
+                                        }
+                                    }
                             }
                         }
                         .frame(width: geo.size.width * 3, height: geo.size.height * 3)

@@ -24,28 +24,24 @@ struct ClassView: View {
                     .foregroundStyle(.black)
             }
             VStack {
-                if let attributes = representation.attributes {
-                    ForEach(attributes, id: \.self) { attribute in
-                        Text(attribute)
-                            .font(.caption2)
-                            .foregroundStyle(.black)
-                    }
+                ForEach(representation.attributes, id: \.self) { attribute in
+                    Text(attribute.name)
+                        .font(.caption2)
+                        .foregroundStyle(.black)
                 }
                 Divider()
                     .foregroundStyle(.black)
             }
             .frame(height: representation.size.height * 0.4)
             VStack {
-                if let functions = representation.functions {
-                    ForEach(functions, id: \.id) { function in
-                        DisclosureGroup(function.name) {
-                            Text(function.functionBody)
-                                .font(.caption2)
-                                .foregroundStyle(.black)
-                        }
-                        .font(.caption2)
-                        .foregroundStyle(.black)
+                ForEach(representation.functions, id: \.id) { function in
+                    DisclosureGroup(function.name) {
+                        Text(function.functionBody)
+                            .font(.caption2)
+                            .foregroundStyle(.black)
                     }
+                    .font(.caption2)
+                    .foregroundStyle(.black)
                 }
             }
             .frame(height: representation.size.height * 0.4)
