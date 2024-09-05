@@ -9,9 +9,8 @@ import SwiftUI
  
 struct EditorView: View {
     @Binding var document: QuickArchitectDocument
-    @StateObject var canvasViewModel = CanvasViewModel()
-    @StateObject var toolBarViewModel = ToolbarViewModel()
     @State var selectedTool: OOPElementType? = nil
+    @State var selectedElement: OOPElementRepresentation? = nil
     
     var body: some View {
         GeometryReader { windowGeo in
@@ -19,9 +18,9 @@ struct EditorView: View {
             let windowHeight = windowGeo.size.height
             
             ZStack {
-                CanvasView(viewModel: canvasViewModel, document: $document, selectedTool: $selectedTool)
+                CanvasView(document: $document, selectedTool: $selectedTool, selectedElement: $selectedElement)
                     .frame(width: windowWidth, height: windowHeight)
-                ToolbarView(viewModel: toolBarViewModel, selectedTool: $selectedTool)
+                ToolbarView(selectedTool: $selectedTool)
                     .frame(height: windowHeight)
             }
         }
@@ -30,5 +29,5 @@ struct EditorView: View {
 }
 
 #Preview {
-    EditorView(document: .constant(QuickArchitectDocument()), canvasViewModel: CanvasViewModel(), toolBarViewModel: ToolbarViewModel())
+    EditorView(document: .constant(QuickArchitectDocument()))
 }

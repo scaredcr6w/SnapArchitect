@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct CanvasView: View {
-    @StateObject var viewModel: CanvasViewModel
+    @StateObject private var viewModel = CanvasViewModel()
     @Binding var document: QuickArchitectDocument
     @Binding var selectedTool: OOPElementType?
-    @State private var selectedElement: UUID?
+    @Binding var selectedElement: OOPElementRepresentation?
     
     private func updateScrollOffsets(geo: GeometryProxy) {
         viewModel.xScrollOffset = geo.frame(in: .global).minX
@@ -31,13 +31,13 @@ struct CanvasView: View {
     private func representationView(_ representation: Binding<OOPElementRepresentation>) -> some View {
         switch representation.wrappedValue.type {
         case .classType:
-            ClassView(representation: representation, isSelected: selectedElement == representation.id)
+            ClassView(representation: representation, isSelected: selectedElement?.id == representation.id)
         case .structType:
-            StructView(representation: representation, isSelected: selectedElement == representation.id)
+            StructView(representation: representation, isSelected: selectedElement?.id == representation.id)
         case .protocolType:
-            ProtocolView(representation: representation, isSelected: selectedElement == representation.id)
+            ProtocolView(representation: representation, isSelected: selectedElement?.id == representation.id)
         case .enumType:
-            EnumView(representation: representation, isSelected: selectedElement == representation.id)
+            EnumView(representation: representation, isSelected: selectedElement?.id == representation.id)
         case .association:
             EmptyView()
         case .directedAssociation:
@@ -65,12 +65,12 @@ struct CanvasView: View {
                                 representationView($object)
                                     .position(object.position)
                                     .onTapGesture {
-                                        selectedElement = object.id
+                                        selectedElement = object
                                     }
                                     .gesture(
                                         DragGesture()
                                             .onChanged { value in
-                                                if object.id == selectedElement {
+                                                if object.id == selectedElement?.id {
                                                     object.position = value.location
                                                 }
                                             }
