@@ -22,8 +22,34 @@ struct CanvasView: View {
         if let event = NSApp.currentEvent, let type = selectedTool {
             let clickLocation = viewModel.getMouseClick(geo, event: event)
             document.entityRepresentations.append(
-                OOPElementRepresentation("IDK", type, clickLocation, CGSize(width: 100, height: 100))
+                OOPElementRepresentation(type.rawValue, type, clickLocation, CGSize(width: 100, height: 100))
             )
+        }
+    }
+    
+    @ViewBuilder
+    private func drawElements() -> some View {
+        ForEach($document.entityRepresentations) { $object in
+            representationView($object)
+                .position(object.position)
+                .onTapGesture {
+                    selectedElement = object
+                }
+                .gesture(
+                    DragGesture()
+                        .onChanged { value in
+                            if object.id == selectedElement?.id {
+                                object.position = value.location
+                            }
+                        }
+                )
+                .onChange(of: selectedElement) { _, newValue in
+                    if let newValue = newValue {
+                        if let index = document.entityRepresentations.firstIndex(where: { $0.id == newValue.id }) {
+                            document.entityRepresentations[index] = newValue
+                        }
+                    }
+                }
         }
     }
     
@@ -61,26 +87,7 @@ struct CanvasView: View {
                 ScrollViewReader { scrollViewProxy in
                     VStack {
                         ZStack {
-                            ForEach($document.entityRepresentations) { $object in
-                                representationView($object)
-                                    .position(object.position)
-                                    .onTapGesture {
-                                        selectedElement = object
-                                    }
-                                    .gesture(
-                                        DragGesture()
-                                            .onChanged { value in
-                                                if object.id == selectedElement?.id {
-                                                    object.position = value.location
-                                                }
-                                            }
-                                    )
-                                    .onChange(of: selectedElement) {
-                                        if let element = selectedElement {
-                                            object = element
-                                        }
-                                    }
-                            }
+                            drawElements()
                         }
                         .frame(width: geo.size.width * 3, height: geo.size.height * 3)
                     }
@@ -97,8 +104,8 @@ struct CanvasView: View {
                     .gesture(
                         TapGesture()
                             .onEnded{ _ in
-                                selectedElement = nil
                                 placeEntity(geo)
+                                selectedElement = nil
                                 selectedTool = nil
                             }
                     )
