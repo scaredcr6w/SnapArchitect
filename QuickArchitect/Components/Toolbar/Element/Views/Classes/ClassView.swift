@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ClassView: View {
     @Binding var representation: OOPElementRepresentation
+    @Environment(\.openWindow) var openWindow
     var isSelected: Bool
     
     var body: some View {
@@ -69,5 +70,26 @@ struct ClassView: View {
             },
             alignment: .bottomTrailing
         )
+        .overlay(
+            Group {
+                if isSelected {
+                    Button {
+                        openWindow(id: "edit-element")
+                    } label: {
+                        Image(systemName: "pencil")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    }
+                    .background(.gray)
+                }
+            }
+        )
     }
+}
+
+#Preview {
+    ClassView(
+        representation: .constant(OOPElementRepresentation("Class 1", .classType, CGPoint(x: 100, y: 100), CGSize(width: 100, height: 150))),
+        isSelected: true
+    )
 }

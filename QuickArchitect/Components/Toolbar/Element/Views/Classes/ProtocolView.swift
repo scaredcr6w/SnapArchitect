@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProtocolView: View {
     @Binding var representation: OOPElementRepresentation
+    @Environment(\.openWindow) var openWindow
     var isSelected: Bool
     
     var body: some View {

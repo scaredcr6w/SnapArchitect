@@ -77,68 +77,6 @@ struct ToolbarView: View {
                         disclosureGroupItem(connections)
                     }
                     Divider()
-                    if selectedElement != nil {
-                        Form {
-                            Section {
-                                TextField("", text: $newName, prompt: Text(selectedElement?.name ?? ""))
-                                    .onChange(of: newName) {
-                                        selectedElement?.update(name: newName)
-                                    }
-                            } header: {
-                                Text("Element name")
-                                    .font(.headline)
-                                    .padding(.top)
-                            }
-                            Section {
-                                Table(selectedElement?.attributes ?? []) {
-                                    TableColumn("Attribute name", value: \.name)
-                                    TableColumn("Attribute type", value: \.type)
-                                }
-                                .frame(maxHeight: 200)
-                                TextField("", text: $newAttributeName, prompt: Text("Name"))
-                                TextField("", text: $newAttributeType, prompt: Text("Type"))
-                                Button("Add") {
-                                    selectedElement?.update(
-                                        attribute: OOPElementAttribute(
-                                            name: newAttributeName,
-                                            type: newAttributeType)
-                                    )
-                                }
-                            } header: {
-                                Text("Attributes")
-                                    .font(.headline)
-                                    .padding(.top)
-                            }
-                            
-                            Section {
-                                if let element = selectedElement {
-                                    ForEach(element.functions) { function in
-                                        DisclosureGroup(function.name) {
-                                            Text(function.functionBody)
-                                        }
-                                        .onTapGesture {
-                                            newFunctionName = function.name
-                                            newFunctionBody = function.functionBody
-                                        }
-                                    }
-                                    TextField("", text: $newFunctionName, prompt: Text("Name"))
-                                    TextEditor(text: $newFunctionBody)
-                                    Button("Add") {
-                                        selectedElement?.update(
-                                            function: OOPElementFunction(
-                                                name: newFunctionName,
-                                                functionBody: newFunctionBody)
-                                        )
-                                    }
-                                }
-                            } header: {
-                                Text("Functions")
-                                    .font(.headline)
-                                    .padding(.top)
-                            }
-                            
-                        }
-                    }
                     Spacer()
                 }
                 .padding()

@@ -9,8 +9,8 @@ import SwiftUI
  
 struct EditorView: View {
     @Binding var document: QuickArchitectDocument
-    @State var selectedTool: OOPElementType? = nil
-    @State var selectedElement: OOPElementRepresentation? = nil
+    @Binding var selectedTool: OOPElementType?
+    @Binding var selectedElement: OOPElementRepresentation?
     
     var body: some View {
         GeometryReader { windowGeo in
@@ -26,8 +26,4 @@ struct EditorView: View {
         }
         .frame(minWidth: 800, minHeight: 600)
     }
-}
-
-#Preview {
-    EditorView(document: .constant(QuickArchitectDocument()))
 }
