@@ -16,9 +16,6 @@
 		0FC6ABE62C7F308400986158 /* OOPElementModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABE52C7F308400986158 /* OOPElementModel.swift */; };
 		0FC6ABE92C7F447800986158 /* ClassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABE82C7F447800986158 /* ClassView.swift */; };
 		0FC6ABEE2C7F542400986158 /* CG+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABED2C7F542400986158 /* CG+Hashable.swift */; };
-		0FC6ABF22C7FBCF800986158 /* ProtocolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABF12C7FBCF800986158 /* ProtocolView.swift */; };
-		0FC6ABF42C7FBD3400986158 /* StructView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABF32C7FBD3400986158 /* StructView.swift */; };
-		0FC6ABF62C7FBD4500986158 /* EnumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABF52C7FBD4500986158 /* EnumView.swift */; };
 		0FC6ABFB2C80523700986158 /* ToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABFA2C80523700986158 /* ToolbarView.swift */; };
 		0FC6ABFE2C8052FF00986158 /* ToolbarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABFD2C8052FF00986158 /* ToolbarViewModel.swift */; };
 		0FC6AC002C80534200986158 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABFF2C80534200986158 /* EditorView.swift */; };
@@ -59,9 +56,6 @@
 		0FC6ABE52C7F308400986158 /* OOPElementModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOPElementModel.swift; sourceTree = "<group>"; };
 		0FC6ABE82C7F447800986158 /* ClassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassView.swift; sourceTree = "<group>"; };
 		0FC6ABED2C7F542400986158 /* CG+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CG+Hashable.swift"; sourceTree = "<group>"; };
-		0FC6ABF12C7FBCF800986158 /* ProtocolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolView.swift; sourceTree = "<group>"; };
-		0FC6ABF32C7FBD3400986158 /* StructView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructView.swift; sourceTree = "<group>"; };
-		0FC6ABF52C7FBD4500986158 /* EnumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumView.swift; sourceTree = "<group>"; };
 		0FC6ABFA2C80523700986158 /* ToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarView.swift; sourceTree = "<group>"; };
 		0FC6ABFD2C8052FF00986158 /* ToolbarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarViewModel.swift; sourceTree = "<group>"; };
 		0FC6ABFF2C80534200986158 /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
@@ -117,9 +111,6 @@
 			isa = PBXGroup;
 			children = (
 				0FC6ABE82C7F447800986158 /* ClassView.swift */,
-				0FC6ABF12C7FBCF800986158 /* ProtocolView.swift */,
-				0FC6ABF32C7FBD3400986158 /* StructView.swift */,
-				0FC6ABF52C7FBD4500986158 /* EnumView.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -136,8 +127,9 @@
 		0FC6ABDE2C7F08D300986158 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				0F52DE5C2C8EDF33001EC07F /* EditElement */,
 				0FC6ABFF2C80534200986158 /* EditorView.swift */,
+				0FC6ABE72C7F443900986158 /* Element */,
+				0F52DE5C2C8EDF33001EC07F /* EditElement */,
 				0FC6ABF92C80518300986158 /* Toolbar */,
 				0FC6ABE02C7F08E900986158 /* Canvas */,
 			);
@@ -192,7 +184,6 @@
 			isa = PBXGroup;
 			children = (
 				0FC6ABFC2C8052F000986158 /* Toolbar */,
-				0FC6ABE72C7F443900986158 /* Element */,
 			);
 			path = Toolbar;
 			sourceTree = "<group>";
@@ -400,13 +391,10 @@
 				0FC6ABFB2C80523700986158 /* ToolbarView.swift in Sources */,
 				0FC6ABE42C7F233500986158 /* CanvasViewModel.swift in Sources */,
 				0FD4DA062C7DAEC100A0279D /* QuickArchitectDocument.swift in Sources */,
-				0FC6ABF22C7FBCF800986158 /* ProtocolView.swift in Sources */,
-				0FC6ABF62C7FBD4500986158 /* EnumView.swift in Sources */,
 				0FA4833B2C87167500E66C7C /* DirectedAssociation.swift in Sources */,
 				0F01733F2C80C82B0051FD9A /* ToolbarItemView.swift in Sources */,
 				0FD4DA042C7DAEC100A0279D /* QuickArchitectApp.swift in Sources */,
 				0FC6ABE92C7F447800986158 /* ClassView.swift in Sources */,
-				0FC6ABF42C7FBD3400986158 /* StructView.swift in Sources */,
 				0FC6AC002C80534200986158 /* EditorView.swift in Sources */,
 				0FC6ABFE2C8052FF00986158 /* ToolbarViewModel.swift in Sources */,
 				0FC6ABEE2C7F542400986158 /* CG+Hashable.swift in Sources */,

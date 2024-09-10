@@ -11,11 +11,37 @@ struct ClassView: View {
     @Binding var representation: OOPElementRepresentation
     @Environment(\.openWindow) var openWindow
     var isSelected: Bool
+    var typeString: String {
+        switch representation.type {
+        case .classType:
+            return "<< class >>"
+        case .structType:
+            return "<< struct >>"
+        case .protocolType:
+            return "<< protocol >>"
+        case .enumType:
+            return "<< enum >>"
+        case .association:
+            return ""
+        case .directedAssociation:
+            return ""
+        case .aggregation:
+            return ""
+        case .composition:
+            return ""
+        case .dependency:
+            return ""
+        case .generalization:
+            return ""
+        case .protocolRealization:
+            return ""
+        }
+    }
     
     var body: some View {
         VStack(spacing: 0) {
             VStack {
-                Text("<< class >>")
+                Text(typeString)
                     .font(.caption)
                     .foregroundStyle(Color.black)
                 Text(representation.name)
@@ -26,7 +52,7 @@ struct ClassView: View {
             }
             VStack {
                 ForEach(representation.attributes, id: \.self) { attribute in
-                    Text(attribute.name)
+                    Text("\(attribute.name): {\(attribute.type)}")
                         .font(.caption2)
                         .foregroundStyle(.black)
                 }
@@ -49,7 +75,6 @@ struct ClassView: View {
         }
         .border(width: 1, edges: [.bottom, .top, .leading, .trailing], color: .black)
         .background(.white)
-        .frame(width: representation.size.width)
         .overlay(
             // Conditionally show the draggable handle
             Group {
@@ -79,11 +104,16 @@ struct ClassView: View {
                         Image(systemName: "pencil")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
+                            .foregroundStyle(.black)
+                            .padding(3)
                     }
-                    .background(.gray)
+                    .border(width: 1, edges: [.bottom, .top, .trailing, .leading], color: .black)
+                    .frame(width: representation.size.width + 67, alignment: .trailing)
                 }
             }
         )
+        .shadow(radius: 10, x: 10, y: 10)
+        .frame(width: representation.size.width)
     }
 }
 

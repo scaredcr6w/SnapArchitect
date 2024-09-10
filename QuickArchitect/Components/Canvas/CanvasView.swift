@@ -55,30 +55,10 @@ struct CanvasView: View {
     
     @ViewBuilder
     private func representationView(_ representation: Binding<OOPElementRepresentation>) -> some View {
-        switch representation.wrappedValue.type {
-        case .classType:
-            ClassView(representation: representation, isSelected: selectedElement?.id == representation.id)
-        case .structType:
-            StructView(representation: representation, isSelected: selectedElement?.id == representation.id)
-        case .protocolType:
-            ProtocolView(representation: representation, isSelected: selectedElement?.id == representation.id)
-        case .enumType:
-            EnumView(representation: representation, isSelected: selectedElement?.id == representation.id)
-        case .association:
-            EmptyView()
-        case .directedAssociation:
-            EmptyView()
-        case .aggregation:
-            EmptyView()
-        case .composition:
-            EmptyView()
-        case .dependency:
-            EmptyView()
-        case .generalization:
-            EmptyView()
-        case .protocolRealization:
-            EmptyView()
-        }
+        ClassView(
+            representation: representation,
+            isSelected: selectedElement?.id == representation.id
+        )
     }
     
     var body: some View {
