@@ -10,10 +10,14 @@ import SwiftUI
 struct EditElementView: View {
     @Binding var element: OOPElementRepresentation
     @State private var showAddAttribute: Bool = false
+    @State private var showAddFunction: Bool = false
     @State private var newAttributeName: String = ""
     @State private var newAttributeType: String = ""
+    @State private var newFunctionName: String = ""
+    @State private var newFunctionReturnType: String = ""
+    @State private var newFunctionBody: String = ""
     var body: some View {
-        VStack {
+        ScrollView {
             Form {
                 Section {
                     TextField("", text: $element.name, prompt: Text(element.name))
@@ -27,6 +31,7 @@ struct EditElementView: View {
                         Button("Add") {
                             element.attributes.append(
                                 OOPElementAttribute(
+                                    access: .accessPublic,
                                     name: newAttributeName,
                                     type: newAttributeType
                                 )
@@ -45,6 +50,7 @@ struct EditElementView: View {
                     HStack {
                         Text("Edit attributes")
                         Image(systemName: "plus")
+                            .background()
                             .onTapGesture {
                                 withAnimation(.easeInOut) {
                                     showAddAttribute.toggle()
@@ -52,13 +58,48 @@ struct EditElementView: View {
                             }
                     }
                 }
+                Section {
+                    if showAddFunction {
+                        TextField("", text: $newFunctionName, prompt: Text("Name"))
+                        TextField("", text: $newFunctionReturnType, prompt: Text("Return Type"))
+                        TextEditor(text: $newFunctionBody)
+                            .frame(height: 100)
+                        Button("Add") {
+                            element.functions.append(
+                                OOPElementFunction(
+                                    access: .accessPublic,
+                                    name: newFunctionName,
+                                    returnType: newFunctionReturnType,
+                                    functionBody: newFunctionBody
+                                )
+                            )
+                            newFunctionName = ""
+                            newFunctionBody = ""
+                            withAnimation(.easeInOut) {
+                                showAddFunction.toggle()
+                            }
+                        }
+                    }
+                    ForEach($element.functions) { $function in
+                        FunctionRowView(function: $function)
+                    }
+                } header: {
+                    HStack {
+                        Text("Edit functions")
+                        Image(systemName: "plus")
+                            .background()
+                            .onTapGesture {
+                                withAnimation(.easeInOut) {
+                                    showAddFunction.toggle()
+                                }
+                            }
+                    }
+                }
+
             }
+            Spacer()
         }
     }
-}
-
-#Preview {
-    EditElementView(element: .constant(OOPElementRepresentation("Class 1", .classType, CGPoint(x: 100, y: 100), CGSize(width: 100, height: 150))))
 }
 
 struct AttributeRowView: View {
@@ -77,21 +118,61 @@ struct AttributeRowView: View {
                         }
                     }
                 Text(attribute.name)
+                    .frame(width: 130)
                 Divider()
                 Text(attribute.type)
+                    .frame(width: 60)
             }
             .frame(height: 50)
-            HStack {
+            .frame(maxWidth: 300)
+            
+            VStack {
                 if showEditor {
-                    TextField("", text: $attribute.name, prompt: Text(attribute.name))
-                    TextField("", text: $attribute.type, prompt: Text(attribute.type))
+                    TextField("", text: $attribute.name)
+                    TextField("", text: $attribute.type)
                 }
             }
+            .frame(maxHeight: showEditor ? .none : 0)
+            .opacity(showEditor ? 1 : 0)
+            .animation(.easeInOut, value: showEditor)
         }
     }
 }
 
-//#Preview {
-//    AttributeRowView(attribute: .constant(OOPElementAttribute(name: "veryLongName", type: "String")))
-//}
-
+struct FunctionRowView: View {
+    @Binding var function: OOPElementFunction
+    @State private var showEditor: Bool = false
+    var body: some View {
+        VStack {
+            HStack {
+                Image(systemName: "minus.circle.fill")
+                    .padding(.horizontal, 5)
+                Image(systemName: "pencil")
+                    .padding(.horizontal, 5)
+                    .onTapGesture {
+                        withAnimation(.easeInOut) {
+                            showEditor.toggle()
+                        }
+                    }
+                Text(function.name)
+                    .frame(width: 130)
+                Text(function.returnType)
+                    .frame(width: 60)
+            }
+            .frame(height: 50)
+            .frame(maxWidth: 300)
+            
+            VStack {
+                if showEditor {
+                    TextField("", text: $function.name)
+                    TextField("", text: $function.returnType)
+                    TextEditor(text: $function.functionBody)
+                        .frame(height: 100)
+                }
+            }
+            .frame(maxHeight: showEditor ? .none : 0)
+            .opacity(showEditor ? 1 : 0)
+            .animation(.easeInOut, value: showEditor)
+        }
+    }
+}

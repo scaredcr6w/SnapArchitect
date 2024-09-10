@@ -22,8 +22,16 @@ enum OOPElementType: String, Codable {
     case protocolRealization
 }
 
+enum OOPAccessModifier: String, Codable {
+    case accessInternal
+    case accessPublic
+    case accessProtected
+    case accessPrivate
+}
+
 protocol OOPElement: Identifiable, Hashable, Codable {
     var id: UUID { get set }
+    var access: OOPAccessModifier { get set }
     var name: String { get set }
     var type: OOPElementType { get set }
     var position: CGPoint { get set }
@@ -34,18 +42,22 @@ protocol OOPElement: Identifiable, Hashable, Codable {
 
 struct OOPElementAttribute: Identifiable, Hashable, Codable {
     var id = UUID()
+    var access: OOPAccessModifier
     var name: String
     var type: String
 }
 
 struct OOPElementFunction: Identifiable, Hashable, Codable {
     var id = UUID()
+    var access: OOPAccessModifier
     var name: String
+    var returnType: String
     var functionBody: String
 }
 
 struct OOPElementRepresentation: OOPElement {
     var id = UUID()
+    var access: OOPAccessModifier
     var name: String
     var type: OOPElementType
     var position: CGPoint
@@ -54,6 +66,7 @@ struct OOPElementRepresentation: OOPElement {
     var functions: [OOPElementFunction]
     
     init(
+        _ access: OOPAccessModifier,
         _ name: String,
         _ type: OOPElementType,
         _ position: CGPoint,
@@ -61,6 +74,7 @@ struct OOPElementRepresentation: OOPElement {
         _ attributes: [OOPElementAttribute] = [],
         _ functions: [OOPElementFunction] = []
     ) {
+        self.access = access
         self.name = name
         self.type = type
         self.position = position
@@ -69,22 +83,22 @@ struct OOPElementRepresentation: OOPElement {
         self.functions = functions
     }
     
-    mutating func update(
-        name: String
-    ) {
-        self.name = name
-    }
-    
-    mutating func update(
-        attribute: OOPElementAttribute
-    ) {
-        self.attributes.append(attribute)
-    }
-    
-    mutating func update(
-        function: OOPElementFunction
-    ) {
-        self.functions.append(function)
-    }
+//    mutating func update(
+//        name: String
+//    ) {
+//        self.name = name
+//    }
+//    
+//    mutating func update(
+//        attribute: OOPElementAttribute
+//    ) {
+//        self.attributes.append(attribute)
+//    }
+//    
+//    mutating func update(
+//        function: OOPElementFunction
+//    ) {
+//        self.functions.append(function)
+//    }
 }
 

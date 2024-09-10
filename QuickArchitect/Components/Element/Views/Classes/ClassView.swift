@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ClassView: View {
     @Binding var representation: OOPElementRepresentation
-    @Environment(\.openWindow) var openWindow
     var isSelected: Bool
     var typeString: String {
         switch representation.type {
@@ -52,7 +51,7 @@ struct ClassView: View {
             }
             VStack {
                 ForEach(representation.attributes, id: \.self) { attribute in
-                    Text("\(attribute.name): {\(attribute.type)}")
+                    Text("\(attribute.name): \(attribute.type)")
                         .font(.caption2)
                         .foregroundStyle(.black)
                 }
@@ -62,7 +61,7 @@ struct ClassView: View {
             .frame(height: representation.size.height * 0.4)
             VStack {
                 ForEach(representation.functions, id: \.id) { function in
-                    DisclosureGroup(function.name) {
+                    DisclosureGroup("\(function.name): \(function.returnType)") {
                         Text(function.functionBody)
                             .font(.caption2)
                             .foregroundStyle(.black)
@@ -95,31 +94,7 @@ struct ClassView: View {
             },
             alignment: .bottomTrailing
         )
-        .overlay(
-            Group {
-                if isSelected {
-                    Button {
-                        openWindow(id: "edit-element")
-                    } label: {
-                        Image(systemName: "pencil")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .foregroundStyle(.black)
-                            .padding(3)
-                    }
-                    .border(width: 1, edges: [.bottom, .top, .trailing, .leading], color: .black)
-                    .frame(width: representation.size.width + 67, alignment: .trailing)
-                }
-            }
-        )
         .shadow(radius: 10, x: 10, y: 10)
         .frame(width: representation.size.width)
     }
-}
-
-#Preview {
-    ClassView(
-        representation: .constant(OOPElementRepresentation("Class 1", .classType, CGPoint(x: 100, y: 100), CGSize(width: 100, height: 150))),
-        isSelected: true
-    )
 }

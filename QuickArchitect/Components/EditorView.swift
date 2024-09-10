@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
- 
+
 struct EditorView: View {
     @Binding var document: QuickArchitectDocument
     @Binding var selectedTool: OOPElementType?
@@ -17,11 +17,25 @@ struct EditorView: View {
             let windowWidth = windowGeo.size.width
             let windowHeight = windowGeo.size.height
             
-            ZStack {
-                CanvasView(document: $document, selectedTool: $selectedTool, selectedElement: $selectedElement)
-                    .frame(width: windowWidth, height: windowHeight)
-                ToolbarView(selectedTool: $selectedTool, selectedElement: $selectedElement)
-                    .frame(height: windowHeight)
+            NavigationSplitView {
+                if let element = selectedElement {
+                    let bindingElement = Binding<OOPElementRepresentation>(
+                        get: { element },
+                        set: { selectedElement = $0 }
+                    )
+                    EditElementView(element: bindingElement)
+                        .frame(minWidth: 270)
+                } else {
+                    Text("No element selected")
+                        .frame(minWidth: 270)
+                }
+            } detail: {
+                ZStack {
+                    CanvasView(document: $document, selectedTool: $selectedTool, selectedElement: $selectedElement)
+                        .frame(width: windowWidth, height: windowHeight)
+                    ToolbarView(selectedTool: $selectedTool, selectedElement: $selectedElement)
+                        .frame(height: windowHeight)
+                }
             }
         }
         .frame(minWidth: 800, minHeight: 600)

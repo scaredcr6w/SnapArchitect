@@ -21,22 +21,6 @@ struct QuickArchitectApp: App {
                     }
                 }
         }
-        Window("Edit", id: "edit-element") {
-            if let element = selectedElement {
-                let bindingElement = Binding<OOPElementRepresentation>(
-                    get: { element },
-                    set: { selectedElement = $0 }
-                )
-                EditElementView(element: bindingElement)
-                    .onAppear {
-                        if let window = NSApplication.shared.windows.first(where: { $0.title == "Edit"}) {
-                            setEditWindowSize(window)
-                        }
-                    }
-            } else {
-                Text("No element selected")
-            }
-        }
     }
     
     func maximizeWindow(_ window: NSWindow) {
