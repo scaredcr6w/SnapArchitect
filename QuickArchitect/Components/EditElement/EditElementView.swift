@@ -17,17 +17,26 @@ struct EditElementView: View {
     @State private var newFunctionReturnType: String = ""
     @State private var newFunctionBody: String = ""
     var body: some View {
+        VStack {
+            Text("Edit Element")
+                .font(.title3)
+                .foregroundStyle(.gray)
+            Divider()
+        }
         ScrollView {
             Form {
                 Section {
                     TextField("", text: $element.name, prompt: Text(element.name))
+                        .padding(.horizontal)
                 } header: {
                     Text("Edit name")
                 }
                 Section {
                     if showAddAttribute {
                         TextField("", text: $newAttributeName, prompt: Text("Name"))
+                            .padding(.horizontal)
                         TextField("", text: $newAttributeType, prompt: Text("Type"))
+                            .padding(.horizontal)
                         Button("Add") {
                             element.attributes.append(
                                 OOPElementAttribute(
@@ -61,9 +70,12 @@ struct EditElementView: View {
                 Section {
                     if showAddFunction {
                         TextField("", text: $newFunctionName, prompt: Text("Name"))
+                            .padding(.horizontal)
                         TextField("", text: $newFunctionReturnType, prompt: Text("Return Type"))
+                            .padding(.horizontal)
                         TextEditor(text: $newFunctionBody)
                             .frame(height: 100)
+                            .padding(.trailing)
                         Button("Add") {
                             element.functions.append(
                                 OOPElementFunction(
