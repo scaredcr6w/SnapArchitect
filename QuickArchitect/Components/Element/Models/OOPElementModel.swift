@@ -97,22 +97,12 @@ struct OOPElementRepresentation: OOPElement {
         self.functions = functions
     }
     
-//    mutating func update(
-//        name: String
-//    ) {
-//        self.name = name
-//    }
-//    
-//    mutating func update(
-//        attribute: OOPElementAttribute
-//    ) {
-//        self.attributes.append(attribute)
-//    }
-//    
-//    mutating func update(
-//        function: OOPElementFunction
-//    ) {
-//        self.functions.append(function)
-//    }
+    mutating func deleteAttribute(_ attribute: OOPElementAttribute) {
+        attributes.removeAll { $0 == attribute }
+    }
+    
+    mutating func deleteFunction(_ function: OOPElementFunction) {
+        functions.removeAll { $0 == function }
+    }
 }
 
