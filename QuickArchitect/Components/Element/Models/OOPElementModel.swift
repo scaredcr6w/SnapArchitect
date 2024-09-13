@@ -22,11 +22,25 @@ enum OOPElementType: String, Codable {
     case protocolRealization
 }
 
-enum OOPAccessModifier: String, Codable {
+enum OOPAccessModifier: String, Codable, CaseIterable, Identifiable {
+    var id: Self { self }
     case accessInternal
     case accessPublic
     case accessProtected
     case accessPrivate
+    
+    var stringValue: String {
+        switch self {
+        case .accessInternal:
+            return "internal"
+        case .accessPublic:
+            return "public"
+        case .accessProtected:
+            return "protected"
+        case .accessPrivate:
+            return "private"
+        }
+    }
 }
 
 protocol OOPElement: Identifiable, Hashable, Codable {

@@ -10,7 +10,7 @@ import SwiftUI
 struct ClassView: View {
     @Binding var representation: OOPElementRepresentation
     var isSelected: Bool
-    var typeString: String {
+    private var typeString: String {
         switch representation.type {
         case .classType:
             return "<< class >>"
@@ -37,6 +37,19 @@ struct ClassView: View {
         }
     }
     
+    private func getAccessMofifier(_ access: OOPAccessModifier) -> String {
+        switch access {
+        case .accessInternal:
+            return ""
+        case .accessPublic:
+            return "+"
+        case .accessProtected:
+            return "#"
+        case .accessPrivate:
+            return "-"
+        }
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             VStack {
@@ -50,10 +63,12 @@ struct ClassView: View {
                     .foregroundStyle(.black)
             }
             VStack {
-                ForEach(representation.attributes, id: \.self) { attribute in
-                    Text("\(attribute.name): \(attribute.type)")
-                        .font(.caption2)
-                        .foregroundStyle(.black)
+                ForEach(representation.attributes) { attribute in
+                    Text(
+                        "\(getAccessMofifier(attribute.access)) \(attribute.name): \(attribute.type)"
+                    )
+                    .font(.caption2)
+                    .foregroundStyle(.black)
                 }
                 Divider()
                     .foregroundStyle(.black)
@@ -61,7 +76,8 @@ struct ClassView: View {
             .frame(height: representation.size.height * 0.4)
             VStack {
                 ForEach(representation.functions, id: \.id) { function in
-                    DisclosureGroup("\(function.name): \(function.returnType)") {
+                    DisclosureGroup(
+                        "\(getAccessMofifier(function.access)) \(function.name): \(function.returnType)") {
                         Text(function.functionBody)
                             .font(.caption2)
                             .foregroundStyle(.black)
@@ -97,4 +113,8 @@ struct ClassView: View {
         .shadow(radius: 10, x: 10, y: 10)
         .frame(width: representation.size.width)
     }
+}
+
+#Preview {
+    ClassView(representation: .constant(OOPElementRepresentation(.accessPublic, "Class 1", .classType, CGPoint(x: 0, y: 0), CGSize(width: 400, height: 200))), isSelected: true)
 }

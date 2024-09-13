@@ -83,7 +83,7 @@ struct CanvasView: View {
                     })
                     .gesture(
                         TapGesture()
-                            .onEnded{ _ in
+                            .onEnded { _ in
                                 placeEntity(geo)
                                 selectedElement = nil
                                 selectedTool = nil

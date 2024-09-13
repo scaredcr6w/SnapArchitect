@@ -16,6 +16,8 @@ struct EditElementView: View {
     @State private var newFunctionName: String = ""
     @State private var newFunctionReturnType: String = ""
     @State private var newFunctionBody: String = ""
+    @State private var selectedAccessModifier: OOPAccessModifier = .accessPublic
+    
     var body: some View {
         VStack {
             Text("Edit Element")
@@ -33,6 +35,13 @@ struct EditElementView: View {
                 }
                 Section {
                     if showAddAttribute {
+                        Picker("", selection: $selectedAccessModifier) {
+                            ForEach(OOPAccessModifier.allCases, id: \.self) { option in
+                                Text(option.stringValue)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .padding(.vertical, 4)
                         TextField("", text: $newAttributeName, prompt: Text("Name"))
                             .padding(.horizontal)
                         TextField("", text: $newAttributeType, prompt: Text("Type"))
@@ -40,13 +49,15 @@ struct EditElementView: View {
                         Button("Add") {
                             element.attributes.append(
                                 OOPElementAttribute(
-                                    access: .accessPublic,
+                                    access: selectedAccessModifier,
                                     name: newAttributeName,
                                     type: newAttributeType
                                 )
                             )
+                            print(element.attributes)
                             newAttributeName = ""
                             newAttributeType = ""
+                            selectedAccessModifier = .accessPublic
                             withAnimation(.easeInOut) {
                                 showAddAttribute.toggle()
                             }
@@ -69,6 +80,13 @@ struct EditElementView: View {
                 }
                 Section {
                     if showAddFunction {
+                        Picker("", selection: $selectedAccessModifier) {
+                            ForEach(OOPAccessModifier.allCases, id: \.self) { option in
+                                Text(option.stringValue)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .padding(.vertical, 4)
                         TextField("", text: $newFunctionName, prompt: Text("Name"))
                             .padding(.horizontal)
                         TextField("", text: $newFunctionReturnType, prompt: Text("Return Type"))
@@ -79,7 +97,7 @@ struct EditElementView: View {
                         Button("Add") {
                             element.functions.append(
                                 OOPElementFunction(
-                                    access: .accessPublic,
+                                    access: selectedAccessModifier,
                                     name: newFunctionName,
                                     returnType: newFunctionReturnType,
                                     functionBody: newFunctionBody
@@ -87,6 +105,7 @@ struct EditElementView: View {
                             )
                             newFunctionName = ""
                             newFunctionBody = ""
+                            selectedAccessModifier = .accessPublic
                             withAnimation(.easeInOut) {
                                 showAddFunction.toggle()
                             }
