@@ -62,13 +62,14 @@ struct ClassView: View {
                 Divider()
                     .foregroundStyle(.black)
             }
-            VStack {
+            VStack(alignment: .leading) {
                 ForEach(representation.attributes) { attribute in
                     Text(
                         "\(getAccessMofifier(attribute.access)) \(attribute.name): \(attribute.type)"
                     )
                     .font(.caption2)
                     .foregroundStyle(.black)
+                    .padding(.horizontal, 12)
                 }
                 Divider()
                     .foregroundStyle(.black)
