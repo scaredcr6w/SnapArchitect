@@ -82,7 +82,5 @@ struct ToolbarView: View {
                 .padding()
             }
         }
-        .frame(width: 270)
-        .frame(maxWidth: .infinity, alignment: .trailing)
     }
 }
