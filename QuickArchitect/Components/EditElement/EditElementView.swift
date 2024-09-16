@@ -138,6 +138,9 @@ struct AttributeRowView: View {
                 HStack {
                     Image(systemName: "minus.circle.fill")
                         .padding(.horizontal, 5)
+                        .onTapGesture {
+                            attributes.removeAll { $0 == attribute }
+                        }
                     Image(systemName: "pencil")
                         .padding(.horizontal, 5)
                         .onTapGesture {

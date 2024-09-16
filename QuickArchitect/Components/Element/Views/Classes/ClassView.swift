@@ -62,32 +62,35 @@ struct ClassView: View {
                 Divider()
                     .foregroundStyle(.black)
             }
-            VStack(alignment: .leading) {
-                ForEach(representation.attributes) { attribute in
-                    Text(
-                        "\(getAccessMofifier(attribute.access)) \(attribute.name): \(attribute.type)"
-                    )
-                    .font(.caption2)
-                    .foregroundStyle(.black)
-                    .padding(.horizontal, 12)
-                }
-                Divider()
-                    .foregroundStyle(.black)
-            }
-            .frame(height: representation.size.height * 0.4)
             VStack {
-                ForEach(representation.functions, id: \.id) { function in
-                    DisclosureGroup(
-                        "\(getAccessMofifier(function.access)) \(function.name): \(function.returnType)") {
-                        Text(function.functionBody)
-                            .font(.caption2)
-                            .foregroundStyle(.black)
+                VStack(alignment: .leading) {
+                    ForEach(representation.attributes) { attribute in
+                        Text(
+                            "\(getAccessMofifier(attribute.access)) \(attribute.name): \(attribute.type)"
+                        )
+                        .font(.caption2)
+                        .foregroundStyle(.black)
+                        .padding(.horizontal, 12)
                     }
-                    .font(.caption2)
-                    .foregroundStyle(.black)
+                    Divider()
+                        .foregroundStyle(.black)
+                }
+                VStack(alignment: .leading) {
+                    ForEach(representation.functions, id: \.id) { function in
+                        DisclosureGroup(
+                            "\(getAccessMofifier(function.access)) \(function.name): \(function.returnType)"
+                        ) {
+                            Text(function.functionBody)
+                                .font(.caption2)
+                                .foregroundStyle(.black)
+                                .padding(.horizontal, 24)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        .font(.caption2)
+                    }
                 }
             }
-            .frame(height: representation.size.height * 0.4)
+            .frame(height: representation.size.height, alignment: .top)
         }
         .border(width: 1, edges: [.bottom, .top, .leading, .trailing], color: .black)
         .background(.white)
@@ -117,5 +120,21 @@ struct ClassView: View {
 }
 
 #Preview {
-    ClassView(representation: .constant(OOPElementRepresentation(.accessPublic, "Class 1", .classType, CGPoint(x: 0, y: 0), CGSize(width: 400, height: 200))), isSelected: true)
+    ClassView(
+        representation:
+            .constant(
+                OOPElementRepresentation(
+                .accessPublic,
+                "Class 1",
+                .classType,
+                CGPoint(x: 0, y: 0),
+                CGSize(width: 200, height: 500),
+                [OOPElementAttribute(access: .accessProtected, name: "Stuff", type: "String"),
+                 OOPElementAttribute(access: .accessProtected, name: "Stuff", type: "String"),
+                 OOPElementAttribute(access: .accessProtected, name: "Stuff", type: "String")],
+                [OOPElementFunction(access: .accessPrivate, name: "longFuncName", returnType: "String", functionBody: "if this then\n\tthat\nendif"),
+                 OOPElementFunction(access: .accessPrivate, name: "longFuncName", returnType: "String", functionBody: "if this then\n\tthat\nendif")]
+                )
+            ),
+        isSelected: true)
 }

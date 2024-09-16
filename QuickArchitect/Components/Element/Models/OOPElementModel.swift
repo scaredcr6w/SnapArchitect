@@ -96,13 +96,5 @@ struct OOPElementRepresentation: OOPElement {
         self.attributes = attributes
         self.functions = functions
     }
-    
-    mutating func deleteAttribute(_ attribute: OOPElementAttribute) {
-        attributes.removeAll { $0 == attribute }
-    }
-    
-    mutating func deleteFunction(_ function: OOPElementFunction) {
-        functions.removeAll { $0 == function }
-    }
 }
 
