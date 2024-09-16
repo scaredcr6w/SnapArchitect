@@ -14,7 +14,6 @@ struct ToolbarItem: Identifiable, Hashable {
 }
 
 struct ToolbarView: View {
-    @StateObject private var viewModel = ToolbarViewModel()
     @Binding var selectedTool: OOPElementType?
     @Binding var selectedElement: OOPElementRepresentation?
     @State private var expandedCategories: Set<String> = []
