@@ -8,14 +8,14 @@
 import Foundation
 import SwiftUI
 
-extension CGPoint: Hashable {
+extension CGPoint: @retroactive Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(x)
         hasher.combine(y)
     }
 }
 
-extension CGSize: Hashable {
+extension CGSize: @retroactive Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(width)
         hasher.combine(height)

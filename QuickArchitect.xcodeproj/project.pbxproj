@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0F01733F2C80C82B0051FD9A /* ToolbarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F01733E2C80C82B0051FD9A /* ToolbarItemView.swift */; };
+		0F1A0AC62C98BE3E006FCD08 /* CanvasTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1A0AC52C98BE3E006FCD08 /* CanvasTests.swift */; };
 		0F52DE5E2C8EDF58001EC07F /* EditElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F52DE5D2C8EDF58001EC07F /* EditElementView.swift */; };
 		0FA4833B2C87167500E66C7C /* DirectedAssociation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA4833A2C87167500E66C7C /* DirectedAssociation.swift */; };
 		0FA4833D2C8716A100E66C7C /* Association.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA4833C2C8716A100E66C7C /* Association.swift */; };
@@ -22,7 +23,6 @@
 		0FD4DA062C7DAEC100A0279D /* QuickArchitectDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD4DA052C7DAEC100A0279D /* QuickArchitectDocument.swift */; };
 		0FD4DA0A2C7DAEC300A0279D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FD4DA092C7DAEC300A0279D /* Assets.xcassets */; };
 		0FD4DA0D2C7DAEC300A0279D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FD4DA0C2C7DAEC300A0279D /* Preview Assets.xcassets */; };
-		0FD4DA192C7DAEC300A0279D /* QuickArchitectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD4DA182C7DAEC300A0279D /* QuickArchitectTests.swift */; };
 		0FD4DA232C7DAEC300A0279D /* QuickArchitectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD4DA222C7DAEC300A0279D /* QuickArchitectUITests.swift */; };
 		0FD4DA252C7DAEC300A0279D /* QuickArchitectUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD4DA242C7DAEC300A0279D /* QuickArchitectUITestsLaunchTests.swift */; };
 		0FEA43902C85D88C00FB8B1D /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FEA438F2C85D88C00FB8B1D /* View+.swift */; };
@@ -47,6 +47,7 @@
 
 /* Begin PBXFileReference section */
 		0F01733E2C80C82B0051FD9A /* ToolbarItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarItemView.swift; sourceTree = "<group>"; };
+		0F1A0AC52C98BE3E006FCD08 /* CanvasTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasTests.swift; sourceTree = "<group>"; };
 		0F52DE5D2C8EDF58001EC07F /* EditElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditElementView.swift; sourceTree = "<group>"; };
 		0FA4833A2C87167500E66C7C /* DirectedAssociation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectedAssociation.swift; sourceTree = "<group>"; };
 		0FA4833C2C8716A100E66C7C /* Association.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Association.swift; sourceTree = "<group>"; };
@@ -65,7 +66,6 @@
 		0FD4DA0E2C7DAEC300A0279D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0FD4DA0F2C7DAEC300A0279D /* QuickArchitect.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuickArchitect.entitlements; sourceTree = "<group>"; };
 		0FD4DA142C7DAEC300A0279D /* QuickArchitectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickArchitectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0FD4DA182C7DAEC300A0279D /* QuickArchitectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickArchitectTests.swift; sourceTree = "<group>"; };
 		0FD4DA1E2C7DAEC300A0279D /* QuickArchitectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickArchitectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FD4DA222C7DAEC300A0279D /* QuickArchitectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickArchitectUITests.swift; sourceTree = "<group>"; };
 		0FD4DA242C7DAEC300A0279D /* QuickArchitectUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickArchitectUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -241,7 +241,7 @@
 		0FD4DA172C7DAEC300A0279D /* QuickArchitectTests */ = {
 			isa = PBXGroup;
 			children = (
-				0FD4DA182C7DAEC300A0279D /* QuickArchitectTests.swift */,
+				0F1A0AC52C98BE3E006FCD08 /* CanvasTests.swift */,
 			);
 			path = QuickArchitectTests;
 			sourceTree = "<group>";
@@ -326,6 +326,7 @@
 					};
 					0FD4DA132C7DAEC300A0279D = {
 						CreatedOnToolsVersion = 15.4;
+						LastSwiftMigration = 1600;
 						TestTargetID = 0FD4D9FF2C7DAEC100A0279D;
 					};
 					0FD4DA1D2C7DAEC300A0279D = {
@@ -406,7 +407,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0FD4DA192C7DAEC300A0279D /* QuickArchitectTests.swift in Sources */,
+				0F1A0AC62C98BE3E006FCD08 /* CanvasTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -612,8 +613,8 @@
 		0FD4DA2C2C7DAEC300A0279D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 37925SQG82;
@@ -623,6 +624,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = scaredcr6w.QuickArchitectTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "QuickArchitectTests/QuickArchitectTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QuickArchitect.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/QuickArchitect";
 			};
@@ -631,8 +634,8 @@
 		0FD4DA2D2C7DAEC300A0279D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 37925SQG82;
@@ -642,6 +645,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = scaredcr6w.QuickArchitectTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "QuickArchitectTests/QuickArchitectTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QuickArchitect.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/QuickArchitect";
 			};
@@ -650,7 +654,6 @@
 		0FD4DA2F2C7DAEC300A0279D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 37925SQG82;
@@ -667,7 +670,6 @@
 		0FD4DA302C7DAEC300A0279D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 37925SQG82;
