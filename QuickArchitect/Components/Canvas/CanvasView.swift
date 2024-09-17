@@ -13,20 +13,6 @@ struct CanvasView: View {
     @Binding var selectedTool: OOPElementType?
     @Binding var selectedElement: OOPElementRepresentation?
     
-    private func updateScrollOffsets(geo: GeometryProxy) {
-        viewModel.xScrollOffset = geo.frame(in: .global).minX
-        viewModel.yScrollOffset = geo.frame(in: .global).minY
-    }
-    
-    private func placeEntity(_ geo: GeometryProxy) {
-        if let event = NSApp.currentEvent, let type = selectedTool {
-            let clickLocation = viewModel.getMouseClick(geo, event: event)
-            document.entityRepresentations.append(
-                OOPElementRepresentation(.accessPublic, type.rawValue, type, clickLocation, CGSize(width: 100, height: 100))
-            )
-        }
-    }
-    
     @ViewBuilder
     private func drawElements() -> some View {
         ForEach($document.entityRepresentations) { $object in
@@ -64,32 +50,32 @@ struct CanvasView: View {
     var body: some View {
         GeometryReader { geo in
             ScrollView([.horizontal, .vertical]) {
-                ScrollViewReader { scrollViewProxy in
-                    VStack {
-                        ZStack {
-                            drawElements()
-                        }
-                        .frame(width: geo.size.width * 3, height: geo.size.height * 3)
+                VStack {
+                    ZStack {
+                        drawElements()
                     }
-                    .background(.white)
-                    .background(GeometryReader { innerGeo in
-                        Color.clear
-                            .onAppear {
-                                updateScrollOffsets(geo: innerGeo)
-                            }
-                            .onChange(of: innerGeo.frame(in: .global)) {
-                                updateScrollOffsets(geo: innerGeo)
-                            }
-                    })
-                    .gesture(
-                        TapGesture()
-                            .onEnded { _ in
-                                placeEntity(geo)
+                    .frame(width: geo.size.width * 3, height: geo.size.height * 3)
+                }
+                .background(.white)
+                .background(GeometryReader { innerGeo in
+                    Color.clear
+                        .onAppear {
+                            viewModel.updateScrollOffsets(geo: innerGeo)
+                        }
+                        .onChange(of: innerGeo.frame(in: .global)) {
+                            viewModel.updateScrollOffsets(geo: innerGeo)
+                        }
+                })
+                .gesture(
+                    TapGesture()
+                        .onEnded { _ in
+                            if let newElement = viewModel.newElement(geo, selectedTool) {
+                                document.entityRepresentations.append(newElement)
                                 selectedElement = nil
                                 selectedTool = nil
                             }
-                    )
-                }
+                        }
+                )
             }
             .scrollIndicators(.hidden)
         }

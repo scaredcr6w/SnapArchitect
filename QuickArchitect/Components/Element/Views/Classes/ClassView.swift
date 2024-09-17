@@ -91,8 +91,8 @@ struct ClassView: View {
                 }
             }
         }
-        .background(.white)
         .frame(width: representation.size.width, height: representation.size.height, alignment: .top)
+        .background(.white)
         .border(width: 1, edges: [.bottom, .top, .leading, .trailing], color: .black)
         .overlay(
             // Conditionally show the draggable handle
