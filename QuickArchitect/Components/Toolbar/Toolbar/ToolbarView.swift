@@ -24,14 +24,14 @@ struct ToolbarView: View {
     @State private var newFunctionName: String = ""
     @State private var newFunctionBody: String = ""
     
-    let basicClasses = [
+    static let basicClasses = [
         ToolbarItem(elementName: "Class", elementType: .classType),
         ToolbarItem(elementName: "Struct", elementType: .structType),
         ToolbarItem(elementName: "Protocol", elementType: .protocolType),
         ToolbarItem(elementName: "Enum", elementType: .enumType)
     ]
     
-    let connections = [
+    static let connections = [
         ToolbarItem(elementName: "Association", elementType: .association),
         ToolbarItem(elementName: "Directed Association", elementType: .directedAssociation),
         ToolbarItem(elementName: "Aggregation", elementType: .aggregation),
@@ -69,11 +69,11 @@ struct ToolbarView: View {
                         .foregroundStyle(.gray)
                     Divider()
                     DisclosureGroup("Basic Classes") {
-                        disclosureGroupItem(basicClasses)
+                        disclosureGroupItem(ToolbarView.basicClasses)
                     }
                     Divider()
                     DisclosureGroup("Connections") {
-                        disclosureGroupItem(connections)
+                        disclosureGroupItem(ToolbarView.connections)
                     }
                     Divider()
                     Spacer()

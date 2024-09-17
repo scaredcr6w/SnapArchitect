@@ -18,6 +18,32 @@ struct EditElementView: View {
     @State private var newFunctionBody: String = ""
     @State private var selectedAccessModifier: OOPAccessModifier = .accessPublic
     
+    private func addAttribute() {
+        let attribute = OOPElementAttribute(
+            access: selectedAccessModifier,
+            name: newAttributeName,
+            type: newAttributeType
+        )
+        element.attributes.append(attribute)
+        selectedAccessModifier = .accessPublic
+        newAttributeName = ""
+        newAttributeType = ""
+    }
+    
+    private func addFunction() {
+        let function = OOPElementFunction(
+            access: selectedAccessModifier,
+            name: newFunctionName,
+            returnType: newFunctionReturnType,
+            functionBody: newFunctionBody
+        )
+        element.functions.append(function)
+        selectedAccessModifier = .accessPublic
+        newFunctionName = ""
+        newFunctionReturnType = ""
+        newFunctionBody = ""
+    }
+    
     var body: some View {
         VStack {
             Text("Edit Element")
@@ -32,6 +58,7 @@ struct EditElementView: View {
                         .padding(.horizontal)
                 } header: {
                     Text("Edit name")
+                        .font(.title3)
                 }
                 Section {
                     if showAddAttribute {
@@ -47,17 +74,7 @@ struct EditElementView: View {
                         TextField("", text: $newAttributeType, prompt: Text("Type"))
                             .padding(.horizontal)
                         Button("Add") {
-                            element.attributes.append(
-                                OOPElementAttribute(
-                                    access: selectedAccessModifier,
-                                    name: newAttributeName,
-                                    type: newAttributeType
-                                )
-                            )
-                            print(element.attributes)
-                            newAttributeName = ""
-                            newAttributeType = ""
-                            selectedAccessModifier = .accessPublic
+                            addAttribute()
                             withAnimation(.easeInOut) {
                                 showAddAttribute.toggle()
                             }
@@ -67,8 +84,9 @@ struct EditElementView: View {
                 } header: {
                     HStack {
                         Text("Edit attributes")
+                            .font(.title3)
                         Image(systemName: "plus")
-                            .background()
+                            .background(.clear)
                             .onTapGesture {
                                 withAnimation(.easeInOut) {
                                     showAddAttribute.toggle()
@@ -93,17 +111,7 @@ struct EditElementView: View {
                             .frame(height: 100)
                             .padding(.trailing)
                         Button("Add") {
-                            element.functions.append(
-                                OOPElementFunction(
-                                    access: selectedAccessModifier,
-                                    name: newFunctionName,
-                                    returnType: newFunctionReturnType,
-                                    functionBody: newFunctionBody
-                                )
-                            )
-                            newFunctionName = ""
-                            newFunctionBody = ""
-                            selectedAccessModifier = .accessPublic
+                            addFunction()
                             withAnimation(.easeInOut) {
                                 showAddFunction.toggle()
                             }
@@ -113,8 +121,9 @@ struct EditElementView: View {
                 } header: {
                     HStack {
                         Text("Edit functions")
+                            .font(.title3)
                         Image(systemName: "plus")
-                            .background()
+                            .background(.clear)
                             .onTapGesture {
                                 withAnimation(.easeInOut) {
                                     showAddFunction.toggle()
