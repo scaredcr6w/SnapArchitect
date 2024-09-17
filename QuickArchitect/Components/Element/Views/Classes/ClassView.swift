@@ -90,10 +90,10 @@ struct ClassView: View {
                     }
                 }
             }
-            .frame(height: representation.size.height, alignment: .top)
         }
-        .border(width: 1, edges: [.bottom, .top, .leading, .trailing], color: .black)
         .background(.white)
+        .frame(width: representation.size.width, height: representation.size.height, alignment: .top)
+        .border(width: 1, edges: [.bottom, .top, .leading, .trailing], color: .black)
         .overlay(
             // Conditionally show the draggable handle
             Group {
@@ -115,7 +115,6 @@ struct ClassView: View {
             alignment: .bottomTrailing
         )
         .shadow(radius: 10, x: 10, y: 10)
-        .frame(width: representation.size.width)
     }
 }
 
@@ -128,7 +127,7 @@ struct ClassView: View {
                 "Class 1",
                 .classType,
                 CGPoint(x: 0, y: 0),
-                CGSize(width: 200, height: 500),
+                CGSize(width: 200, height: 200),
                 [OOPElementAttribute(access: .accessProtected, name: "Stuff", type: "String"),
                  OOPElementAttribute(access: .accessProtected, name: "Stuff", type: "String"),
                  OOPElementAttribute(access: .accessProtected, name: "Stuff", type: "String")],

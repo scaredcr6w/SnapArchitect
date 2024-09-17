@@ -20,4 +20,36 @@ final class CanvasViewModel: ObservableObject {
         )
         return clickPosition
     }
+    
+    func getEdgeCenters(elementPosition: CGPoint, elementSize: CGSize) ->
+    (
+        top: CGPoint,
+        bottom: CGPoint,
+        leading: CGPoint,
+        trailing: CGPoint
+    ) {
+        let leadingEdgeCenter = CGPoint(
+            x: elementPosition.x - elementSize.width / 2,
+            y: elementPosition.y
+        )
+        let trailingEdgeCenter = CGPoint(
+            x: elementPosition.x + elementSize.width / 2,
+            y: elementPosition.y
+        )
+        let topEdgeCenter = CGPoint(
+            x: elementPosition.x,
+            y: elementPosition.y - elementSize.height / 2
+        )
+        let bottomEdgeCenter = CGPoint(
+            x: elementPosition.x,
+            y: elementPosition.y + elementSize.height / 2
+        )
+        
+        return (
+            top: topEdgeCenter,
+            bottom: bottomEdgeCenter,
+            leading: leadingEdgeCenter,
+            trailing: trailingEdgeCenter
+        )
+    }
 }
