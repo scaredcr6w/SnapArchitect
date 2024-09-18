@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct Association: View {
+    let startPoint: CGPoint
+    let endPoint: CGPoint
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Path() { path in
+            path.move(to: startPoint)
+            path.addLine(to: endPoint)
+        }
+        .stroke(Color.black, lineWidth: 3)
     }
-}
-
-#Preview {
-    Association()
 }

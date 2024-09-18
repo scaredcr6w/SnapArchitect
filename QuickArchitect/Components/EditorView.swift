@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EditorView: View {
     @Binding var document: QuickArchitectDocument
-    @Binding var selectedTool: OOPElementType?
+    @Binding var selectedTool: Any?
     @Binding var selectedElement: OOPElementRepresentation?
     
     var body: some View {

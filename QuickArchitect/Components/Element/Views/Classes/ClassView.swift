@@ -20,20 +20,6 @@ struct ClassView: View {
             return "<< protocol >>"
         case .enumType:
             return "<< enum >>"
-        case .association:
-            return ""
-        case .directedAssociation:
-            return ""
-        case .aggregation:
-            return ""
-        case .composition:
-            return ""
-        case .dependency:
-            return ""
-        case .generalization:
-            return ""
-        case .protocolRealization:
-            return ""
         }
     }
     
@@ -118,22 +104,3 @@ struct ClassView: View {
     }
 }
 
-#Preview {
-    ClassView(
-        representation:
-            .constant(
-                OOPElementRepresentation(
-                .accessPublic,
-                "Class 1",
-                .classType,
-                CGPoint(x: 0, y: 0),
-                CGSize(width: 200, height: 200),
-                [OOPElementAttribute(access: .accessProtected, name: "Stuff", type: "String"),
-                 OOPElementAttribute(access: .accessProtected, name: "Stuff", type: "String"),
-                 OOPElementAttribute(access: .accessProtected, name: "Stuff", type: "String")],
-                [OOPElementFunction(access: .accessPrivate, name: "longFuncName", returnType: "String", functionBody: "if this then\n\tthat\nendif"),
-                 OOPElementFunction(access: .accessPrivate, name: "longFuncName", returnType: "String", functionBody: "if this then\n\tthat\nendif")]
-                )
-            ),
-        isSelected: true)
-}

@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct QuickArchitectApp: App {
-    @State var selectedTool: OOPElementType? = nil
+    @State var selectedTool: Any? = nil
     @State var selectedElement: OOPElementRepresentation? = nil
     
     var body: some Scene {

@@ -13,6 +13,9 @@ enum OOPElementType: String, Codable {
     case structType
     case protocolType
     case enumType
+}
+
+enum OOPConnectionType: String, Codable {
     case association
     case directedAssociation
     case aggregation
@@ -98,3 +101,15 @@ struct OOPElementRepresentation: OOPElement {
     }
 }
 
+struct OOPConnectionRepresentation: Identifiable, Hashable, Codable{
+    var id = UUID()
+    var type: OOPConnectionType
+    var startPoint: CGPoint
+    var endPoint: CGPoint
+    
+    init(_ type: OOPConnectionType, _ startPoint: CGPoint, _ endPoint: CGPoint) {
+        self.type = type
+        self.startPoint = startPoint
+        self.endPoint = endPoint
+    }
+}

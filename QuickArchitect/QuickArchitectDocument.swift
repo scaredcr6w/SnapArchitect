@@ -14,9 +14,10 @@ extension UTType {
 
 struct QuickArchitectDocument: FileDocument, Codable {
     var entityRepresentations: [OOPElementRepresentation]
-
-    init(entityRepresentations: [OOPElementRepresentation] = []) {
+    var entityConnections: [OOPConnectionRepresentation]
+    init(entityRepresentations: [OOPElementRepresentation] = [], entityConnections: [OOPConnectionRepresentation] = []) {
         self.entityRepresentations = entityRepresentations
+        self.entityConnections = entityConnections
     }
 
     static var readableContentTypes: [UTType] { [.quickArchitectDocument] }

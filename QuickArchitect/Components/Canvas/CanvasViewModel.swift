@@ -60,4 +60,27 @@ final class CanvasViewModel: ObservableObject {
             trailing: trailingEdgeCenter
         )
     }
+    
+    func distance(from point1: CGPoint, to point2: CGPoint) -> CGFloat {
+        let xDist = point2.x - point1.x
+        let yDist = point2.y - point1.y
+        
+        return sqrt(pow(xDist, 2) + pow(yDist, 2))
+    }
+    
+    func findClosestElement(to dragEndPos: CGPoint, _ elements: [OOPElementRepresentation]) -> OOPElementRepresentation? {
+        guard let firstElement = elements.first else { return nil }
+        
+        var closestElement = firstElement
+        var closestDistance = distance(from: firstElement.position, to: dragEndPos)
+        
+        for element in elements {
+            let currentDistance = distance(from: element.position, to: dragEndPos)
+            if currentDistance < closestDistance {
+                closestElement = element
+                closestDistance = currentDistance
+            }
+        }
+        return closestElement
+    }
 }

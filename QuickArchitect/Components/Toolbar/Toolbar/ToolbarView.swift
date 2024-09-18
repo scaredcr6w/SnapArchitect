@@ -7,14 +7,20 @@
 
 import SwiftUI
 
-struct ToolbarItem: Identifiable, Hashable {
+struct ToolbarElementItem: Identifiable, Hashable {
     let id = UUID()
     let elementName: String
     var elementType: OOPElementType?
 }
 
+struct ToolbarConnectionItem: Identifiable, Hashable {
+    let id = UUID()
+    let elementName: String
+    var elementType: OOPConnectionType?
+}
+
 struct ToolbarView: View {
-    @Binding var selectedTool: OOPElementType?
+    @Binding var selectedTool: Any?
     @Binding var selectedElement: OOPElementRepresentation?
     @State private var expandedCategories: Set<String> = []
     
@@ -25,29 +31,46 @@ struct ToolbarView: View {
     @State private var newFunctionBody: String = ""
     
     static let basicClasses = [
-        ToolbarItem(elementName: "Class", elementType: .classType),
-        ToolbarItem(elementName: "Struct", elementType: .structType),
-        ToolbarItem(elementName: "Protocol", elementType: .protocolType),
-        ToolbarItem(elementName: "Enum", elementType: .enumType)
+        ToolbarElementItem(elementName: "Class", elementType: .classType),
+        ToolbarElementItem(elementName: "Struct", elementType: .structType),
+        ToolbarElementItem(elementName: "Protocol", elementType: .protocolType),
+        ToolbarElementItem(elementName: "Enum", elementType: .enumType)
     ]
     
     static let connections = [
-        ToolbarItem(elementName: "Association", elementType: .association),
-        ToolbarItem(elementName: "Directed Association", elementType: .directedAssociation),
-        ToolbarItem(elementName: "Aggregation", elementType: .aggregation),
-        ToolbarItem(elementName: "Composition", elementType: .composition),
-        ToolbarItem(elementName: "Dependency", elementType: .dependency),
-        ToolbarItem(elementName: "Generalization", elementType: .generalization),
-        ToolbarItem(elementName: "Protocol Realization", elementType: .protocolRealization)
+        ToolbarConnectionItem(elementName: "Association", elementType: .association),
+        ToolbarConnectionItem(elementName: "Directed Association", elementType: .directedAssociation),
+        ToolbarConnectionItem(elementName: "Aggregation", elementType: .aggregation),
+        ToolbarConnectionItem(elementName: "Composition", elementType: .composition),
+        ToolbarConnectionItem(elementName: "Dependency", elementType: .dependency),
+        ToolbarConnectionItem(elementName: "Generalization", elementType: .generalization),
+        ToolbarConnectionItem(elementName: "Protocol Realization", elementType: .protocolRealization)
     ]
     
     @ViewBuilder
-    private func disclosureGroupItem(_ category: [ToolbarItem]) -> some View {
+    private func disclosureGroupElementItem(_ category: [ToolbarElementItem]) -> some View {
         VStack (alignment: .leading, spacing: 10) {
             ForEach(category) { toolbarItem in
                 ToolbarItemView(
                     toolbarItem.elementName,
-                    toolbarItem.elementType == selectedTool
+                    toolbarItem.elementType == selectedTool as? OOPElementType
+                )
+                .onTapGesture {
+                    selectedTool = toolbarItem.elementType
+                }
+            }
+        }
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    @ViewBuilder
+    private func disclosureGroupConnectionItem(_ category: [ToolbarConnectionItem]) -> some View {
+        VStack (alignment: .leading, spacing: 10) {
+            ForEach(category) { toolbarItem in
+                ToolbarItemView(
+                    toolbarItem.elementName,
+                    toolbarItem.elementType == selectedTool as? OOPConnectionType
                 )
                 .onTapGesture {
                     selectedTool = toolbarItem.elementType
@@ -69,11 +92,11 @@ struct ToolbarView: View {
                         .foregroundStyle(.gray)
                     Divider()
                     DisclosureGroup("Basic Classes") {
-                        disclosureGroupItem(ToolbarView.basicClasses)
+                        disclosureGroupElementItem(ToolbarView.basicClasses)
                     }
                     Divider()
                     DisclosureGroup("Connections") {
-                        disclosureGroupItem(ToolbarView.connections)
+                        disclosureGroupConnectionItem(ToolbarView.connections)
                     }
                     Divider()
                     Spacer()
