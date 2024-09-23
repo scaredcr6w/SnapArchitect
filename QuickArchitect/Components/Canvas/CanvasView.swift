@@ -34,7 +34,7 @@ struct CanvasView: View {
                                     location: value.location,
                                     elements: document.entityRepresentations
                                 ) {
-                                    object.connections.append(connection)
+                                    document.entityConnections.append(connection)
                                 }
                             }
                         }
@@ -51,10 +51,8 @@ struct CanvasView: View {
     
     @ViewBuilder
     private func drawConnections() -> some View {
-        ForEach(document.entityRepresentations) { entity in
-            ForEach(entity.connections) { connection in
-                Association(startPoint: connection.startElement, endPoint: connection.endElement)
-            }
+        ForEach(document.entityConnections) { connection in
+            Association(startPoint: connection.startElement, endPoint: connection.endElement)
         }
     }
     
@@ -66,13 +64,12 @@ struct CanvasView: View {
         )
     }
     
-#warning("Problema: ha az element egy endPoint, akkor nem mozgatható a connection, mert nincs benne a saját connections listajaban, ezert atugorja a for ciklust")
     private func updateConnections(for element: inout OOPElementRepresentation) {
-        for index in element.connections.indices {
-            if element.connections[index].startElement.id == element.id {
-                element.connections[index].startElement.position = element.position
-            } else if element.connections[index].endElement.id == element.id {
-                element.connections[index].endElement.position = element.position
+        for index in document.entityConnections.indices {
+            if document.entityConnections[index].startElement.id == element.id {
+                document.entityConnections[index].startElement.position = element.position
+            } else if document.entityConnections[index].endElement.id == element.id {
+                document.entityConnections[index].endElement.position = element.position
             }
         }
     }
