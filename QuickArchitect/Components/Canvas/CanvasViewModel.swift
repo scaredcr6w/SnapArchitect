@@ -68,19 +68,39 @@ final class CanvasViewModel: ObservableObject {
         return sqrt(pow(xDist, 2) + pow(yDist, 2))
     }
     
-    func findClosestElement(to dragEndPos: CGPoint, _ elements: [OOPElementRepresentation]) -> OOPElementRepresentation? {
+    func findClosestElement(to location: CGPoint, _ elements: [OOPElementRepresentation]) -> OOPElementRepresentation? {
         guard let firstElement = elements.first else { return nil }
         
         var closestElement = firstElement
-        var closestDistance = distance(from: firstElement.position, to: dragEndPos)
+        var closestDistance = distance(from: firstElement.position, to: location)
         
         for element in elements {
-            let currentDistance = distance(from: element.position, to: dragEndPos)
+            let currentDistance = distance(from: element.position, to: location)
             if currentDistance < closestDistance {
                 closestElement = element
                 closestDistance = currentDistance
             }
         }
         return closestElement
+    }
+    
+    func createConnection(
+        from start: CGPoint,
+        to prededictedEnd: CGPoint,
+        location: CGPoint,
+        elements: [OOPElementRepresentation]
+    ) -> OOPConnectionRepresentation? {
+        guard !elements.isEmpty else { return nil }
+        guard distance(from: prededictedEnd, to: location) <= 10 else { return nil }
+        
+        let startElement = findClosestElement(to: start, elements)
+        let endElement = findClosestElement(to: location, elements)
+        #warning("If there is a connection between two elements, it should return nil.")
+        
+#warning("Change type from .association")
+        if let startElement, let endElement {
+            return OOPConnectionRepresentation(type: .association, startElement: startElement, endElement: endElement)
+        }
+        return nil
     }
 }

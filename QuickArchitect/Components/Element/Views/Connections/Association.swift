@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct Association: View {
-    let startPoint: CGPoint
-    let endPoint: CGPoint
+    var startPoint: OOPElementRepresentation
+    var endPoint: OOPElementRepresentation
     var body: some View {
         Path() { path in
-            path.move(to: startPoint)
-            path.addLine(to: endPoint)
+            path.move(to: startPoint.position)
+            path.addLine(to: endPoint.position)
         }
         .stroke(Color.black, lineWidth: 3)
     }

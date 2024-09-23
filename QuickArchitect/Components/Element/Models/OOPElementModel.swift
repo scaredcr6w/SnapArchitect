@@ -81,6 +81,7 @@ struct OOPElementRepresentation: OOPElement {
     var size: CGSize
     var attributes: [OOPElementAttribute]
     var functions: [OOPElementFunction]
+    var connections: [OOPConnectionRepresentation]
     
     init(
         _ access: OOPAccessModifier,
@@ -89,7 +90,8 @@ struct OOPElementRepresentation: OOPElement {
         _ position: CGPoint,
         _ size: CGSize,
         _ attributes: [OOPElementAttribute] = [],
-        _ functions: [OOPElementFunction] = []
+        _ functions: [OOPElementFunction] = [],
+        _ connections: [OOPConnectionRepresentation] = []
     ) {
         self.access = access
         self.name = name
@@ -98,18 +100,19 @@ struct OOPElementRepresentation: OOPElement {
         self.size = size
         self.attributes = attributes
         self.functions = functions
+        self.connections = connections
     }
 }
 
 struct OOPConnectionRepresentation: Identifiable, Hashable, Codable{
     var id = UUID()
     var type: OOPConnectionType
-    var startPoint: CGPoint
-    var endPoint: CGPoint
+    var startElement: OOPElementRepresentation
+    var endElement: OOPElementRepresentation
     
-    init(_ type: OOPConnectionType, _ startPoint: CGPoint, _ endPoint: CGPoint) {
+    init(type: OOPConnectionType, startElement: OOPElementRepresentation, endElement: OOPElementRepresentation) {
         self.type = type
-        self.startPoint = startPoint
-        self.endPoint = endPoint
+        self.startElement = startElement
+        self.endElement = endElement
     }
 }

@@ -13,9 +13,6 @@ struct CanvasView: View {
     @Binding var selectedTool: Any?
     @Binding var selectedElement: OOPElementRepresentation?
     
-    @State var connectionStartElement: OOPElementRepresentation? = nil
-    @State var connectionEndElement: OOPElementRepresentation? = nil
-    
     @ViewBuilder
     private func drawElements() -> some View {
         ForEach($document.entityRepresentations) { $object in
@@ -29,32 +26,17 @@ struct CanvasView: View {
                         .onChanged { value in
                             if object.id == selectedElement?.id {
                                 object.position = value.location
+                                updateConnections(for: &object)
                             } else {
-                                connectionStartElement = viewModel.findClosestElement(to: value.startLocation, document.entityRepresentations)
+                                if let connection = viewModel.createConnection(
+                                    from: value.startLocation,
+                                    to: value.predictedEndLocation,
+                                    location: value.location,
+                                    elements: document.entityRepresentations
+                                ) {
+                                    object.connections.append(connection)
+                                }
                             }
-                        }
-                        .onEnded { value in
-                            #warning("TODO: Refactor mert ez nagyon ocsmany")
-                            connectionEndElement = viewModel.findClosestElement(to: value.location, document.entityRepresentations)
-                            newConnection()
-                            
-//                            if let startElement = connectionStartElement, let endElement = connectionEndElement {
-//                                if let selectedTool = selectedTool as? OOPConnectionType {
-//                                    document.entityConnections.append(
-//                                        OOPConnectionRepresentation(
-//                                            selectedTool,
-//                                            viewModel.getEdgeCenters(
-//                                                elementPosition: startElement.position,
-//                                                elementSize: startElement.size
-//                                            ).trailing,
-//                                            viewModel.getEdgeCenters(
-//                                                elementPosition: endElement.position,
-//                                                elementSize: endElement.size
-//                                            ).leading
-//                                        )
-//                                    )
-//                                }
-//                            }
                         }
                 )
                 .onChange(of: selectedElement) { _, newValue in
@@ -68,6 +50,15 @@ struct CanvasView: View {
     }
     
     @ViewBuilder
+    private func drawConnections() -> some View {
+        ForEach(document.entityRepresentations) { entity in
+            ForEach(entity.connections) { connection in
+                Association(startPoint: connection.startElement, endPoint: connection.endElement)
+            }
+        }
+    }
+    
+    @ViewBuilder
     private func representationView(_ representation: Binding<OOPElementRepresentation>) -> some View {
         ClassView(
             representation: representation,
@@ -75,32 +66,15 @@ struct CanvasView: View {
         )
     }
     
-    @ViewBuilder
-    private func drawConnections() -> some View {
-        ForEach(document.entityConnections) { connetion in
-            Association(startPoint: connetion.startPoint, endPoint: connetion.endPoint)
-        }
-    }
-    
-    private func newConnection() {
-        if let startElement = connectionStartElement, let endElement = connectionEndElement {
-            if let selectedTool = selectedTool as? OOPConnectionType {
-                document.entityConnections.append(
-                    OOPConnectionRepresentation(
-                        selectedTool,
-                        viewModel.getEdgeCenters(
-                            elementPosition: startElement.position,
-                            elementSize: startElement.size
-                        ).trailing,
-                        viewModel.getEdgeCenters(
-                            elementPosition: endElement.position,
-                            elementSize: endElement.size
-                        ).leading
-                    )
-                )
+#warning("Problema: ha az element egy endPoint, akkor nem mozgatható a connection, mert nincs benne a saját connections listajaban, ezert atugorja a for ciklust")
+    private func updateConnections(for element: inout OOPElementRepresentation) {
+        for index in element.connections.indices {
+            if element.connections[index].startElement.id == element.id {
+                element.connections[index].startElement.position = element.position
+            } else if element.connections[index].endElement.id == element.id {
+                element.connections[index].endElement.position = element.position
             }
         }
-        
     }
     
     var body: some View {
