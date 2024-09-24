@@ -48,6 +48,7 @@ struct CanvasView: View {
                                     ) {
                                         document.entityConnections.append(connection)
                                     }
+                                    selectedTool = nil
                                 }
                             }
                         }

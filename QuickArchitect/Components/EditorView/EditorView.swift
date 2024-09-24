@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct EditorView: View {
+    @ObservedObject var viewModel = EditorViewModel()
     @Binding var document: QuickArchitectDocument
     @Binding var selectedTool: Any?
     @Binding var selectedElement: OOPElementRepresentation?
+    @FocusState private var isFocused: Bool
     
     var body: some View {
         GeometryReader { windowGeo in
@@ -38,6 +40,14 @@ struct EditorView: View {
             }
         }
         .frame(minWidth: 800, minHeight: 600)
+        .focusable()
+        .focused($isFocused)
+        .onAppear {
+            isFocused = true
+            viewModel.setupKeyPressListener($document, $selectedElement)
+        }
+        .onDisappear {
+            viewModel.removeKeyPressListener()
+        }
     }
-    
 }
