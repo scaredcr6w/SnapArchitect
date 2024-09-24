@@ -14,16 +14,13 @@ final class EditorViewModel: ObservableObject {
             NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
                 if event.keyCode == 51 {
                     if let selectedElement = selectedElement.wrappedValue {
-                        document.wrappedValue.entityRepresentations.removeAll(where: { $0.id == selectedElement.id })
+                        document.wrappedValue.entityRepresentations.removeAll(where: { $0 == selectedElement })
+                        document.wrappedValue.entityConnections.removeAll(where: { $0.startElement == selectedElement || $0.endElement == selectedElement })
                         return nil
                     }
                 }
                 return event
             }
         }
-    }
-    
-    func removeKeyPressListener() {
-        NotificationCenter.default.removeObserver(self, name: NSApplication.didBecomeActiveNotification, object: nil)
     }
 }

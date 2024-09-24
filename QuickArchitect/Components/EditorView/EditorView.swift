@@ -17,7 +17,6 @@ struct EditorView: View {
     var body: some View {
         GeometryReader { windowGeo in
             let windowHeight = windowGeo.size.height
-            
             HStack(spacing: 0) {
                 NavigationSplitView {
                     if let element = selectedElement {
@@ -45,9 +44,6 @@ struct EditorView: View {
         .onAppear {
             isFocused = true
             viewModel.setupKeyPressListener($document, $selectedElement)
-        }
-        .onDisappear {
-            viewModel.removeKeyPressListener()
         }
     }
 }
