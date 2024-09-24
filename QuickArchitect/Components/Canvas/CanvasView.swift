@@ -13,6 +13,16 @@ struct CanvasView: View {
     @Binding var selectedTool: Any?
     @Binding var selectedElement: OOPElementRepresentation?
     
+    private func updateConnections(for element: inout OOPElementRepresentation) {
+        for index in document.entityConnections.indices {
+            if document.entityConnections[index].startElement.id == element.id {
+                document.entityConnections[index].startElement.position = element.position
+            } else if document.entityConnections[index].endElement.id == element.id {
+                document.entityConnections[index].endElement.position = element.position
+            }
+        }
+    }
+    
     @ViewBuilder
     private func drawElements() -> some View {
         ForEach($document.entityRepresentations) { $object in
@@ -28,13 +38,16 @@ struct CanvasView: View {
                                 object.position = value.location
                                 updateConnections(for: &object)
                             } else {
-                                if let connection = viewModel.createConnection(
-                                    from: value.startLocation,
-                                    to: value.predictedEndLocation,
-                                    location: value.location,
-                                    elements: document.entityRepresentations
-                                ) {
-                                    document.entityConnections.append(connection)
+                                if selectedTool as? OOPConnectionType != nil {
+                                    if let connection = viewModel.createConnection(
+                                        from: value.startLocation,
+                                        to: value.predictedEndLocation,
+                                        location: value.location,
+                                        elements: document.entityRepresentations,
+                                        connections: document.entityConnections
+                                    ) {
+                                        document.entityConnections.append(connection)
+                                    }
                                 }
                             }
                         }
@@ -62,16 +75,6 @@ struct CanvasView: View {
             representation: representation,
             isSelected: selectedElement?.id == representation.id
         )
-    }
-    
-    private func updateConnections(for element: inout OOPElementRepresentation) {
-        for index in document.entityConnections.indices {
-            if document.entityConnections[index].startElement.id == element.id {
-                document.entityConnections[index].startElement.position = element.position
-            } else if document.entityConnections[index].endElement.id == element.id {
-                document.entityConnections[index].endElement.position = element.position
-            }
-        }
     }
     
     var body: some View {

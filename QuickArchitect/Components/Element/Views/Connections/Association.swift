@@ -15,6 +15,6 @@ struct Association: View {
             path.move(to: startPoint.position)
             path.addLine(to: endPoint.position)
         }
-        .stroke(Color.black, lineWidth: 3)
+        .stroke(Color.black, lineWidth: 1)
     }
 }

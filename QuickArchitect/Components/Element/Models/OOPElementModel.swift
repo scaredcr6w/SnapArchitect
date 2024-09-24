@@ -81,7 +81,6 @@ struct OOPElementRepresentation: OOPElement {
     var size: CGSize
     var attributes: [OOPElementAttribute]
     var functions: [OOPElementFunction]
-    var connections: [OOPConnectionRepresentation]
     
     init(
         _ access: OOPAccessModifier,
@@ -90,8 +89,7 @@ struct OOPElementRepresentation: OOPElement {
         _ position: CGPoint,
         _ size: CGSize,
         _ attributes: [OOPElementAttribute] = [],
-        _ functions: [OOPElementFunction] = [],
-        _ connections: [OOPConnectionRepresentation] = []
+        _ functions: [OOPElementFunction] = []
     ) {
         self.access = access
         self.name = name
@@ -100,7 +98,6 @@ struct OOPElementRepresentation: OOPElement {
         self.size = size
         self.attributes = attributes
         self.functions = functions
-        self.connections = connections
     }
 }
 

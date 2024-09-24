@@ -84,23 +84,34 @@ final class CanvasViewModel: ObservableObject {
         return closestElement
     }
     
+    func checkIfConnectionExists(
+        _ startElement: OOPElementRepresentation,
+        _ endElement: OOPElementRepresentation,
+        _ connections: [OOPConnectionRepresentation]
+    ) -> Bool {
+        if connections.contains(where: { $0.startElement == startElement && $0.endElement == endElement }) {
+            return true
+        } else if connections.contains(where: { $0.startElement == endElement && $0.endElement == startElement }) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     func createConnection(
         from start: CGPoint,
         to prededictedEnd: CGPoint,
         location: CGPoint,
-        elements: [OOPElementRepresentation]
+        elements: [OOPElementRepresentation],
+        connections: [OOPConnectionRepresentation]
     ) -> OOPConnectionRepresentation? {
         guard !elements.isEmpty else { return nil }
         guard distance(from: prededictedEnd, to: location) <= 10 else { return nil }
-        
-        let startElement = findClosestElement(to: start, elements)
-        let endElement = findClosestElement(to: location, elements)
-        #warning("If there is a connection between two elements, it should return nil.")
+        guard let startElement = findClosestElement(to: start, elements) else { return nil }
+        guard let endElement = findClosestElement(to: location, elements) else { return nil }
+        if checkIfConnectionExists(startElement, endElement, connections) { return nil }
         
 #warning("Change type from .association")
-        if let startElement, let endElement {
-            return OOPConnectionRepresentation(type: .association, startElement: startElement, endElement: endElement)
-        }
-        return nil
+        return OOPConnectionRepresentation(type: .association, startElement: startElement, endElement: endElement)
     }
 }
