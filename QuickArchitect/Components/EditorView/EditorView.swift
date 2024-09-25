@@ -12,6 +12,16 @@ struct EditorView: View {
     @Binding var selectedTool: Any?
     @Binding var selectedElement: OOPElementRepresentation?
     
+    @ViewBuilder
+    private func toolbar() -> some View {
+        if let element = selectedElement, let index = document.entityRepresentations.firstIndex(where: { $0.id == element.id }) {
+            let bindingElement = $document.entityRepresentations[index]
+            EditElementView(element: bindingElement)
+        } else {
+            Text("No element selected")
+        }
+    }
+    
     var body: some View {
         GeometryReader { windowGeo in
             let windowHeight = windowGeo.size.height
@@ -19,26 +29,16 @@ struct EditorView: View {
                 NavigationSplitView {
                     ToolbarView(selectedTool: $selectedTool, selectedElement: $selectedElement)
                         .navigationSplitViewColumnWidth(270)
-                        
+                    
                 } detail: {
                     CanvasView(document: $document, selectedTool: $selectedTool, selectedElement: $selectedElement)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-                if let element = selectedElement {
-                    let bindingElement = Binding<OOPElementRepresentation>(
-                        get: { element },
-                        set: { selectedElement = $0 }
-                    )
-                    EditElementView(element: bindingElement)
-                        .frame(width: 270, height: windowHeight)
-                } else {
-                    Text("No element selected")
-                        .frame(width: 270, height: windowHeight)
-                }
-                
+                toolbar()
+                    .frame(width: 270, height: windowHeight)
             }
         }
         .frame(minWidth: 800, minHeight: 600)
-       
+        
     }
 }
