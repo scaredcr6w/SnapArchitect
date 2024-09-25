@@ -11,7 +11,7 @@ import SwiftUI
 class KeyPressManager: ObservableObject {
     private var eventMonitor: Any?
     
-    func setupKeyPressListener(_ document: Binding<QuickArchitectDocument>, _ selectedElement: Binding<OOPElementRepresentation?>) {
+    func setupKeyListeners(_ document: Binding<QuickArchitectDocument>, _ selectedElement: Binding<OOPElementRepresentation?>) {
         removeKeyPressListener()
         
         eventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in

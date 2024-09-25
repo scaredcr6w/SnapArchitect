@@ -10,17 +10,16 @@ import SwiftUI
 @main
 struct QuickArchitectApp: App {
     @ObservedObject var keyPressManager = KeyPressManager()
-    @State var selectedTool: Any? = nil
-    @State var selectedElement: OOPElementRepresentation? = nil
+    @ObservedObject var toolManager = ToolManager()
     
     var body: some Scene {
         DocumentGroup(newDocument: QuickArchitectDocument()) { file in
-            EditorView(document: file.$document, selectedTool: $selectedTool, selectedElement: $selectedElement)
+            EditorView(document: file.$document, selectedTool: $toolManager.selectedTool, selectedElement: $toolManager.selectedElement)
                 .onAppear {
                     if let window = NSApplication.shared.windows.last {
                         maximizeWindow(window)
                     }
-                    keyPressManager.setupKeyPressListener(file.$document, $selectedElement)
+                    keyPressManager.setupKeyListeners(file.$document, $toolManager.selectedElement)
                 }
                 .onDisappear {
                     keyPressManager.removeKeyPressListener()
