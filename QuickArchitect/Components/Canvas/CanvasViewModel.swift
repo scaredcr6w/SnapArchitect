@@ -61,6 +61,11 @@ final class CanvasViewModel: ObservableObject {
         )
     }
     
+    /// Calculates distance between two points
+    /// - Parameters:
+    ///   - point1: first point
+    ///   - point2: second point
+    /// - Returns: The distance between the points in CGFloat
     func distance(from point1: CGPoint, to point2: CGPoint) -> CGFloat {
         let xDist = point2.x - point1.x
         let yDist = point2.y - point1.y
@@ -68,6 +73,11 @@ final class CanvasViewModel: ObservableObject {
         return sqrt(pow(xDist, 2) + pow(yDist, 2))
     }
     
+    /// Finds the closest element from an array of OOPElementRepresentations to the location of the point
+    /// - Parameters:
+    ///   - location: the location of the point
+    ///   - elements: an array containing OOPElementRepresentations
+    /// - Returns: OOPElementRepresentation that is closest to the point
     func findClosestElement(to location: CGPoint, _ elements: [OOPElementRepresentation]) -> OOPElementRepresentation? {
         guard let firstElement = elements.first else { return nil }
         
@@ -84,6 +94,12 @@ final class CanvasViewModel: ObservableObject {
         return closestElement
     }
     
+    /// Checks if a connection between two OOPElementRepresentations exists
+    /// - Parameters:
+    ///   - startElement: an OOPElementRepresentation
+    ///   - endElement: an OOPElementRepresentation
+    ///   - connections: an array containing OOPConnectionRepresentations
+    /// - Returns: whether there is or isn't a connection between the given elements
     func checkIfConnectionExists(
         _ startElement: OOPElementRepresentation,
         _ endElement: OOPElementRepresentation,
@@ -98,6 +114,14 @@ final class CanvasViewModel: ObservableObject {
         }
     }
     
+    /// Creates a connection between two OOPElementRepresentations
+    /// - Parameters:
+    ///   - start: the point, from which the closest element is being determinted. This will be used as the connection's start element.
+    ///   - prededictedEnd: the point, from which the closest element is being determinted. This will be used as the connection's end element.
+    ///   - location: the point of the Drag gesture's current point, that is used to find the closest end element more accurately
+    ///   - elements: an array containing OOPElementRepresentations
+    ///   - connections: an array containing OOPConnectionRepresentations
+    /// - Returns: a new OOPConnectionRepresentation between two elements
     func createConnection(
         from start: CGPoint,
         to prededictedEnd: CGPoint,

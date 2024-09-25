@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct QuickArchitectApp: App {
+    @ObservedObject var keyPressManager = KeyPressManager()
     @State var selectedTool: Any? = nil
     @State var selectedElement: OOPElementRepresentation? = nil
     
@@ -19,6 +20,10 @@ struct QuickArchitectApp: App {
                     if let window = NSApplication.shared.windows.last {
                         maximizeWindow(window)
                     }
+                    keyPressManager.setupKeyPressListener(file.$document, $selectedElement)
+                }
+                .onDisappear {
+                    keyPressManager.removeKeyPressListener()
                 }
         }
     }
