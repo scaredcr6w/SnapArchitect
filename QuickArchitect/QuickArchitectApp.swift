@@ -19,7 +19,7 @@ struct QuickArchitectApp: App {
                     if let window = NSApplication.shared.windows.last {
                         maximizeWindow(window)
                     }
-                    keyPressManager.setupKeyListeners(file.$document, $toolManager.selectedElement)
+                    keyPressManager.setupKeyListeners(file.$document, toolManager)
                 }
                 .onDisappear {
                     keyPressManager.removeKeyPressListener()
