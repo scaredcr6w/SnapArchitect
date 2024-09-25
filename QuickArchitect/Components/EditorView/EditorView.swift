@@ -17,23 +17,25 @@ struct EditorView: View {
             let windowHeight = windowGeo.size.height
             HStack(spacing: 0) {
                 NavigationSplitView {
-                    if let element = selectedElement {
-                        let bindingElement = Binding<OOPElementRepresentation>(
-                            get: { element },
-                            set: { selectedElement = $0 }
-                        )
-                        EditElementView(element: bindingElement)
-                            .navigationSplitViewColumnWidth(270)
-                    } else {
-                        Text("No element selected")
-                            .navigationSplitViewColumnWidth(270)
-                    }
+                    ToolbarView(selectedTool: $selectedTool, selectedElement: $selectedElement)
+                        .navigationSplitViewColumnWidth(270)
+                        
                 } detail: {
                     CanvasView(document: $document, selectedTool: $selectedTool, selectedElement: $selectedElement)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-                ToolbarView(selectedTool: $selectedTool, selectedElement: $selectedElement)
-                    .frame(width: 270, height: windowHeight)
+                if let element = selectedElement {
+                    let bindingElement = Binding<OOPElementRepresentation>(
+                        get: { element },
+                        set: { selectedElement = $0 }
+                    )
+                    EditElementView(element: bindingElement)
+                        .frame(width: 270, height: windowHeight)
+                } else {
+                    Text("No element selected")
+                        .frame(width: 270, height: windowHeight)
+                }
+                
             }
         }
         .frame(minWidth: 800, minHeight: 600)

@@ -83,8 +83,6 @@ struct ToolbarView: View {
     
     var body: some View {
         ZStack(alignment: .leading) {
-            Rectangle()
-                .foregroundStyle(Color.primaryDarkGray)
             ScrollView {
                 VStack {
                     Text("Toolbar")

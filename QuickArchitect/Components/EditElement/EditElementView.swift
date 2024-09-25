@@ -50,8 +50,7 @@ struct EditElementView: View {
                 .font(.title3)
                 .foregroundStyle(.gray)
             Divider()
-        }
-        ScrollView {
+            
             Form {
                 Section {
                     TextField("", text: $element.name, prompt: Text(element.name))
@@ -131,10 +130,11 @@ struct EditElementView: View {
                             }
                     }
                 }
-
+                
             }
             Spacer()
         }
+        .padding(.vertical)
     }
 }
 
