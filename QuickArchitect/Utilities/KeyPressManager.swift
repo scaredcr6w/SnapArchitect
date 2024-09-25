@@ -11,7 +11,7 @@ import SwiftUI
 class KeyPressManager: ObservableObject {
     private var eventMonitor: Any?
     
-    func deleteElement(
+    private func deleteElement(
         _ document: Binding<QuickArchitectDocument>,
         _ selectedElement: OOPElementRepresentation?
     ) {
@@ -32,7 +32,7 @@ class KeyPressManager: ObservableObject {
         removeKeyPressListener()
         
         eventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
-            if event.keyCode == 51 {
+            if event.modifierFlags.contains(.command) && event.keyCode == 51 {
                 self.deleteElement(document, toolManager.selectedElement)
             }
             if event.keyCode == 53 {

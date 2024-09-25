@@ -9,8 +9,8 @@ import SwiftUI
 
 @main
 struct QuickArchitectApp: App {
-    @ObservedObject var keyPressManager = KeyPressManager()
-    @ObservedObject var toolManager = ToolManager()
+    @StateObject var keyPressManager = KeyPressManager()
+    @StateObject var toolManager = ToolManager()
     
     var body: some Scene {
         DocumentGroup(newDocument: QuickArchitectDocument()) { file in

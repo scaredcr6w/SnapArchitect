@@ -108,9 +108,7 @@ struct CanvasView: View {
                                     selectedTool = nil
                                 }
                             }
-                            if selectedElement != nil {
-                                selectedElement = nil
-                            }
+                            selectedElement = nil
                         }
                 )
             }
