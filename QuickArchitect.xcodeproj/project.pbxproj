@@ -24,6 +24,9 @@
 		0FD4DA0D2C7DAEC300A0279D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FD4DA0C2C7DAEC300A0279D /* Preview Assets.xcassets */; };
 		0FD4DA232C7DAEC300A0279D /* QuickArchitectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD4DA222C7DAEC300A0279D /* QuickArchitectUITests.swift */; };
 		0FD4DA252C7DAEC300A0279D /* QuickArchitectUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD4DA242C7DAEC300A0279D /* QuickArchitectUITestsLaunchTests.swift */; };
+		0FDF53662CA7318E002CB42A /* DiamondShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FDF53652CA7318E002CB42A /* DiamondShape.swift */; };
+		0FDF53682CA731AF002CB42A /* Aggregation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FDF53672CA731AF002CB42A /* Aggregation.swift */; };
+		0FE7A2A22CA6C6F600E96724 /* Composition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE7A2A12CA6C6F600E96724 /* Composition.swift */; };
 		0FEA43902C85D88C00FB8B1D /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FEA438F2C85D88C00FB8B1D /* View+.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,7 +67,7 @@
 		0FC6ABE82C7F447800986158 /* ClassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassView.swift; sourceTree = "<group>"; };
 		0FC6ABED2C7F542400986158 /* CG+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CG+Hashable.swift"; sourceTree = "<group>"; };
 		0FC6ABFA2C80523700986158 /* ToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarView.swift; sourceTree = "<group>"; };
-		0FD4DA002C7DAEC100A0279D /* QuickArchitect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickArchitect.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0FD4DA002C7DAEC100A0279D /* Snap Architect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Snap Architect.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FD4DA032C7DAEC100A0279D /* QuickArchitectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickArchitectApp.swift; sourceTree = "<group>"; };
 		0FD4DA052C7DAEC100A0279D /* QuickArchitectDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickArchitectDocument.swift; sourceTree = "<group>"; };
 		0FD4DA092C7DAEC300A0279D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -75,6 +78,9 @@
 		0FD4DA1E2C7DAEC300A0279D /* QuickArchitectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickArchitectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FD4DA222C7DAEC300A0279D /* QuickArchitectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickArchitectUITests.swift; sourceTree = "<group>"; };
 		0FD4DA242C7DAEC300A0279D /* QuickArchitectUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickArchitectUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		0FDF53652CA7318E002CB42A /* DiamondShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiamondShape.swift; sourceTree = "<group>"; };
+		0FDF53672CA731AF002CB42A /* Aggregation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aggregation.swift; sourceTree = "<group>"; };
+		0FE7A2A12CA6C6F600E96724 /* Composition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Composition.swift; sourceTree = "<group>"; };
 		0FEA438F2C85D88C00FB8B1D /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -135,9 +141,11 @@
 		0FA483392C87165A00E66C7C /* Connections */ = {
 			isa = PBXGroup;
 			children = (
-				0FA4833A2C87167500E66C7C /* DirectedAssociation.swift */,
 				0FA4833C2C8716A100E66C7C /* Association.swift */,
-				0F2BE7D32CA6A9C400D5DE1A /* ConnectionProtocol.swift */,
+				0FA4833A2C87167500E66C7C /* DirectedAssociation.swift */,
+				0FE7A2A12CA6C6F600E96724 /* Composition.swift */,
+				0FDF53652CA7318E002CB42A /* DiamondShape.swift */,
+				0FDF53672CA731AF002CB42A /* Aggregation.swift */,
 			);
 			path = Connections;
 			sourceTree = "<group>";
@@ -166,6 +174,7 @@
 		0FC6ABE72C7F443900986158 /* Element */ = {
 			isa = PBXGroup;
 			children = (
+				0F2BE7D32CA6A9C400D5DE1A /* ConnectionProtocol.swift */,
 				0FC6ABEB2C7F53F400986158 /* Models */,
 				0FC6ABEA2C7F476A00986158 /* Views */,
 			);
@@ -228,7 +237,7 @@
 		0FD4DA012C7DAEC100A0279D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0FD4DA002C7DAEC100A0279D /* QuickArchitect.app */,
+				0FD4DA002C7DAEC100A0279D /* Snap Architect.app */,
 				0FD4DA142C7DAEC300A0279D /* QuickArchitectTests.xctest */,
 				0FD4DA1E2C7DAEC300A0279D /* QuickArchitectUITests.xctest */,
 				0F9841352CA544A400257F27 /* QATests.xctest */,
@@ -313,7 +322,7 @@
 			);
 			name = QuickArchitect;
 			productName = QuickArchitect;
-			productReference = 0FD4DA002C7DAEC100A0279D /* QuickArchitect.app */;
+			productReference = 0FD4DA002C7DAEC100A0279D /* Snap Architect.app */;
 			productType = "com.apple.product-type.application";
 		};
 		0FD4DA132C7DAEC300A0279D /* QuickArchitectTests */ = {
@@ -450,11 +459,14 @@
 				0FC6ABE42C7F233500986158 /* CanvasViewModel.swift in Sources */,
 				0FD4DA062C7DAEC100A0279D /* QuickArchitectDocument.swift in Sources */,
 				0FA4833B2C87167500E66C7C /* DirectedAssociation.swift in Sources */,
+				0FDF53682CA731AF002CB42A /* Aggregation.swift in Sources */,
+				0FE7A2A22CA6C6F600E96724 /* Composition.swift in Sources */,
 				0F01733F2C80C82B0051FD9A /* ToolbarItemView.swift in Sources */,
 				0FD4DA042C7DAEC100A0279D /* QuickArchitectApp.swift in Sources */,
 				0F2BE7D42CA6A9C400D5DE1A /* ConnectionProtocol.swift in Sources */,
 				0FC6ABE92C7F447800986158 /* ClassView.swift in Sources */,
 				0FC6ABEE2C7F542400986158 /* CG+Hashable.swift in Sources */,
+				0FDF53662CA7318E002CB42A /* DiamondShape.swift in Sources */,
 				0FC6ABE22C7F232B00986158 /* CanvasView.swift in Sources */,
 				0FEA43902C85D88C00FB8B1D /* View+.swift in Sources */,
 				0FA4833D2C8716A100E66C7C /* Association.swift in Sources */,
@@ -680,7 +692,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = scaredcr6w.QuickArchitect;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Snap Architect";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -710,7 +722,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = scaredcr6w.QuickArchitect;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Snap Architect";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};

@@ -12,8 +12,6 @@ struct Association: View, Connection {
     var endElement: OOPElementRepresentation
     var body: some View {
         Path() { path in
-//            path.move(to: getEdgeCenters(elementPosition: startPoint.position, elementSize: startPoint.size).trailing)
-//            path.addLine(to: getEdgeCenters(elementPosition: endPoint.position, elementSize: endPoint.size).leading)
             path.move(to: startElement.position)
             path.addLine(to: getClosestEdgeCenter())
         }

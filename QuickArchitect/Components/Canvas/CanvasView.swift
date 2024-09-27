@@ -72,6 +72,8 @@ struct CanvasView: View {
                 Association(startElement: connection.startElement, endElement: connection.endElement)
             } else if connection.type == .directedAssociation {
                 DirectedAssociation(startElement: connection.startElement, endElement: connection.endElement)
+            } else if connection.type == .composition {
+                Composition(startElement: connection.startElement, endElement: connection.endElement)
             }
         }
     }
@@ -89,8 +91,8 @@ struct CanvasView: View {
             ScrollView([.horizontal, .vertical]) {
                 VStack {
                     ZStack {
-                        drawConnections()
                         drawElements()
+                        drawConnections()
                     }
                     .frame(width: geo.size.width * 3, height: geo.size.height * 3)
                 }
