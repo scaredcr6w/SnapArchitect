@@ -98,6 +98,7 @@ final class CanvasViewModel: ObservableObject {
         from start: CGPoint,
         to prededictedEnd: CGPoint,
         location: CGPoint,
+        connectionType: OOPConnectionType,
         elements: [OOPElementRepresentation],
         connections: [OOPConnectionRepresentation]
     ) -> OOPConnectionRepresentation? {
@@ -107,7 +108,6 @@ final class CanvasViewModel: ObservableObject {
         guard let endElement = findClosestElement(to: location, elements) else { return nil }
         if checkIfConnectionExists(startElement, endElement, connections) { return nil }
         
-#warning("Change type from .association")
-        return OOPConnectionRepresentation(type: .association, startElement: startElement, endElement: endElement)
+        return OOPConnectionRepresentation(type: connectionType, startElement: startElement, endElement: endElement)
     }
 }

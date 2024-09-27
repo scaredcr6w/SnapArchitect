@@ -38,16 +38,18 @@ struct CanvasView: View {
                                 object.position = value.location
                                 updateConnections(for: &object)
                             } else {
-                                if selectedTool as? OOPConnectionType != nil {
+                                if let selectedTool = selectedTool as? OOPConnectionType {
+                                    print(selectedTool)
                                     if let connection = viewModel.createConnection(
                                         from: value.startLocation,
                                         to: value.predictedEndLocation,
                                         location: value.location,
+                                        connectionType: selectedTool,
                                         elements: document.entityRepresentations,
                                         connections: document.entityConnections
                                     ) {
                                         document.entityConnections.append(connection)
-                                        selectedTool = nil
+                                        self.selectedTool = nil
                                     }
                                 }
                             }
@@ -66,7 +68,11 @@ struct CanvasView: View {
     @ViewBuilder
     private func drawConnections() -> some View {
         ForEach(document.entityConnections) { connection in
-            Association(startElement: connection.startElement, endElement: connection.endElement)
+            if connection.type == .association {
+                Association(startElement: connection.startElement, endElement: connection.endElement)
+            } else if connection.type == .directedAssociation {
+                DirectedAssociation(startElement: connection.startElement, endElement: connection.endElement)
+            }
         }
     }
     
