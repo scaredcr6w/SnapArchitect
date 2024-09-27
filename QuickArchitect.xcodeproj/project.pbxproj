@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0F01733F2C80C82B0051FD9A /* ToolbarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F01733E2C80C82B0051FD9A /* ToolbarItemView.swift */; };
+		0F2BE7D42CA6A9C400D5DE1A /* ConnectionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2BE7D32CA6A9C400D5DE1A /* ConnectionProtocol.swift */; };
 		0F52DE5E2C8EDF58001EC07F /* EditElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F52DE5D2C8EDF58001EC07F /* EditElementView.swift */; };
 		0FA4833B2C87167500E66C7C /* DirectedAssociation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA4833A2C87167500E66C7C /* DirectedAssociation.swift */; };
 		0FA4833D2C8716A100E66C7C /* Association.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA4833C2C8716A100E66C7C /* Association.swift */; };
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		0F01733E2C80C82B0051FD9A /* ToolbarItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarItemView.swift; sourceTree = "<group>"; };
+		0F2BE7D32CA6A9C400D5DE1A /* ConnectionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionProtocol.swift; sourceTree = "<group>"; };
 		0F52DE5D2C8EDF58001EC07F /* EditElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditElementView.swift; sourceTree = "<group>"; };
 		0F9841352CA544A400257F27 /* QATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FA4833A2C87167500E66C7C /* DirectedAssociation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectedAssociation.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			children = (
 				0FA4833A2C87167500E66C7C /* DirectedAssociation.swift */,
 				0FA4833C2C8716A100E66C7C /* Association.swift */,
+				0F2BE7D32CA6A9C400D5DE1A /* ConnectionProtocol.swift */,
 			);
 			path = Connections;
 			sourceTree = "<group>";
@@ -449,6 +452,7 @@
 				0FA4833B2C87167500E66C7C /* DirectedAssociation.swift in Sources */,
 				0F01733F2C80C82B0051FD9A /* ToolbarItemView.swift in Sources */,
 				0FD4DA042C7DAEC100A0279D /* QuickArchitectApp.swift in Sources */,
+				0F2BE7D42CA6A9C400D5DE1A /* ConnectionProtocol.swift in Sources */,
 				0FC6ABE92C7F447800986158 /* ClassView.swift in Sources */,
 				0FC6ABEE2C7F542400986158 /* CG+Hashable.swift in Sources */,
 				0FC6ABE22C7F232B00986158 /* CanvasView.swift in Sources */,

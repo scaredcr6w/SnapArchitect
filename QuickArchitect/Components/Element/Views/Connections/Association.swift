@@ -7,13 +7,15 @@
 
 import SwiftUI
 
-struct Association: View {
-    var startPoint: OOPElementRepresentation
-    var endPoint: OOPElementRepresentation
+struct Association: View, Connection {
+    var startElement: OOPElementRepresentation
+    var endElement: OOPElementRepresentation
     var body: some View {
         Path() { path in
-            path.move(to: startPoint.position)
-            path.addLine(to: endPoint.position)
+//            path.move(to: getEdgeCenters(elementPosition: startPoint.position, elementSize: startPoint.size).trailing)
+//            path.addLine(to: getEdgeCenters(elementPosition: endPoint.position, elementSize: endPoint.size).leading)
+            path.move(to: startElement.position)
+            path.addLine(to: getClosestEdgeCenter())
         }
         .stroke(Color.black, lineWidth: 1)
     }

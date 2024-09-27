@@ -66,7 +66,7 @@ struct CanvasView: View {
     @ViewBuilder
     private func drawConnections() -> some View {
         ForEach(document.entityConnections) { connection in
-            Association(startPoint: connection.startElement, endPoint: connection.endElement)
+            Association(startElement: connection.startElement, endElement: connection.endElement)
         }
     }
     
@@ -83,8 +83,8 @@ struct CanvasView: View {
             ScrollView([.horizontal, .vertical]) {
                 VStack {
                     ZStack {
-                        drawElements()
                         drawConnections()
+                        drawElements()
                     }
                     .frame(width: geo.size.width * 3, height: geo.size.height * 3)
                 }
