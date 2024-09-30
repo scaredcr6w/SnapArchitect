@@ -21,7 +21,9 @@ struct Aggregation: View, Connection {
             
             DiamondShape()
                 .fill(Color.white)
+                .stroke(Color.black, lineWidth: 1)
                 .frame(width: 20, height: 8)
+                .rotationEffect(Angle(degrees: angle(from: startElement.position, to: getClosestEdgeCenter())))
                 .position(getClosestEdgeCenter())
         }
     }

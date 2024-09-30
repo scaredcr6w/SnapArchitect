@@ -39,7 +39,6 @@ struct CanvasView: View {
                                 updateConnections(for: &object)
                             } else {
                                 if let selectedTool = selectedTool as? OOPConnectionType {
-                                    print(selectedTool)
                                     if let connection = viewModel.createConnection(
                                         from: value.startLocation,
                                         to: value.predictedEndLocation,
@@ -74,6 +73,8 @@ struct CanvasView: View {
                 DirectedAssociation(startElement: connection.startElement, endElement: connection.endElement)
             } else if connection.type == .composition {
                 Composition(startElement: connection.startElement, endElement: connection.endElement)
+            } else if connection.type == .aggregation {
+                Aggregation(startElement: connection.startElement, endElement: connection.endElement)
             }
         }
     }

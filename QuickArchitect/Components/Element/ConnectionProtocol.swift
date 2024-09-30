@@ -20,6 +20,11 @@ protocol Connection {
 }
 
 extension Connection {
+    /// Gets a rectangle's edge's center points
+    /// - Parameters:
+    ///   - elementPosition: the position of the element
+    ///   - elementSize: the size of the element
+    /// - Returns: The four edge center points of a rectanle
     func getEdgeCenters(
         elementPosition: CGPoint,
         elementSize: CGSize
@@ -49,7 +54,7 @@ extension Connection {
         )
     }
     
-    /// Returns the connection endPoint's closest edge's center point
+    /// Gets the connection endPoint's closest edge's center point
     /// - Returns: The CGPoint of the endPoint's closest edge's center point
     func getClosestEdgeCenter() -> CGPoint {
         let endElementEdgeCenter = getEdgeCenters(elementPosition: endElement.position, elementSize: endElement.size)
@@ -77,7 +82,6 @@ extension Connection {
         }
     }
     
-    
     /// Calculates distance between two points
     /// - Parameters:
     ///   - point1: first point
@@ -88,5 +92,19 @@ extension Connection {
         let yDist = point2.y - point1.y
         
         return sqrt(pow(xDist, 2) + pow(yDist, 2))
+    }
+    
+    /// Calculates the angle between two points
+    /// - Parameters:
+    ///   - point1: the first point
+    ///   - point2: the second point
+    /// - Returns: the angle between two points
+    func angle(from point1: CGPoint, to point2: CGPoint) -> CGFloat {
+        let dx = point2.x - point1.x
+        let dy = point2.y - point1.y
+        let radians = atan2(dy, dx)
+        let degrees = radians * 180 / .pi
+        
+        return degrees
     }
 }
