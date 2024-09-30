@@ -75,6 +75,12 @@ struct CanvasView: View {
                 Composition(startElement: connection.startElement, endElement: connection.endElement)
             } else if connection.type == .aggregation {
                 Aggregation(startElement: connection.startElement, endElement: connection.endElement)
+            } else if connection.type == .dependency {
+                Dependency(startElement: connection.startElement, endElement: connection.endElement)
+            } else if connection.type == .generalization {
+                Generalization(startElement: connection.startElement, endElement: connection.endElement)
+            } else if connection.type == .protocolRealization {
+                ProtocolRealization(startElement: connection.startElement, endElement: connection.endElement)
             }
         }
     }
@@ -92,8 +98,8 @@ struct CanvasView: View {
             ScrollView([.horizontal, .vertical]) {
                 VStack {
                     ZStack {
-                        drawElements()
                         drawConnections()
+                        drawElements()
                     }
                     .frame(width: geo.size.width * 3, height: geo.size.height * 3)
                 }

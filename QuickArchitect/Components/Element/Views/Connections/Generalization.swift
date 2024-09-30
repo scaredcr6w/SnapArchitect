@@ -1,13 +1,13 @@
 //
-//  DirectedAssociation.swift
+//  Generalization.swift
 //  QuickArchitect
 //
-//  Created by Anda Levente on 03/09/2024.
+//  Created by Anda Levente on 2024. 09. 30..
 //
 
 import SwiftUI
 
-struct DirectedAssociation: View, Connection {
+struct Generalization: View, Connection {
     var startElement: OOPElementRepresentation
     var endElement: OOPElementRepresentation
     
@@ -19,7 +19,8 @@ struct DirectedAssociation: View, Connection {
         }
         .stroke(Color.black, lineWidth: 1)
         
-        twoEdgeArrowHead(from: startElement.position, to: endPosition)
+        threeEdgeArrowHead(from: startElement.position, to: endPosition)
+            .fill(Color.white)
             .stroke(Color.black, lineWidth: 1)
     }
 }

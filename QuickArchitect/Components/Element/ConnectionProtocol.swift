@@ -6,17 +6,11 @@
 //
 
 import Foundation
+import SwiftUI
 
 protocol Connection {
     var startElement: OOPElementRepresentation { get set }
     var endElement: OOPElementRepresentation { get set }
-    
-    func getEdgeCenters(
-        elementPosition: CGPoint,
-        elementSize: CGSize
-    ) -> (top: CGPoint, bottom: CGPoint, leading: CGPoint, trailing: CGPoint)
-    
-    func getClosestEdgeCenter() -> CGPoint
 }
 
 extension Connection {
@@ -79,6 +73,55 @@ extension Connection {
             return endElementEdgeCenter.trailing
         default:
             return endElementEdgeCenter.top
+        }
+    }
+    
+    func twoEdgeArrowHead(from startPoint: CGPoint, to endPoint: CGPoint) -> Path {
+        Path { path in
+            let arrowLength: CGFloat = 15.0
+            let arrowAngle: CGFloat = .pi / 6
+            
+            let dx = endPoint.x - startPoint.x
+            let dy = endPoint.y - startPoint.y
+            let angle = atan2(dy, dx)
+            
+            let arrowLeft = CGPoint(
+                x: endPoint.x - arrowLength * cos(angle - arrowAngle),
+                y: endPoint.y - arrowLength * sin(angle - arrowAngle)
+            )
+            let arrowRight = CGPoint(
+                x: endPoint.x - arrowLength * cos(angle + arrowAngle),
+                y: endPoint.y - arrowLength * sin(angle + arrowAngle)
+            )
+            
+            path.move(to: arrowLeft)
+            path.addLine(to: endPoint)
+            path.addLine(to: arrowRight)
+        }
+    }
+    
+    func threeEdgeArrowHead(from startPoint: CGPoint, to endPoint: CGPoint) -> Path {
+        Path { path in
+            let arrowLength: CGFloat = 15.0
+            let arrowAngle: CGFloat = .pi / 6
+            
+            let dx = endPoint.x - startPoint.x
+            let dy = endPoint.y - startPoint.y
+            let angle = atan2(dy, dx)
+            
+            let arrowLeft = CGPoint(
+                x: endPoint.x - arrowLength * cos(angle - arrowAngle),
+                y: endPoint.y - arrowLength * sin(angle - arrowAngle)
+            )
+            let arrowRight = CGPoint(
+                x: endPoint.x - arrowLength * cos(angle + arrowAngle),
+                y: endPoint.y - arrowLength * sin(angle + arrowAngle)
+            )
+            
+            path.move(to: arrowLeft)
+            path.addLine(to: endPoint)
+            path.addLine(to: arrowRight)
+            path.addLine(to: arrowLeft)
         }
     }
     

@@ -10,6 +10,9 @@
 		0F01733F2C80C82B0051FD9A /* ToolbarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F01733E2C80C82B0051FD9A /* ToolbarItemView.swift */; };
 		0F2BE7D42CA6A9C400D5DE1A /* ConnectionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2BE7D32CA6A9C400D5DE1A /* ConnectionProtocol.swift */; };
 		0F52DE5E2C8EDF58001EC07F /* EditElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F52DE5D2C8EDF58001EC07F /* EditElementView.swift */; };
+		0F60CA732CAA85500059777E /* Dependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F60CA722CAA85500059777E /* Dependency.swift */; };
+		0F60CA752CAA855C0059777E /* Generalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F60CA742CAA855C0059777E /* Generalization.swift */; };
+		0F60CA772CAA85780059777E /* ProtocolRealization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F60CA762CAA85780059777E /* ProtocolRealization.swift */; };
 		0FA4833B2C87167500E66C7C /* DirectedAssociation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA4833A2C87167500E66C7C /* DirectedAssociation.swift */; };
 		0FA4833D2C8716A100E66C7C /* Association.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA4833C2C8716A100E66C7C /* Association.swift */; };
 		0FC6ABE22C7F232B00986158 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABE12C7F232B00986158 /* CanvasView.swift */; };
@@ -58,6 +61,9 @@
 		0F01733E2C80C82B0051FD9A /* ToolbarItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarItemView.swift; sourceTree = "<group>"; };
 		0F2BE7D32CA6A9C400D5DE1A /* ConnectionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionProtocol.swift; sourceTree = "<group>"; };
 		0F52DE5D2C8EDF58001EC07F /* EditElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditElementView.swift; sourceTree = "<group>"; };
+		0F60CA722CAA85500059777E /* Dependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependency.swift; sourceTree = "<group>"; };
+		0F60CA742CAA855C0059777E /* Generalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generalization.swift; sourceTree = "<group>"; };
+		0F60CA762CAA85780059777E /* ProtocolRealization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolRealization.swift; sourceTree = "<group>"; };
 		0F9841352CA544A400257F27 /* QATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FA4833A2C87167500E66C7C /* DirectedAssociation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectedAssociation.swift; sourceTree = "<group>"; };
 		0FA4833C2C8716A100E66C7C /* Association.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Association.swift; sourceTree = "<group>"; };
@@ -141,11 +147,14 @@
 		0FA483392C87165A00E66C7C /* Connections */ = {
 			isa = PBXGroup;
 			children = (
+				0FDF53652CA7318E002CB42A /* DiamondShape.swift */,
 				0FA4833C2C8716A100E66C7C /* Association.swift */,
 				0FA4833A2C87167500E66C7C /* DirectedAssociation.swift */,
 				0FE7A2A12CA6C6F600E96724 /* Composition.swift */,
-				0FDF53652CA7318E002CB42A /* DiamondShape.swift */,
 				0FDF53672CA731AF002CB42A /* Aggregation.swift */,
+				0F60CA722CAA85500059777E /* Dependency.swift */,
+				0F60CA742CAA855C0059777E /* Generalization.swift */,
+				0F60CA762CAA85780059777E /* ProtocolRealization.swift */,
 			);
 			path = Connections;
 			sourceTree = "<group>";
@@ -458,6 +467,7 @@
 				0FC6ABFB2C80523700986158 /* ToolbarView.swift in Sources */,
 				0FC6ABE42C7F233500986158 /* CanvasViewModel.swift in Sources */,
 				0FD4DA062C7DAEC100A0279D /* QuickArchitectDocument.swift in Sources */,
+				0F60CA752CAA855C0059777E /* Generalization.swift in Sources */,
 				0FA4833B2C87167500E66C7C /* DirectedAssociation.swift in Sources */,
 				0FDF53682CA731AF002CB42A /* Aggregation.swift in Sources */,
 				0FE7A2A22CA6C6F600E96724 /* Composition.swift in Sources */,
@@ -465,6 +475,8 @@
 				0FD4DA042C7DAEC100A0279D /* QuickArchitectApp.swift in Sources */,
 				0F2BE7D42CA6A9C400D5DE1A /* ConnectionProtocol.swift in Sources */,
 				0FC6ABE92C7F447800986158 /* ClassView.swift in Sources */,
+				0F60CA732CAA85500059777E /* Dependency.swift in Sources */,
+				0F60CA772CAA85780059777E /* ProtocolRealization.swift in Sources */,
 				0FC6ABEE2C7F542400986158 /* CG+Hashable.swift in Sources */,
 				0FDF53662CA7318E002CB42A /* DiamondShape.swift in Sources */,
 				0FC6ABE22C7F232B00986158 /* CanvasView.swift in Sources */,
