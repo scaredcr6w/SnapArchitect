@@ -101,6 +101,7 @@ struct ClassView: View {
             alignment: .bottomTrailing
         )
         .shadow(radius: 10, x: 10, y: 10)
+        .position(representation.position)
     }
 }
 

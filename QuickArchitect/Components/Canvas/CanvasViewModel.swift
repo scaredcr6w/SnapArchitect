@@ -27,7 +27,7 @@ final class CanvasViewModel: ObservableObject {
         return clickPosition
     }
     
-    func newElement(_ geo: GeometryProxy, _ selectedTool: OOPElementType?) -> OOPElementRepresentation? {
+    func createElement(at geo: GeometryProxy, _ selectedTool: OOPElementType?) -> OOPElementRepresentation? {
         guard let event = NSApp.currentEvent, let type = selectedTool else { return nil }
         let clickLocation = getMouseClick(geo, event: event)
         return .init(.accessPublic, type.rawValue, type, clickLocation, CGSize(width: 100, height: 100))

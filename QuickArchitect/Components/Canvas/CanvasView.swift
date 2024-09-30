@@ -23,44 +23,61 @@ struct CanvasView: View {
         }
     }
     
+    private func addConnection(_ dragValue: DragGesture.Value) {
+        if let selectedTool = selectedTool as? OOPConnectionType {
+            if let connection = viewModel.createConnection(
+                from: dragValue.startLocation,
+                to: dragValue.predictedEndLocation,
+                location: dragValue.location,
+                connectionType: selectedTool,
+                elements: document.entityRepresentations,
+                connections: document.entityConnections
+            ) {
+                document.entityConnections.append(connection)
+                self.selectedTool = nil
+            }
+        }
+    }
+    
+    private func addElement(_ geo: GeometryProxy) {
+        if let selectedTool = selectedTool as? OOPElementType {
+            if let newElement = viewModel.createElement(at: geo, selectedTool) {
+                document.entityRepresentations.append(newElement)
+                selectedElement = nil
+                self.selectedTool = nil
+            }
+        }
+        selectedElement = nil
+    }
+    
     @ViewBuilder
     private func drawElements() -> some View {
         ForEach($document.entityRepresentations) { $object in
-            representationView($object)
-                .position(object.position)
-                .onTapGesture {
-                    selectedElement = object
-                }
-                .gesture(
-                    DragGesture()
-                        .onChanged { value in
-                            if object.id == selectedElement?.id {
-                                object.position = value.location
-                                updateConnections(for: &object)
-                            } else {
-                                if let selectedTool = selectedTool as? OOPConnectionType {
-                                    if let connection = viewModel.createConnection(
-                                        from: value.startLocation,
-                                        to: value.predictedEndLocation,
-                                        location: value.location,
-                                        connectionType: selectedTool,
-                                        elements: document.entityRepresentations,
-                                        connections: document.entityConnections
-                                    ) {
-                                        document.entityConnections.append(connection)
-                                        self.selectedTool = nil
-                                    }
-                                }
-                            }
-                        }
-                )
-                .onChange(of: selectedElement) { _, newValue in
-                    if let newValue = newValue {
-                        if let index = document.entityRepresentations.firstIndex(where: { $0.id == newValue.id }) {
-                            document.entityRepresentations[index] = newValue
+            ClassView(
+                representation: $object,
+                isSelected: selectedElement?.id == object.id
+            )
+            .onTapGesture {
+                selectedElement = object
+            }
+            .gesture(
+                DragGesture()
+                    .onChanged { value in
+                        if object.id == selectedElement?.id {
+                            object.position = value.location
+                            updateConnections(for: &object)
+                        } else {
+                            addConnection(value)
                         }
                     }
+            )
+            .onChange(of: selectedElement) { _, newValue in
+                if let newValue = newValue {
+                    if let index = document.entityRepresentations.firstIndex(where: { $0.id == newValue.id }) {
+                        document.entityRepresentations[index] = newValue
+                    }
                 }
+            }
         }
     }
     
@@ -84,15 +101,7 @@ struct CanvasView: View {
             }
         }
     }
-    
-    @ViewBuilder
-    private func representationView(_ representation: Binding<OOPElementRepresentation>) -> some View {
-        ClassView(
-            representation: representation,
-            isSelected: selectedElement?.id == representation.id
-        )
-    }
-    
+
     var body: some View {
         GeometryReader { geo in
             ScrollView([.horizontal, .vertical]) {
@@ -116,14 +125,7 @@ struct CanvasView: View {
                 .gesture(
                     TapGesture()
                         .onEnded { _ in
-                            if selectedTool as? OOPElementType != nil {
-                                if let newElement = viewModel.newElement(geo, selectedTool as? OOPElementType) {
-                                    document.entityRepresentations.append(newElement)
-                                    selectedElement = nil
-                                    selectedTool = nil
-                                }
-                            }
-                            selectedElement = nil
+                            addElement(geo)
                         }
                 )
             }
