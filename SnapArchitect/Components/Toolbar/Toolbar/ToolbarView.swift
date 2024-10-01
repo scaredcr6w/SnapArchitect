@@ -51,6 +51,8 @@ struct ToolbarView: View {
                     toolbarItem.elementName,
                     toolbarItem.elementType == selectedTool as? OOPElementType
                 )
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
                 .onTapGesture {
                     selectedTool = toolbarItem.elementType
                 }
@@ -68,6 +70,8 @@ struct ToolbarView: View {
                     toolbarItem.elementName,
                     toolbarItem.elementType == selectedTool as? OOPConnectionType
                 )
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
                 .onTapGesture {
                     selectedTool = toolbarItem.elementType
                 }
