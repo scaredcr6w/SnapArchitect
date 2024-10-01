@@ -8,12 +8,12 @@
 import SwiftUI
 
 @main
-struct QuickArchitectApp: App {
+struct SnapArchitectApp: App {
     @StateObject var keyPressManager = KeyPressManager()
     @StateObject var toolManager = ToolManager()
     
     var body: some Scene {
-        DocumentGroup(newDocument: QuickArchitectDocument()) { file in
+        DocumentGroup(newDocument: SnapArchitectDocument()) { file in
             EditorView(document: file.$document, selectedTool: $toolManager.selectedTool, selectedElement: $toolManager.selectedElement)
                 .onAppear {
                     if let window = NSApplication.shared.windows.last {

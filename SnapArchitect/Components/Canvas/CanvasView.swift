@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CanvasView: View {
     @StateObject private var viewModel = CanvasViewModel()
-    @Binding var document: QuickArchitectDocument
+    @Binding var document: SnapArchitectDocument
     @Binding var selectedTool: Any?
     @Binding var selectedElement: OOPElementRepresentation?
     

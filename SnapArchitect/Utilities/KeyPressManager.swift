@@ -12,7 +12,7 @@ class KeyPressManager: ObservableObject {
     private var eventMonitor: Any?
     
     private func deleteElement(
-        _ document: Binding<QuickArchitectDocument>,
+        _ document: Binding<SnapArchitectDocument>,
         _ selectedElement: OOPElementRepresentation?
     ) {
         if let selectedElement = selectedElement {
@@ -26,7 +26,7 @@ class KeyPressManager: ObservableObject {
     }
     
     func setupKeyListeners(
-        _ document: Binding<QuickArchitectDocument>,
+        _ document: Binding<SnapArchitectDocument>,
         _ toolManager: ToolManager
     ) {
         removeKeyPressListener()

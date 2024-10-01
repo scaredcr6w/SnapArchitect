@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EditorView: View {
-    @Binding var document: QuickArchitectDocument
+    @Binding var document: SnapArchitectDocument
     @Binding var selectedTool: Any?
     @Binding var selectedElement: OOPElementRepresentation?
     

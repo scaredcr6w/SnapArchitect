@@ -28,11 +28,11 @@
 				<string>public.content</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Quick Architect UML Diagram</string>
+			<string>Snap Architect UML Diagram</string>
 			<key>UTTypeIcons</key>
 			<dict/>
 			<key>UTTypeIdentifier</key>
-			<string>com.quickarchitect.qad</string>
+			<string>com.snaparchitect.qad</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>

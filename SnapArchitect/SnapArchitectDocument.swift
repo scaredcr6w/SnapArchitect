@@ -9,10 +9,10 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 extension UTType {
-    static let quickArchitectDocument = UTType(exportedAs: "com.quickarchitect.qad")
+    static let quickArchitectDocument = UTType(exportedAs: "com.snaparchitect.qad")
 }
 
-struct QuickArchitectDocument: FileDocument, Codable {
+struct SnapArchitectDocument: FileDocument, Codable {
     var entityRepresentations: [OOPElementRepresentation]
     var entityConnections: [OOPConnectionRepresentation]
     init(entityRepresentations: [OOPElementRepresentation] = [], entityConnections: [OOPConnectionRepresentation] = []) {
@@ -27,7 +27,7 @@ struct QuickArchitectDocument: FileDocument, Codable {
             throw CocoaError(.fileReadCorruptFile)
         }
         let decoder = JSONDecoder()
-        self = try decoder.decode(QuickArchitectDocument.self, from: data)
+        self = try decoder.decode(SnapArchitectDocument.self, from: data)
     }
     
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {

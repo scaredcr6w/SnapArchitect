@@ -19,7 +19,7 @@ class CanvasTests {
     }
     
     @Test("Find the closest element to a given point") func testFindClosestElement() throws {
-        var document = QuickArchitectDocument()
+        var document = SnapArchitectDocument()
         document.entityRepresentations.append(
             OOPElementRepresentation(
                 .accessPublic,
@@ -42,7 +42,7 @@ class CanvasTests {
     }
     
     @Test("Check if connection exists") func testCheckIfConnectionExists() async throws {
-        var document = QuickArchitectDocument()
+        var document = SnapArchitectDocument()
         document.entityRepresentations.append(
             OOPElementRepresentation(
                 .accessPublic,
@@ -74,7 +74,7 @@ class CanvasTests {
     }
     
     @Test("Check if connection exists reversed") func testCheckIfConnectionExistsReverse() async throws {
-        var document = QuickArchitectDocument()
+        var document = SnapArchitectDocument()
         document.entityRepresentations.append(
             OOPElementRepresentation(
                 .accessPublic,
@@ -106,7 +106,7 @@ class CanvasTests {
     }
     
     @Test("Check if connection doesn't exist") func testCheckIfConnectionExistsFalse() async throws {
-        var document = QuickArchitectDocument()
+        var document = SnapArchitectDocument()
         document.entityRepresentations.append(
             OOPElementRepresentation(
                 .accessPublic,
@@ -130,7 +130,7 @@ class CanvasTests {
     }
     
     @Test("Create connection") func testCreateConnection() async throws {
-        var document = QuickArchitectDocument()
+        var document = SnapArchitectDocument()
         
         document.entityRepresentations.append(
             OOPElementRepresentation(
@@ -165,7 +165,7 @@ class CanvasTests {
     }
     
     @Test("Points are too far to create connection") func testCreateConnectionPointsTooFar() async throws {
-        var document = QuickArchitectDocument()
+        var document = SnapArchitectDocument()
         
         document.entityRepresentations.append(
             OOPElementRepresentation(
