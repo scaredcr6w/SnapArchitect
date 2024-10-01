@@ -108,6 +108,6 @@ final class CanvasViewModel: ObservableObject {
         guard let endElement = findClosestElement(to: location, elements) else { return nil }
         if checkIfConnectionExists(startElement, endElement, connections) { return nil }
         
-        return OOPConnectionRepresentation(type: connectionType, startElement: startElement, endElement: endElement)
+        return .init(type: connectionType, startElement: startElement, endElement: endElement)
     }
 }

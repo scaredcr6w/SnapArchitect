@@ -9,7 +9,9 @@ import SwiftUI
 
 struct ClassView: View {
     @Binding var representation: OOPElementRepresentation
+    @State var backgroundColor: Color = .white
     var isSelected: Bool
+    
     private var typeString: String {
         switch representation.type {
         case .classType:
@@ -78,7 +80,7 @@ struct ClassView: View {
             }
         }
         .frame(width: representation.size.width, height: representation.size.height, alignment: .top)
-        .background(.white)
+        .background(backgroundColor)
         .border(width: 1, edges: [.bottom, .top, .leading, .trailing], color: .black)
         .overlay(
             // Conditionally show the draggable handle

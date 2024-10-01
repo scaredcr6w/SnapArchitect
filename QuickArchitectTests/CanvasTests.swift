@@ -7,7 +7,7 @@
 
 import Foundation
 import Testing
-@testable import QuickArchitect
+@testable import Snap_Architect
 
 class CanvasTests {
     let viewModel = CanvasViewModel()
@@ -156,6 +156,7 @@ class CanvasTests {
                 from: CGPoint(x: 8, y: 8),
                 to: CGPoint(x: 24, y: 28),
                 location: CGPoint(x: 22, y: 33),
+                connectionType: .association,
                 elements: document.entityRepresentations, connections: document.entityConnections
             )
         )
@@ -189,6 +190,7 @@ class CanvasTests {
             from: CGPoint(x: 8, y: 8),
             to: CGPoint(x: 24, y: 28),
             location: CGPoint(x: 10, y: 10),
+            connectionType: .association,
             elements: document.entityRepresentations, connections: document.entityConnections
         )
         

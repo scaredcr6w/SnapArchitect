@@ -13,9 +13,10 @@ struct Composition: View, Connection {
     
     var body: some View {
         ZStack {
+            let endPosition = getClosestEdgeCenter()
             Path { path in
                 path.move(to: startElement.position)
-                path.addLine(to: getClosestEdgeCenter())
+                path.addLine(to: endPosition)
             }
             .stroke(Color.black, lineWidth: 1)
             
@@ -23,8 +24,8 @@ struct Composition: View, Connection {
                 .fill(Color.black)
                 .stroke(Color.black, lineWidth: 1)
                 .frame(width: 20, height: 8)
-                .rotationEffect(Angle(degrees: angle(from: startElement.position, to: getClosestEdgeCenter())))
-                .position(getClosestEdgeCenter())
+                .rotationEffect(Angle(degrees: angle(from: startElement.position, to: endPosition)))
+                .position(endPosition)
         }
     }
 }
