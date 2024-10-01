@@ -34,19 +34,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0F9841392CA544A400257F27 /* PBXContainerItemProxy */ = {
+		0F6B9B732CABEEF0008B56D4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0FD4D9F82C7DAEC100A0279D /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 0FD4D9FF2C7DAEC100A0279D;
-			remoteInfo = QuickArchitect;
-		};
-		0FD4DA152C7DAEC300A0279D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0FD4D9F82C7DAEC100A0279D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0FD4D9FF2C7DAEC100A0279D;
-			remoteInfo = QuickArchitect;
+			remoteInfo = SnapArchitect;
 		};
 		0FD4DA1F2C7DAEC300A0279D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -64,7 +57,7 @@
 		0F60CA722CAA85500059777E /* Dependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependency.swift; sourceTree = "<group>"; };
 		0F60CA742CAA855C0059777E /* Generalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generalization.swift; sourceTree = "<group>"; };
 		0F60CA762CAA85780059777E /* ProtocolRealization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolRealization.swift; sourceTree = "<group>"; };
-		0F9841352CA544A400257F27 /* QATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F6B9B6F2CABEEF0008B56D4 /* SnapArchitectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SnapArchitectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FA4833A2C87167500E66C7C /* DirectedAssociation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectedAssociation.swift; sourceTree = "<group>"; };
 		0FA4833C2C8716A100E66C7C /* Association.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Association.swift; sourceTree = "<group>"; };
 		0FC6ABE12C7F232B00986158 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
@@ -80,8 +73,7 @@
 		0FD4DA0C2C7DAEC300A0279D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0FD4DA0E2C7DAEC300A0279D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0FD4DA0F2C7DAEC300A0279D /* QuickArchitect.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuickArchitect.entitlements; sourceTree = "<group>"; };
-		0FD4DA142C7DAEC300A0279D /* QuickArchitectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickArchitectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0FD4DA1E2C7DAEC300A0279D /* QuickArchitectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickArchitectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0FD4DA1E2C7DAEC300A0279D /* SnapArchitectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SnapArchitectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FD4DA222C7DAEC300A0279D /* QuickArchitectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickArchitectUITests.swift; sourceTree = "<group>"; };
 		0FD4DA242C7DAEC300A0279D /* QuickArchitectUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickArchitectUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		0FDF53652CA7318E002CB42A /* DiamondShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiamondShape.swift; sourceTree = "<group>"; };
@@ -91,13 +83,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		0F6B9B702CABEEF0008B56D4 /* SnapArchitectTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SnapArchitectTests; sourceTree = "<group>"; };
 		0F9327E82CA2C4CB009AB117 /* EditorView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = EditorView; sourceTree = "<group>"; };
 		0F9327F22CA41F10009AB117 /* Utilities */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Utilities; sourceTree = "<group>"; };
-		0F9841362CA544A400257F27 /* QuickArchitectTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = QuickArchitectTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		0F9841322CA544A400257F27 /* Frameworks */ = {
+		0F6B9B6C2CABEEF0008B56D4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -105,13 +97,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		0FD4D9FD2C7DAEC100A0279D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0FD4DA112C7DAEC300A0279D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -236,9 +221,9 @@
 		0FD4D9F72C7DAEC100A0279D = {
 			isa = PBXGroup;
 			children = (
-				0FD4DA022C7DAEC100A0279D /* QuickArchitect */,
-				0F9841362CA544A400257F27 /* QuickArchitectTests */,
-				0FD4DA212C7DAEC300A0279D /* QuickArchitectUITests */,
+				0FD4DA022C7DAEC100A0279D /* SnapArchitect */,
+				0FD4DA212C7DAEC300A0279D /* SnapArchitectUITests */,
+				0F6B9B702CABEEF0008B56D4 /* SnapArchitectTests */,
 				0FD4DA012C7DAEC100A0279D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -247,14 +232,13 @@
 			isa = PBXGroup;
 			children = (
 				0FD4DA002C7DAEC100A0279D /* Snap Architect.app */,
-				0FD4DA142C7DAEC300A0279D /* QuickArchitectTests.xctest */,
-				0FD4DA1E2C7DAEC300A0279D /* QuickArchitectUITests.xctest */,
-				0F9841352CA544A400257F27 /* QATests.xctest */,
+				0FD4DA1E2C7DAEC300A0279D /* SnapArchitectUITests.xctest */,
+				0F6B9B6F2CABEEF0008B56D4 /* SnapArchitectTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0FD4DA022C7DAEC100A0279D /* QuickArchitect */ = {
+		0FD4DA022C7DAEC100A0279D /* SnapArchitect */ = {
 			isa = PBXGroup;
 			children = (
 				0F9327F22CA41F10009AB117 /* Utilities */,
@@ -267,7 +251,7 @@
 				0FD4DA0F2C7DAEC300A0279D /* QuickArchitect.entitlements */,
 				0FD4DA0B2C7DAEC300A0279D /* Preview Content */,
 			);
-			path = QuickArchitect;
+			path = SnapArchitect;
 			sourceTree = "<group>";
 		};
 		0FD4DA0B2C7DAEC300A0279D /* Preview Content */ = {
@@ -278,44 +262,44 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		0FD4DA212C7DAEC300A0279D /* QuickArchitectUITests */ = {
+		0FD4DA212C7DAEC300A0279D /* SnapArchitectUITests */ = {
 			isa = PBXGroup;
 			children = (
 				0FD4DA222C7DAEC300A0279D /* QuickArchitectUITests.swift */,
 				0FD4DA242C7DAEC300A0279D /* QuickArchitectUITestsLaunchTests.swift */,
 			);
-			path = QuickArchitectUITests;
+			path = SnapArchitectUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0F9841342CA544A400257F27 /* QATests */ = {
+		0F6B9B6E2CABEEF0008B56D4 /* SnapArchitectTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0F98413D2CA544A400257F27 /* Build configuration list for PBXNativeTarget "QATests" */;
+			buildConfigurationList = 0F6B9B752CABEEF0008B56D4 /* Build configuration list for PBXNativeTarget "SnapArchitectTests" */;
 			buildPhases = (
-				0F9841312CA544A400257F27 /* Sources */,
-				0F9841322CA544A400257F27 /* Frameworks */,
-				0F9841332CA544A400257F27 /* Resources */,
+				0F6B9B6B2CABEEF0008B56D4 /* Sources */,
+				0F6B9B6C2CABEEF0008B56D4 /* Frameworks */,
+				0F6B9B6D2CABEEF0008B56D4 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				0F98413A2CA544A400257F27 /* PBXTargetDependency */,
+				0F6B9B742CABEEF0008B56D4 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				0F9841362CA544A400257F27 /* QuickArchitectTests */,
+				0F6B9B702CABEEF0008B56D4 /* SnapArchitectTests */,
 			);
-			name = QATests;
+			name = SnapArchitectTests;
 			packageProductDependencies = (
 			);
-			productName = QATests;
-			productReference = 0F9841352CA544A400257F27 /* QATests.xctest */;
+			productName = SnapArchitectTests;
+			productReference = 0F6B9B6F2CABEEF0008B56D4 /* SnapArchitectTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		0FD4D9FF2C7DAEC100A0279D /* QuickArchitect */ = {
+		0FD4D9FF2C7DAEC100A0279D /* SnapArchitect */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0FD4DA282C7DAEC300A0279D /* Build configuration list for PBXNativeTarget "QuickArchitect" */;
+			buildConfigurationList = 0FD4DA282C7DAEC300A0279D /* Build configuration list for PBXNativeTarget "SnapArchitect" */;
 			buildPhases = (
 				0FD4D9FC2C7DAEC100A0279D /* Sources */,
 				0FD4D9FD2C7DAEC100A0279D /* Frameworks */,
@@ -329,32 +313,14 @@
 				0F9327E82CA2C4CB009AB117 /* EditorView */,
 				0F9327F22CA41F10009AB117 /* Utilities */,
 			);
-			name = QuickArchitect;
+			name = SnapArchitect;
 			productName = QuickArchitect;
 			productReference = 0FD4DA002C7DAEC100A0279D /* Snap Architect.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0FD4DA132C7DAEC300A0279D /* QuickArchitectTests */ = {
+		0FD4DA1D2C7DAEC300A0279D /* SnapArchitectUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0FD4DA2B2C7DAEC300A0279D /* Build configuration list for PBXNativeTarget "QuickArchitectTests" */;
-			buildPhases = (
-				0FD4DA102C7DAEC300A0279D /* Sources */,
-				0FD4DA112C7DAEC300A0279D /* Frameworks */,
-				0FD4DA122C7DAEC300A0279D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				0FD4DA162C7DAEC300A0279D /* PBXTargetDependency */,
-			);
-			name = QuickArchitectTests;
-			productName = QuickArchitectTests;
-			productReference = 0FD4DA142C7DAEC300A0279D /* QuickArchitectTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		0FD4DA1D2C7DAEC300A0279D /* QuickArchitectUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0FD4DA2E2C7DAEC300A0279D /* Build configuration list for PBXNativeTarget "QuickArchitectUITests" */;
+			buildConfigurationList = 0FD4DA2E2C7DAEC300A0279D /* Build configuration list for PBXNativeTarget "SnapArchitectUITests" */;
 			buildPhases = (
 				0FD4DA1A2C7DAEC300A0279D /* Sources */,
 				0FD4DA1B2C7DAEC300A0279D /* Frameworks */,
@@ -365,9 +331,9 @@
 			dependencies = (
 				0FD4DA202C7DAEC300A0279D /* PBXTargetDependency */,
 			);
-			name = QuickArchitectUITests;
+			name = SnapArchitectUITests;
 			productName = QuickArchitectUITests;
-			productReference = 0FD4DA1E2C7DAEC300A0279D /* QuickArchitectUITests.xctest */;
+			productReference = 0FD4DA1E2C7DAEC300A0279D /* SnapArchitectUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -380,17 +346,12 @@
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
-					0F9841342CA544A400257F27 = {
+					0F6B9B6E2CABEEF0008B56D4 = {
 						CreatedOnToolsVersion = 16.0;
 						TestTargetID = 0FD4D9FF2C7DAEC100A0279D;
 					};
 					0FD4D9FF2C7DAEC100A0279D = {
 						CreatedOnToolsVersion = 15.4;
-					};
-					0FD4DA132C7DAEC300A0279D = {
-						CreatedOnToolsVersion = 15.4;
-						LastSwiftMigration = 1600;
-						TestTargetID = 0FD4D9FF2C7DAEC100A0279D;
 					};
 					0FD4DA1D2C7DAEC300A0279D = {
 						CreatedOnToolsVersion = 15.4;
@@ -398,7 +359,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0FD4D9FB2C7DAEC100A0279D /* Build configuration list for PBXProject "QuickArchitect" */;
+			buildConfigurationList = 0FD4D9FB2C7DAEC100A0279D /* Build configuration list for PBXProject "SnapArchitect" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -411,16 +372,15 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0FD4D9FF2C7DAEC100A0279D /* QuickArchitect */,
-				0FD4DA132C7DAEC300A0279D /* QuickArchitectTests */,
-				0FD4DA1D2C7DAEC300A0279D /* QuickArchitectUITests */,
-				0F9841342CA544A400257F27 /* QATests */,
+				0FD4D9FF2C7DAEC100A0279D /* SnapArchitect */,
+				0FD4DA1D2C7DAEC300A0279D /* SnapArchitectUITests */,
+				0F6B9B6E2CABEEF0008B56D4 /* SnapArchitectTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		0F9841332CA544A400257F27 /* Resources */ = {
+		0F6B9B6D2CABEEF0008B56D4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -436,13 +396,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0FD4DA122C7DAEC300A0279D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		0FD4DA1C2C7DAEC300A0279D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -453,7 +406,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		0F9841312CA544A400257F27 /* Sources */ = {
+		0F6B9B6B2CABEEF0008B56D4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -487,13 +440,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0FD4DA102C7DAEC300A0279D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		0FD4DA1A2C7DAEC300A0279D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -506,25 +452,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0F98413A2CA544A400257F27 /* PBXTargetDependency */ = {
+		0F6B9B742CABEEF0008B56D4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0FD4D9FF2C7DAEC100A0279D /* QuickArchitect */;
-			targetProxy = 0F9841392CA544A400257F27 /* PBXContainerItemProxy */;
-		};
-		0FD4DA162C7DAEC300A0279D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0FD4D9FF2C7DAEC100A0279D /* QuickArchitect */;
-			targetProxy = 0FD4DA152C7DAEC300A0279D /* PBXContainerItemProxy */;
+			target = 0FD4D9FF2C7DAEC100A0279D /* SnapArchitect */;
+			targetProxy = 0F6B9B732CABEEF0008B56D4 /* PBXContainerItemProxy */;
 		};
 		0FD4DA202C7DAEC300A0279D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0FD4D9FF2C7DAEC100A0279D /* QuickArchitect */;
+			target = 0FD4D9FF2C7DAEC100A0279D /* SnapArchitect */;
 			targetProxy = 0FD4DA1F2C7DAEC300A0279D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		0F98413B2CA544A400257F27 /* Debug */ = {
+		0F6B9B762CABEEF0008B56D4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -534,15 +475,15 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = scaredcr6w.QATests;
+				PRODUCT_BUNDLE_IDENTIFIER = scaredcr6w.SnapArchitectTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QuickArchitect.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/QuickArchitect";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Snap Architect.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Snap Architect";
 			};
 			name = Debug;
 		};
-		0F98413C2CA544A400257F27 /* Release */ = {
+		0F6B9B772CABEEF0008B56D4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -552,11 +493,11 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = scaredcr6w.QATests;
+				PRODUCT_BUNDLE_IDENTIFIER = scaredcr6w.SnapArchitectTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QuickArchitect.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/QuickArchitect";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Snap Architect.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Snap Architect";
 			};
 			name = Release;
 		};
@@ -685,17 +626,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = QuickArchitect/QuickArchitect.entitlements;
+				CODE_SIGN_ENTITLEMENTS = SnapArchitect/QuickArchitect.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"QuickArchitect/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"SnapArchitect/Preview Content\"";
 				DEVELOPMENT_TEAM = 37925SQG82;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = QuickArchitect/Info.plist;
+				INFOPLIST_FILE = SnapArchitect/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -703,7 +644,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = scaredcr6w.QuickArchitect;
+				PRODUCT_BUNDLE_IDENTIFIER = scaredcr6w.SnapArchitect;
 				PRODUCT_NAME = "Snap Architect";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -715,17 +656,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = QuickArchitect/QuickArchitect.entitlements;
+				CODE_SIGN_ENTITLEMENTS = SnapArchitect/QuickArchitect.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"QuickArchitect/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"SnapArchitect/Preview Content\"";
 				DEVELOPMENT_TEAM = 37925SQG82;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = QuickArchitect/Info.plist;
+				INFOPLIST_FILE = SnapArchitect/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -733,53 +674,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = scaredcr6w.QuickArchitect;
+				PRODUCT_BUNDLE_IDENTIFIER = scaredcr6w.SnapArchitect;
 				PRODUCT_NAME = "Snap Architect";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		0FD4DA2C2C7DAEC300A0279D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 37925SQG82;
-				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.5;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = scaredcr6w.QuickArchitectTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "QuickArchitectTests/QuickArchitectTests-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QuickArchitect.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/QuickArchitect";
-			};
-			name = Debug;
-		};
-		0FD4DA2D2C7DAEC300A0279D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 37925SQG82;
-				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.5;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = scaredcr6w.QuickArchitectTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "QuickArchitectTests/QuickArchitectTests-Bridging-Header.h";
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QuickArchitect.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/QuickArchitect";
 			};
 			name = Release;
 		};
@@ -820,16 +718,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0F98413D2CA544A400257F27 /* Build configuration list for PBXNativeTarget "QATests" */ = {
+		0F6B9B752CABEEF0008B56D4 /* Build configuration list for PBXNativeTarget "SnapArchitectTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0F98413B2CA544A400257F27 /* Debug */,
-				0F98413C2CA544A400257F27 /* Release */,
+				0F6B9B762CABEEF0008B56D4 /* Debug */,
+				0F6B9B772CABEEF0008B56D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0FD4D9FB2C7DAEC100A0279D /* Build configuration list for PBXProject "QuickArchitect" */ = {
+		0FD4D9FB2C7DAEC100A0279D /* Build configuration list for PBXProject "SnapArchitect" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0FD4DA262C7DAEC300A0279D /* Debug */,
@@ -838,7 +736,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0FD4DA282C7DAEC300A0279D /* Build configuration list for PBXNativeTarget "QuickArchitect" */ = {
+		0FD4DA282C7DAEC300A0279D /* Build configuration list for PBXNativeTarget "SnapArchitect" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0FD4DA292C7DAEC300A0279D /* Debug */,
@@ -847,16 +745,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0FD4DA2B2C7DAEC300A0279D /* Build configuration list for PBXNativeTarget "QuickArchitectTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0FD4DA2C2C7DAEC300A0279D /* Debug */,
-				0FD4DA2D2C7DAEC300A0279D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		0FD4DA2E2C7DAEC300A0279D /* Build configuration list for PBXNativeTarget "QuickArchitectUITests" */ = {
+		0FD4DA2E2C7DAEC300A0279D /* Build configuration list for PBXNativeTarget "SnapArchitectUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0FD4DA2F2C7DAEC300A0279D /* Debug */,
