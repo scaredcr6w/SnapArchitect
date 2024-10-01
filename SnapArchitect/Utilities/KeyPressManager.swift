@@ -17,12 +17,6 @@ class KeyPressManager: ObservableObject {
     ) {
         if let diagramIndex = document.wrappedValue.diagrams.firstIndex(where: { $0.isSelected }) {
             if let selectedElement = selectedElement {
-    //            document.wrappedValue.entityRepresentations.removeAll(
-    //                where: { $0 == selectedElement }
-    //            )
-    //            document.wrappedValue.entityConnections.removeAll(
-    //                where: { $0.startElement == selectedElement || $0.endElement == selectedElement }
-    //            )
                 document.wrappedValue.diagrams[diagramIndex].entityRepresentations.removeAll(
                     where: { $0 == selectedElement }
                 )
