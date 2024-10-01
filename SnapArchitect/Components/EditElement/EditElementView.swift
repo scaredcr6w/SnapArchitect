@@ -142,39 +142,41 @@ struct AttributeRowView: View {
     @Binding var attributes: [OOPElementAttribute]
     @State private var showEditor: Bool = false
     var body: some View {
-        ForEach($attributes) { $attribute in
-            VStack {
-                HStack {
-                    Image(systemName: "minus.circle.fill")
-                        .padding(.horizontal, 5)
-                        .onTapGesture {
-                            attributes.removeAll { $0 == attribute }
-                        }
-                    Image(systemName: "pencil")
-                        .padding(.horizontal, 5)
-                        .onTapGesture {
-                            withAnimation(.easeInOut) {
-                                showEditor.toggle()
-                            }
-                        }
-                    Text(attribute.name)
-                        .frame(width: 130)
-                    Divider()
-                    Text(attribute.type)
-                        .frame(width: 60)
-                }
-                .frame(height: 50)
-                .frame(maxWidth: 300)
-                
+        ScrollView {
+            ForEach($attributes) { $attribute in
                 VStack {
-                    if showEditor {
-                        TextField("", text: $attribute.name)
-                        TextField("", text: $attribute.type)
+                    HStack {
+                        Image(systemName: "minus.circle.fill")
+                            .padding(.horizontal, 5)
+                            .onTapGesture {
+                                attributes.removeAll { $0 == attribute }
+                            }
+                        Image(systemName: "pencil")
+                            .padding(.horizontal, 5)
+                            .onTapGesture {
+                                withAnimation(.easeInOut) {
+                                    showEditor.toggle()
+                                }
+                            }
+                        Text(attribute.name)
+                            .frame(width: 130)
+                        Divider()
+                        Text(attribute.type)
+                            .frame(width: 60)
                     }
+                    .frame(height: 50)
+                    .frame(maxWidth: 300)
+                    
+                    VStack {
+                        if showEditor {
+                            TextField("", text: $attribute.name)
+                            TextField("", text: $attribute.type)
+                        }
+                    }
+                    .frame(maxHeight: showEditor ? .none : 0)
+                    .opacity(showEditor ? 1 : 0)
+                    .animation(.easeInOut, value: showEditor)
                 }
-                .frame(maxHeight: showEditor ? .none : 0)
-                .opacity(showEditor ? 1 : 0)
-                .animation(.easeInOut, value: showEditor)
             }
         }
     }
@@ -184,40 +186,42 @@ struct FunctionRowView: View {
     @Binding var functions: [OOPElementFunction]
     @State private var showEditor: Bool = false
     var body: some View {
-        ForEach($functions) { $function in
-            VStack {
-                HStack {
-                    Image(systemName: "minus.circle.fill")
-                        .padding(.horizontal, 5)
-                        .onTapGesture {
-                            functions.removeAll { $0 == function }
-                        }
-                    Image(systemName: "pencil")
-                        .padding(.horizontal, 5)
-                        .onTapGesture {
-                            withAnimation(.easeInOut) {
-                                showEditor.toggle()
-                            }
-                        }
-                    Text(function.name)
-                        .frame(width: 130)
-                    Text(function.returnType)
-                        .frame(width: 60)
-                }
-                .frame(height: 50)
-                .frame(maxWidth: 300)
-                
+        ScrollView {
+            ForEach($functions) { $function in
                 VStack {
-                    if showEditor {
-                        TextField("", text: $function.name)
-                        TextField("", text: $function.returnType)
-                        TextEditor(text: $function.functionBody)
-                            .frame(height: 100)
+                    HStack {
+                        Image(systemName: "minus.circle.fill")
+                            .padding(.horizontal, 5)
+                            .onTapGesture {
+                                functions.removeAll { $0 == function }
+                            }
+                        Image(systemName: "pencil")
+                            .padding(.horizontal, 5)
+                            .onTapGesture {
+                                withAnimation(.easeInOut) {
+                                    showEditor.toggle()
+                                }
+                            }
+                        Text(function.name)
+                            .frame(width: 130)
+                        Text(function.returnType)
+                            .frame(width: 60)
                     }
+                    .frame(height: 50)
+                    .frame(maxWidth: 300)
+                    
+                    VStack {
+                        if showEditor {
+                            TextField("", text: $function.name)
+                            TextField("", text: $function.returnType)
+                            TextEditor(text: $function.functionBody)
+                                .frame(height: 100)
+                        }
+                    }
+                    .frame(maxHeight: showEditor ? .none : 0)
+                    .opacity(showEditor ? 1 : 0)
+                    .animation(.easeInOut, value: showEditor)
                 }
-                .frame(maxHeight: showEditor ? .none : 0)
-                .opacity(showEditor ? 1 : 0)
-                .animation(.easeInOut, value: showEditor)
             }
         }
     }

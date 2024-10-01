@@ -79,7 +79,8 @@ struct ClassView: View {
                 }
             }
         }
-        .frame(width: representation.size.width, height: representation.size.height, alignment: .top)
+        .frame(width: representation.size.width)
+        .frame(minHeight: representation.size.height, alignment: .top)
         .background(backgroundColor)
         .border(width: 1, edges: [.bottom, .top, .leading, .trailing], color: .black)
         .overlay(
