@@ -14,8 +14,10 @@ struct EditorView: View {
     
     @ViewBuilder
     private func toolbar() -> some View {
-        if let element = selectedElement, let index = document.entityRepresentations.firstIndex(where: { $0.id == element.id }) {
-            let bindingElement = $document.entityRepresentations[index]
+        if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }),
+           let element = selectedElement,
+           let elementIndex = document.diagrams[diagramIndex].entityRepresentations.firstIndex(where: { $0.id == element.id }) {
+            let bindingElement = $document.diagrams[diagramIndex].entityRepresentations[elementIndex]
             EditElementView(element: bindingElement)
         } else {
             Text("No element selected")

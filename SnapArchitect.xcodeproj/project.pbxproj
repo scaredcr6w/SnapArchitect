@@ -74,6 +74,7 @@
 		0F6B9B702CABEEF0008B56D4 /* SnapArchitectTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SnapArchitectTests; sourceTree = "<group>"; };
 		0F9327E82CA2C4CB009AB117 /* EditorView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = EditorView; sourceTree = "<group>"; };
 		0F9327F22CA41F10009AB117 /* Utilities */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Utilities; sourceTree = "<group>"; };
+		0FBED4B52CABF4BF00D68D13 /* ProjectNavigator */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ProjectNavigator; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +129,7 @@
 		0FC6ABDE2C7F08D300986158 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				0FBED4B52CABF4BF00D68D13 /* ProjectNavigator */,
 				0F9327E82CA2C4CB009AB117 /* EditorView */,
 				0FC6ABE72C7F443900986158 /* Element */,
 				0F52DE5C2C8EDF33001EC07F /* EditElement */,
@@ -282,6 +284,7 @@
 			fileSystemSynchronizedGroups = (
 				0F9327E82CA2C4CB009AB117 /* EditorView */,
 				0F9327F22CA41F10009AB117 /* Utilities */,
+				0FBED4B52CABF4BF00D68D13 /* ProjectNavigator */,
 			);
 			name = SnapArchitect;
 			productName = QuickArchitect;

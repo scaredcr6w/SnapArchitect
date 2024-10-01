@@ -15,13 +15,21 @@ class KeyPressManager: ObservableObject {
         _ document: Binding<SnapArchitectDocument>,
         _ selectedElement: OOPElementRepresentation?
     ) {
-        if let selectedElement = selectedElement {
-            document.wrappedValue.entityRepresentations.removeAll(
-                where: { $0 == selectedElement }
-            )
-            document.wrappedValue.entityConnections.removeAll(
-                where: { $0.startElement == selectedElement || $0.endElement == selectedElement }
-            )
+        if let diagramIndex = document.wrappedValue.diagrams.firstIndex(where: { $0.isSelected }) {
+            if let selectedElement = selectedElement {
+    //            document.wrappedValue.entityRepresentations.removeAll(
+    //                where: { $0 == selectedElement }
+    //            )
+    //            document.wrappedValue.entityConnections.removeAll(
+    //                where: { $0.startElement == selectedElement || $0.endElement == selectedElement }
+    //            )
+                document.wrappedValue.diagrams[diagramIndex].entityRepresentations.removeAll(
+                    where: { $0 == selectedElement }
+                )
+                document.wrappedValue.diagrams[diagramIndex].entityConnections.removeAll(
+                    where: { $0.startElement == selectedElement || $0.endElement == selectedElement }
+                )
+            }
         }
     }
     

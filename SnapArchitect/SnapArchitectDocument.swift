@@ -12,12 +12,16 @@ extension UTType {
     static let quickArchitectDocument = UTType(exportedAs: "com.snaparchitect.qad")
 }
 
-struct SnapArchitectDocument: FileDocument, Codable {
+struct SnapArchitectDiagram: Codable {
+    var isSelected: Bool
     var entityRepresentations: [OOPElementRepresentation]
     var entityConnections: [OOPConnectionRepresentation]
-    init(entityRepresentations: [OOPElementRepresentation] = [], entityConnections: [OOPConnectionRepresentation] = []) {
-        self.entityRepresentations = entityRepresentations
-        self.entityConnections = entityConnections
+}
+
+struct SnapArchitectDocument: FileDocument, Codable {
+    var diagrams: [SnapArchitectDiagram]
+    init(diagrams: [SnapArchitectDiagram] = [SnapArchitectDiagram(isSelected: true, entityRepresentations: [], entityConnections: [])]) {
+        self.diagrams = diagrams
     }
 
     static var readableContentTypes: [UTType] { [.quickArchitectDocument] }
