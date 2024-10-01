@@ -23,12 +23,8 @@ struct ToolbarView: View {
     @Binding var selectedTool: Any?
     @Binding var selectedElement: OOPElementRepresentation?
     @State private var expandedCategories: Set<String> = []
-    
-    @State private var newName: String = ""
-    @State private var newAttributeName: String = ""
-    @State private var newAttributeType: String = ""
-    @State private var newFunctionName: String = ""
-    @State private var newFunctionBody: String = ""
+    @State private var elementDisclosureGruopExpanded: Bool = true
+    @State private var connectionDisclosureGruopExpanded: Bool = true
     
     static let basicClasses = [
         ToolbarElementItem(elementName: "Class", elementType: .classType),
@@ -89,11 +85,11 @@ struct ToolbarView: View {
                         .font(.title3)
                         .foregroundStyle(.gray)
                     Divider()
-                    DisclosureGroup("Basic Classes") {
+                    DisclosureGroup("Basic Classes", isExpanded: $elementDisclosureGruopExpanded) {
                         disclosureGroupElementItem(ToolbarView.basicClasses)
                     }
                     Divider()
-                    DisclosureGroup("Connections") {
+                    DisclosureGroup("Connections", isExpanded: $connectionDisclosureGruopExpanded) {
                         disclosureGroupConnectionItem(ToolbarView.connections)
                     }
                     Divider()
