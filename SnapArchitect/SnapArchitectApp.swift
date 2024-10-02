@@ -25,6 +25,10 @@ struct SnapArchitectApp: App {
                     keyPressManager.removeKeyPressListener()
                 }
         }
+        
+        Settings {
+            SettingsView()
+        }
     }
     
     func maximizeWindow(_ window: NSWindow) {

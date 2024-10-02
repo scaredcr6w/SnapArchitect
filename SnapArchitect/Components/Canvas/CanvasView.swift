@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CanvasView: View {
+    @AppStorage("canvasBackgorundColor") private var backgroundColor: Color = .white
     @StateObject private var viewModel = CanvasViewModel()
     @Binding var document: SnapArchitectDocument
     @Binding var selectedTool: Any?
@@ -122,7 +123,7 @@ struct CanvasView: View {
                     }
                     .frame(width: geo.size.width * 3, height: geo.size.height * 3)
                 }
-                .background(.white)
+                .background(backgroundColor)
                 .background(GeometryReader { innerGeo in
                     Color.clear
                         .onAppear {

@@ -23,6 +23,7 @@ struct EditorView: View {
                     .frame(height: windowHeight / 2)
             } else {
                 Text("No element selected")
+                    .font(.title2)
                     .frame(height: windowHeight / 2)
             }
             Divider()
