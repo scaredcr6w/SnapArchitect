@@ -17,7 +17,7 @@ struct CanvasSettingsView: View {
         Form {
             Toggle("Show grid", isOn: $showGrid)
             Toggle("Snap to grid", isOn: $snapToGrid)
-            Slider(value: $gridSize, in: 1...20) {
+            Slider(value: $gridSize, in: 10...30) {
                 Text("Grid Size: \(gridSize, specifier: "%.1f") pts")
             }
             ColorPicker("Background Color", selection: $backgroundColor)

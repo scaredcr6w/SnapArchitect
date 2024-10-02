@@ -9,6 +9,9 @@ import SwiftUI
 
 struct CanvasView: View {
     @AppStorage("canvasBackgorundColor") private var backgroundColor: Color = .white
+    @AppStorage("showGrid") private var showGrid: Bool = false
+    @AppStorage("snapToGrid") private var snapToGrid: Bool = false
+    @AppStorage("gridSize") private var gridSize: Double = 10
     @StateObject private var viewModel = CanvasViewModel()
     @Binding var document: SnapArchitectDocument
     @Binding var selectedTool: Any?
@@ -112,12 +115,16 @@ struct CanvasView: View {
             }
         }
     }
-
+    
     var body: some View {
         GeometryReader { geo in
             ScrollView([.horizontal, .vertical]) {
                 VStack {
                     ZStack {
+                        if showGrid {
+                            CanvasGridShape(gridSize: gridSize)
+                                .stroke(Color.gray.opacity(0.5), lineWidth: 0.5)
+                        }
                         drawConnections()
                         drawElements()
                     }
@@ -142,5 +149,26 @@ struct CanvasView: View {
             }
             .scrollIndicators(.hidden)
         }
+    }
+}
+
+
+struct CanvasGridShape: Shape {
+    var gridSize: Double
+    
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        
+        for x in stride(from: 0, to: rect.width, by: gridSize) {
+            path.move(to: CGPoint(x: x, y: 0))
+            path.addLine(to: CGPoint(x: x, y: rect.height))
+        }
+        
+        for y in stride(from: 0, to: rect.height, by: gridSize) {
+            path.move(to: CGPoint(x: 0, y: y))
+            path.addLine(to: CGPoint(x: rect.width, y: y))
+        }
+        
+        return path
     }
 }
