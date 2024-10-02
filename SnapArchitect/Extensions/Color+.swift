@@ -10,10 +10,16 @@ import AppKit
 
 extension Color: @retroactive RawRepresentable {
     public var rawValue: String {
-        guard let components = NSColor(self).cgColor.components else {
+        guard let nsColor = NSColor(self).usingColorSpace(.deviceRGB),
+              let components = nsColor.cgColor.components else {
             return "1.0,1.0,1.0,1.0"
         }
-        return components.map { String(Double($0)) }.joined(separator: ",")
+        let red = components.count > 0 ? components[0] : 1.0
+        let green = components.count > 1 ? components[1] : 1.0
+        let blue = components.count > 2 ? components[2] : 1.0
+        let opacity = components.count > 3 ? components[3] : 1.0
+        
+        return String(format: "%.6f,%.6f,%.6f,%.6f", red, green, blue, opacity)
     }
     
     public init?(rawValue: String) {
