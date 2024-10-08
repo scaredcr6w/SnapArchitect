@@ -11,6 +11,8 @@ struct ClassView: View {
     @Binding var representation: OOPElementRepresentation
     @State var backgroundColor: Color = .white
     var isSelected: Bool
+    let minWidth: CGFloat = 100
+    let minHeight: CGFloat = 50
     
     private var typeString: String {
         switch representation.type {
@@ -35,6 +37,82 @@ struct ClassView: View {
             return "#"
         case .accessPrivate:
             return "-"
+        }
+    }
+    
+    private func topLeadingHandle(_ value: DragGesture.Value) {
+        let newWidth = max(100, representation.size.width - value.translation.width)
+        let newHeight = max(50, representation.size.height - value.translation.height)
+        let newX = representation.position.x + value.translation.width / 2
+        let newY = representation.position.y + value.translation.height / 2
+        
+        representation.size = CGSize(
+            width: newWidth,
+            height: newHeight
+        )
+        
+        if newWidth > minWidth && newHeight > minHeight {
+            representation.position = CGPoint(
+                x: newX,
+                y: newY
+            )
+        }
+    }
+    
+    private func topTrailingHandle(_ value: DragGesture.Value) {
+        let newWidth = max(100, representation.size.width + value.translation.width)
+        let newHeight = max(50, representation.size.height - value.translation.height)
+        let newX = representation.position.x + value.translation.width / 2
+        let newY = representation.position.y + value.translation.height / 2
+        
+        representation.size = CGSize(
+            width: newWidth,
+            height: newHeight
+        )
+        
+        if newWidth > minWidth && newHeight > minHeight {
+            representation.position = CGPoint(
+                x: newX,
+                y: newY
+            )
+        }
+    }
+    
+    private func bottomLeadingHandle(_ value: DragGesture.Value) {
+        let newWidth = max(100, representation.size.width - value.translation.width)
+        let newHeight = max(50, representation.size.height + value.translation.height)
+        let newX = representation.position.x + value.translation.width / 2
+        let newY = representation.position.y + value.translation.height / 2
+        
+        representation.size = CGSize(
+            width: newWidth,
+            height: newHeight
+        )
+        
+        if newWidth > minWidth && newHeight > minHeight {
+            representation.position = CGPoint(
+                x: newX,
+                y: newY
+            )
+        }
+    }
+    
+    private func bottomTrailingHandle(_ value: DragGesture.Value) {
+        let newWidth = max(100, representation.size.width + value.translation.width)
+        let newHeight = max(50, representation.size.height + value.translation.height)
+        let newX = representation.position.x + value.translation.width / 2
+        let newY = representation.position.y + value.translation.height / 2
+        
+        representation.size = CGSize(
+            width: newWidth,
+            height: newHeight
+        )
+        
+        if newWidth > minWidth && newHeight > minHeight {
+            representation.position = CGPoint(
+                x: newX,
+                y: newY
+            )
         }
     }
     
@@ -80,31 +158,73 @@ struct ClassView: View {
             }
         }
         .frame(width: representation.size.width)
+        .frame(minWidth: 100)
         .frame(minHeight: representation.size.height, alignment: .top)
         .background(backgroundColor)
         .border(width: 1, edges: [.bottom, .top, .leading, .trailing], color: .black)
         .overlay(
-            // Conditionally show the draggable handle
             Group {
                 if isSelected {
-                    Rectangle()
-                        .fill(.accent.opacity(0.7))
-                        .frame(width: 10, height: 10)
+                    //top leading
+                    handleView
                         .gesture(
                             DragGesture()
                                 .onChanged { value in
-                                    // Update the size based on the drag amount
-                                    let newWidth = max(100, representation.size.width + value.translation.width)
-                                    let newHeight = max(50, representation.size.height + value.translation.height)
-                                    representation.size = CGSize(width: newWidth, height: newHeight)
+                                    topLeadingHandle(value)
                                 }
                         )
+                        .position(x: 0, y: 0)
+                    //top trailing
+                    handleView
+                        .gesture(
+                            DragGesture()
+                                .onChanged { value in
+                                    topTrailingHandle(value)
+                                }
+                        )
+                        .position(x: representation.size.width, y: 0)
+                    //bottom leading
+                    handleView
+                        .gesture(
+                            DragGesture()
+                                .onChanged { value in
+                                    bottomLeadingHandle(value)
+                                }
+                        )
+                        .position(x: 0, y: representation.size.height)
+                    //bottom trailing
+                    handleView
+                        .gesture(
+                            DragGesture()
+                                .onChanged { value in
+                                    bottomTrailingHandle(value)
+                                }
+                        )
+                        .position(x: representation.size.width, y: representation.size.height)
                 }
-            },
-            alignment: .bottomTrailing
+            }
         )
         .shadow(radius: 10, x: 10, y: 10)
         .position(representation.position)
     }
+    
+    var handleView: some View {
+        Circle()
+            .stroke(.accent, lineWidth: 1.5)
+            .frame(width: 10, height: 10)
+            .contentShape(Circle())
+    }
 }
 
+//#Preview {
+//    ClassView(
+//        representation: .constant(OOPElementRepresentation(
+//            .accessInternal,
+//            "Class",
+//            .classType,
+//            CGPoint(x: 100, y: 100),
+//            CGSize(width: 100, height: 100))),
+//        backgroundColor: .white,
+//        isSelected: true
+//    )
+//}
