@@ -81,6 +81,11 @@ struct CanvasView: View {
                                 addConnection(value)
                             }
                         }
+                        .onEnded { _ in
+                            let snappedCorners = viewModel.getSnappedElementCorners(object, gridSize: gridSize)
+                            
+                            viewModel.adjustPositionFromCorners(snappedCorners, element: &object)
+                        }
                 )
                 .onChange(of: selectedElement) { _, newValue in
                     if let newValue = newValue {
