@@ -15,13 +15,14 @@ struct CanvasSettingsView: View {
     
     var body: some View {
         Form {
+            ColorPicker("Background Color", selection: $backgroundColor)
             Toggle("Show grid", isOn: $showGrid)
             Toggle("Snap to grid", isOn: $snapToGrid)
                 .disabled(!showGrid)
             Slider(value: $gridSize, in: 10...30) {
                 Text("Grid Size: \(gridSize, specifier: "%.1f") pts")
             }
-            ColorPicker("Background Color", selection: $backgroundColor)
+            .disabled(!showGrid)
         }
     }
 }
