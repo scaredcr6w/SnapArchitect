@@ -46,7 +46,7 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0FD4DA1D2C7DAEC300A0279D"
+               BlueprintIdentifier = "0F41A8E92CB55889001F286F"
                BuildableName = "SnapArchitectUITests.xctest"
                BlueprintName = "SnapArchitectUITests"
                ReferencedContainer = "container:SnapArchitect.xcodeproj">

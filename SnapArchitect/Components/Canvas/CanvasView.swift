@@ -83,7 +83,6 @@ struct CanvasView: View {
                         }
                         .onEnded { _ in
                             let snappedCorners = viewModel.getSnappedElementCorners(object, gridSize: gridSize)
-                            
                             viewModel.adjustPositionFromCorners(snappedCorners, element: &object)
                         }
                 )

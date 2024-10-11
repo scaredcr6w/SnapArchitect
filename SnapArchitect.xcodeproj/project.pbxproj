@@ -33,6 +33,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		0F41A8F02CB55889001F286F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0FD4D9F82C7DAEC100A0279D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0FD4D9FF2C7DAEC100A0279D;
+			remoteInfo = SnapArchitect;
+		};
 		0F6B9B732CABEEF0008B56D4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0FD4D9F82C7DAEC100A0279D /* Project object */;
@@ -46,6 +53,7 @@
 		0F01733E2C80C82B0051FD9A /* ToolbarItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarItemView.swift; sourceTree = "<group>"; };
 		0F2BE7D32CA6A9C400D5DE1A /* ConnectionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionProtocol.swift; sourceTree = "<group>"; };
 		0F3E20352CAD52120036B33A /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
+		0F41A8EA2CB55889001F286F /* SnapArchitectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SnapArchitectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F52DE5D2C8EDF58001EC07F /* EditElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditElementView.swift; sourceTree = "<group>"; };
 		0F60CA722CAA85500059777E /* Dependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependency.swift; sourceTree = "<group>"; };
 		0F60CA742CAA855C0059777E /* Generalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generalization.swift; sourceTree = "<group>"; };
@@ -74,6 +82,7 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0F3E202E2CAD4FF30036B33A /* Settings */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Settings; sourceTree = "<group>"; };
+		0F41A8EB2CB55889001F286F /* SnapArchitectUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SnapArchitectUITests; sourceTree = "<group>"; };
 		0F6B9B702CABEEF0008B56D4 /* SnapArchitectTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SnapArchitectTests; sourceTree = "<group>"; };
 		0F9327E82CA2C4CB009AB117 /* EditorView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = EditorView; sourceTree = "<group>"; };
 		0F9327F22CA41F10009AB117 /* Utilities */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Utilities; sourceTree = "<group>"; };
@@ -81,6 +90,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0F41A8E72CB55889001F286F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0F6B9B6C2CABEEF0008B56D4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -211,6 +227,7 @@
 			children = (
 				0FD4DA022C7DAEC100A0279D /* SnapArchitect */,
 				0F6B9B702CABEEF0008B56D4 /* SnapArchitectTests */,
+				0F41A8EB2CB55889001F286F /* SnapArchitectUITests */,
 				0FD4DA012C7DAEC100A0279D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -220,6 +237,7 @@
 			children = (
 				0FD4DA002C7DAEC100A0279D /* Snap Architect.app */,
 				0F6B9B6F2CABEEF0008B56D4 /* SnapArchitectTests.xctest */,
+				0F41A8EA2CB55889001F286F /* SnapArchitectUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -251,6 +269,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0F41A8E92CB55889001F286F /* SnapArchitectUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0F41A8F42CB55889001F286F /* Build configuration list for PBXNativeTarget "SnapArchitectUITests" */;
+			buildPhases = (
+				0F41A8E62CB55889001F286F /* Sources */,
+				0F41A8E72CB55889001F286F /* Frameworks */,
+				0F41A8E82CB55889001F286F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0F41A8F12CB55889001F286F /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				0F41A8EB2CB55889001F286F /* SnapArchitectUITests */,
+			);
+			name = SnapArchitectUITests;
+			packageProductDependencies = (
+			);
+			productName = SnapArchitectUITests;
+			productReference = 0F41A8EA2CB55889001F286F /* SnapArchitectUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		0F6B9B6E2CABEEF0008B56D4 /* SnapArchitectTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0F6B9B752CABEEF0008B56D4 /* Build configuration list for PBXNativeTarget "SnapArchitectTests" */;
@@ -307,6 +348,10 @@
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
+					0F41A8E92CB55889001F286F = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 0FD4D9FF2C7DAEC100A0279D;
+					};
 					0F6B9B6E2CABEEF0008B56D4 = {
 						CreatedOnToolsVersion = 16.0;
 						TestTargetID = 0FD4D9FF2C7DAEC100A0279D;
@@ -331,11 +376,19 @@
 			targets = (
 				0FD4D9FF2C7DAEC100A0279D /* SnapArchitect */,
 				0F6B9B6E2CABEEF0008B56D4 /* SnapArchitectTests */,
+				0F41A8E92CB55889001F286F /* SnapArchitectUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0F41A8E82CB55889001F286F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0F6B9B6D2CABEEF0008B56D4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -355,6 +408,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0F41A8E62CB55889001F286F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0F6B9B6B2CABEEF0008B56D4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -393,6 +453,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		0F41A8F12CB55889001F286F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0FD4D9FF2C7DAEC100A0279D /* SnapArchitect */;
+			targetProxy = 0F41A8F02CB55889001F286F /* PBXContainerItemProxy */;
+		};
 		0F6B9B742CABEEF0008B56D4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0FD4D9FF2C7DAEC100A0279D /* SnapArchitect */;
@@ -401,6 +466,40 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		0F41A8F22CB55889001F286F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 37925SQG82;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = scaredcr6w.SnapArchitectUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = SnapArchitect;
+			};
+			name = Debug;
+		};
+		0F41A8F32CB55889001F286F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 37925SQG82;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = scaredcr6w.SnapArchitectUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = SnapArchitect;
+			};
+			name = Release;
+		};
 		0F6B9B762CABEEF0008B56D4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -620,6 +719,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0F41A8F42CB55889001F286F /* Build configuration list for PBXNativeTarget "SnapArchitectUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0F41A8F22CB55889001F286F /* Debug */,
+				0F41A8F32CB55889001F286F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		0F6B9B752CABEEF0008B56D4 /* Build configuration list for PBXNativeTarget "SnapArchitectTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

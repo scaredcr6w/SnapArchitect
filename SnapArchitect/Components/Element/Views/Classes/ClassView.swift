@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ClassView: View {
+    @AppStorage("snapToGrid") private var snapToGrid: Bool = false
+    @AppStorage("gridSize") private var gridSize: Double = 10
     @Binding var representation: OOPElementRepresentation
     @State var backgroundColor: Color = .white
     var isSelected: Bool
@@ -40,79 +42,107 @@ struct ClassView: View {
         }
     }
     
+    private func snapToGrid(_ value: Double, gridSize: Double) -> Double {
+        return round(value / gridSize) * gridSize
+    }
+    
     private func topLeadingHandle(_ value: DragGesture.Value) {
-        let newWidth = max(100, representation.size.width - value.translation.width)
-        let newHeight = max(50, representation.size.height - value.translation.height)
-        let newX = representation.position.x + value.translation.width / 2
-        let newY = representation.position.y + value.translation.height / 2
+        var newWidth = max(100, representation.size.width - value.translation.width)
+        var newHeight = max(50, representation.size.height - value.translation.height)
+        var newX = representation.position.x + value.translation.width / 2
+        var newY = representation.position.y + value.translation.height / 2
         
-        representation.size = CGSize(
-            width: newWidth,
-            height: newHeight
-        )
+        // Snap to grid if enabled
+        if snapToGrid {
+            newX = snapToGrid(newX - representation.size.width / 2, gridSize: gridSize) + representation.size.width / 2
+            newY = snapToGrid(newY - representation.size.height / 2, gridSize: gridSize) + representation.size.height / 2
+            newWidth = snapToGrid(newWidth, gridSize: gridSize)
+            newHeight = snapToGrid(newHeight, gridSize: gridSize)
+        }
         
-        if newWidth > minWidth && newHeight > minHeight {
-            representation.position = CGPoint(
-                x: newX,
-                y: newY
-            )
+        // Update size and position
+        if newWidth > minWidth {
+            representation.size.width = newWidth
+            representation.position.x = newX
+        }
+        if newHeight > minHeight {
+            representation.size.height = newHeight
+            representation.position.y = newY
         }
     }
     
     private func topTrailingHandle(_ value: DragGesture.Value) {
-        let newWidth = max(100, representation.size.width + value.translation.width)
-        let newHeight = max(50, representation.size.height - value.translation.height)
-        let newX = representation.position.x + value.translation.width / 2
-        let newY = representation.position.y + value.translation.height / 2
+        var newWidth = max(100, representation.size.width + value.translation.width)
+        var newHeight = max(50, representation.size.height - value.translation.height)
+        var newX = representation.position.x + value.translation.width / 2
+        var newY = representation.position.y + value.translation.height / 2
         
-        representation.size = CGSize(
-            width: newWidth,
-            height: newHeight
-        )
+        // Snap to grid if enabled
+        if snapToGrid {
+            newX = snapToGrid(newX - representation.size.width / 2, gridSize: gridSize) + representation.size.width / 2
+            newY = snapToGrid(newY - representation.size.height / 2, gridSize: gridSize) + representation.size.height / 2
+            newWidth = snapToGrid(newWidth, gridSize: gridSize)
+            newHeight = snapToGrid(newHeight, gridSize: gridSize)
+        }
         
-        if newWidth > minWidth && newHeight > minHeight {
-            representation.position = CGPoint(
-                x: newX,
-                y: newY
-            )
+        // Update size and position
+        if newWidth > minWidth {
+            representation.size.width = newWidth
+            representation.position.x = newX
+        }
+        if newHeight > minHeight {
+            representation.size.height = newHeight
+            representation.position.y = newY
         }
     }
     
     private func bottomLeadingHandle(_ value: DragGesture.Value) {
-        let newWidth = max(100, representation.size.width - value.translation.width)
-        let newHeight = max(50, representation.size.height + value.translation.height)
-        let newX = representation.position.x + value.translation.width / 2
-        let newY = representation.position.y + value.translation.height / 2
+        var newWidth = max(100, representation.size.width - value.translation.width)
+        var newHeight = max(50, representation.size.height + value.translation.height)
+        var newX = representation.position.x + value.translation.width / 2
+        var newY = representation.position.y + value.translation.height / 2
         
-        representation.size = CGSize(
-            width: newWidth,
-            height: newHeight
-        )
+        // Snap to grid if enabled
+        if snapToGrid {
+            newX = snapToGrid(newX - representation.size.width / 2, gridSize: gridSize) + representation.size.width / 2
+            newY = snapToGrid(newY - representation.size.height / 2, gridSize: gridSize) + representation.size.height / 2
+            newWidth = snapToGrid(newWidth, gridSize: gridSize)
+            newHeight = snapToGrid(newHeight, gridSize: gridSize)
+        }
         
-        if newWidth > minWidth && newHeight > minHeight {
-            representation.position = CGPoint(
-                x: newX,
-                y: newY
-            )
+        // Update size and position
+        if newWidth > minWidth {
+            representation.size.width = newWidth
+            representation.position.x = newX
+        }
+        if newHeight > minHeight {
+            representation.size.height = newHeight
+            representation.position.y = newY
         }
     }
     
     private func bottomTrailingHandle(_ value: DragGesture.Value) {
-        let newWidth = max(100, representation.size.width + value.translation.width)
-        let newHeight = max(50, representation.size.height + value.translation.height)
-        let newX = representation.position.x + value.translation.width / 2
-        let newY = representation.position.y + value.translation.height / 2
+        var newWidth = max(100, representation.size.width + value.translation.width)
+        var newHeight = max(50, representation.size.height + value.translation.height)
+        var newX = representation.position.x + value.translation.width / 2
+        var newY = representation.position.y + value.translation.height / 2
         
-        representation.size = CGSize(
-            width: newWidth,
-            height: newHeight
-        )
+        // Snap to grid if enabled
+        if snapToGrid {
+            newX = snapToGrid(newX - representation.size.width / 2, gridSize: gridSize) + representation.size.width / 2
+            newY = snapToGrid(newY - representation.size.height / 2, gridSize: gridSize) + representation.size.height / 2
+            newWidth = snapToGrid(newWidth, gridSize: gridSize)
+            newHeight = snapToGrid(newHeight, gridSize: gridSize)
+        }
         
-        if newWidth > minWidth && newHeight > minHeight {
-            representation.position = CGPoint(
-                x: newX,
-                y: newY
-            )
+        // Update size and position
+        if newWidth > minWidth {
+            representation.size.width = newWidth
+            representation.position.x = newX
+        }
+        if newHeight > minHeight {
+            representation.size.height = newHeight
+            representation.position.y = newY
         }
     }
     
