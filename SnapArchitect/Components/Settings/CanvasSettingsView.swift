@@ -17,6 +17,7 @@ struct CanvasSettingsView: View {
         Form {
             Toggle("Show grid", isOn: $showGrid)
             Toggle("Snap to grid", isOn: $snapToGrid)
+                .disabled(!showGrid)
             Slider(value: $gridSize, in: 10...30) {
                 Text("Grid Size: \(gridSize, specifier: "%.1f") pts")
             }
