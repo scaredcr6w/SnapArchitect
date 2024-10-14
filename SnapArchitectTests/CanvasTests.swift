@@ -208,4 +208,48 @@ class CanvasTests {
             #expect(connection == nil)
         }
     }
+    
+    @Test("Connection updates when connected start element moves") func testUpdateConnectionForStartElement() async throws {
+        var document = SnapArchitectDocument()
+        var startElement = OOPElementRepresentation(
+            .accessPublic,
+            "Class1",
+            .classType,
+            CGPoint(x: 10, y: 10),
+            CGSize(width: 100, height: 100)
+        )
+        let endElement = OOPElementRepresentation(
+            .accessPublic,
+            "Class1",
+            .classType,
+            CGPoint(x: 20, y: 30),
+            CGSize(width: 100, height: 100)
+        )
+        
+        if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
+            document.diagrams[diagramIndex].entityRepresentations.append(startElement)
+            document.diagrams[diagramIndex].entityRepresentations.append(endElement)
+            let _ = try #require(document.diagrams[diagramIndex].entityRepresentations.first)
+            let _ = try #require(document.diagrams[diagramIndex].entityRepresentations.last)
+            
+            let connection = viewModel.createConnection(
+                from: CGPoint(x: 10, y: 10),
+                to: CGPoint(x: 20, y: 30),
+                location: CGPoint(x: 20, y: 30),
+                connectionType: .association,
+                elements: document.diagrams[diagramIndex].entityRepresentations, connections: document.diagrams[diagramIndex].entityConnections
+            )
+            
+            if let newConnection = connection {
+                document.diagrams[diagramIndex].entityConnections.append(newConnection)
+            }
+            
+            startElement.position = CGPoint(x: 100, y: 100)
+            
+            viewModel.updateConnections(for: &startElement, in: &document)
+            #expect(
+                document.diagrams[diagramIndex].entityConnections.first?.startElement.position == CGPoint(x: 100, y: 100)
+            )
+        }
+    }
 }

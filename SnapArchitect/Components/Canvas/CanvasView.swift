@@ -16,19 +16,7 @@ struct CanvasView: View {
     @Binding var document: SnapArchitectDocument
     @Binding var selectedTool: Any?
     @Binding var selectedElement: OOPElementRepresentation?
-    
-    private func updateConnections(for element: inout OOPElementRepresentation) {
-        if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
-            for index in document.diagrams[diagramIndex].entityConnections.indices {
-                if document.diagrams[diagramIndex].entityConnections[index].startElement.id == element.id {
-                    document.diagrams[diagramIndex].entityConnections[index].startElement.position = element.position
-                } else if document.diagrams[diagramIndex].entityConnections[index].endElement.id == element.id {
-                    document.diagrams[diagramIndex].entityConnections[index].endElement.position = element.position
-                }
-            }
-        }
-    }
-    
+
     private func addConnection(_ dragValue: DragGesture.Value) {
         if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
             if let selectedTool = selectedTool as? OOPConnectionType {
@@ -76,7 +64,7 @@ struct CanvasView: View {
                         .onChanged { value in
                             if object.id == selectedElement?.id {
                                 object.position = value.location
-                                updateConnections(for: &object)
+                                viewModel.updateConnections(for: &object, in: &document)
                             } else {
                                 addConnection(value)
                             }

@@ -147,4 +147,16 @@ final class CanvasViewModel: ObservableObject {
         
         return .init(type: connectionType, startElement: startElement, endElement: endElement)
     }
+    
+    func updateConnections(for element: inout OOPElementRepresentation, in document: inout SnapArchitectDocument) {
+        if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
+            for index in document.diagrams[diagramIndex].entityConnections.indices {
+                if document.diagrams[diagramIndex].entityConnections[index].startElement.id == element.id {
+                    document.diagrams[diagramIndex].entityConnections[index].startElement.position = element.position
+                } else if document.diagrams[diagramIndex].entityConnections[index].endElement.id == element.id {
+                    document.diagrams[diagramIndex].entityConnections[index].endElement.position = element.position
+                }
+            }
+        }
+    }
 }
