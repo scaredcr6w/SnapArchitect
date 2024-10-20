@@ -147,7 +147,7 @@ final class CanvasViewModel: ObservableObject {
     ///   - elements: an array containing OOPElementRepresentations
     ///   - connections: an array containing OOPConnectionRepresentations
     /// - Returns: a new OOPConnectionRepresentation between two elements
-    private func createConnection(
+    func createConnection(
         from start: CGPoint,
         to prededictedEnd: CGPoint,
         location: CGPoint,

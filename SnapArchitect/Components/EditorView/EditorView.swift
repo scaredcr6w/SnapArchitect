@@ -12,7 +12,7 @@ struct EditorView: View {
     @EnvironmentObject private var toolManager: ToolManager
     
     @ViewBuilder
-    private func toolbar(windowHeight: CGFloat) -> some View {
+    private func rightSidebar(windowHeight: CGFloat) -> some View {
         VStack {
             if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }),
                let element = toolManager.selectedElement,
@@ -43,8 +43,8 @@ struct EditorView: View {
                     CanvasView(document: $document)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-                toolbar(windowHeight: windowHeight)
-                    .frame(width: 270)
+                rightSidebar(windowHeight: windowHeight)
+                    .frame(width: 270, height: windowHeight)
             }
         }
         .frame(minWidth: 800, minHeight: 600)
