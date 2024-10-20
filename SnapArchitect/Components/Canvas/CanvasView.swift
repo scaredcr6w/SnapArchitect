@@ -8,45 +8,14 @@
 import SwiftUI
 
 struct CanvasView: View {
+    @EnvironmentObject private var toolManager: ToolManager
     @AppStorage("canvasBackgorundColor") private var backgroundColor: Color = .white
     @AppStorage("showGrid") private var showGrid: Bool = false
     @AppStorage("snapToGrid") private var snapToGrid: Bool = false
     @AppStorage("gridSize") private var gridSize: Double = 10
     @StateObject private var viewModel = CanvasViewModel()
     @Binding var document: SnapArchitectDocument
-    @EnvironmentObject private var toolManager: ToolManager
 
-    private func addConnection(_ dragValue: DragGesture.Value) {
-        if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
-            if let selectedTool = toolManager.selectedTool as? OOPConnectionType {
-                if let connection = viewModel.createConnection(
-                    from: dragValue.startLocation,
-                    to: dragValue.predictedEndLocation,
-                    location: dragValue.location,
-                    connectionType: selectedTool,
-                    elements: document.diagrams[diagramIndex].entityRepresentations,
-                    connections: document.diagrams[diagramIndex].entityConnections
-                ) {
-                    document.diagrams[diagramIndex].entityConnections.append(connection)
-                    toolManager.selectedTool = nil
-                }
-            }
-        }
-    }
-    
-    private func addElement(_ geo: GeometryProxy) {
-        if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
-            if let selectedTool = toolManager.selectedTool as? OOPElementType {
-                if let newElement = viewModel.createElement(at: geo, selectedTool) {
-                    document.diagrams[diagramIndex].entityRepresentations.append(newElement)
-                    toolManager.selectedElement = nil
-                    toolManager.selectedTool = nil
-                }
-            }
-        }
-        toolManager.selectedElement = nil
-    }
-    
     @ViewBuilder
     private func drawElements() -> some View {
         if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
@@ -65,7 +34,10 @@ struct CanvasView: View {
                                 object.position = value.location
                                 viewModel.updateConnections(for: &object, in: &document)
                             } else {
-                                addConnection(value)
+                                viewModel.addConnection(to: &document, toolManager.selectedTool, value) {
+                                    toolManager.selectedTool = nil
+                                    toolManager.selectedConnection = nil
+                                }
                             }
                         }
                         .onEnded { _ in
@@ -185,7 +157,14 @@ struct CanvasView: View {
                 .gesture(
                     TapGesture()
                         .onEnded { _ in
-                            addElement(geo)
+                            viewModel.createAndAddElement(
+                                to: &document,
+                                at: geo,
+                                toolManager.selectedTool as? OOPElementType
+                            ) {
+                                toolManager.selectedElement = nil
+                                toolManager.selectedTool = nil
+                            }
                         }
                 )
             }

@@ -27,10 +27,26 @@ final class CanvasViewModel: ObservableObject {
         return clickPosition
     }
     
-    func createElement(at geo: GeometryProxy, _ selectedTool: OOPElementType?) -> OOPElementRepresentation? {
-        guard let event = NSApp.currentEvent, let type = selectedTool else { return nil }
+    /// Creates a new OOPElementrRepresentation and adds it to the document
+    /// - Parameters:
+    ///   - document: a SnapArchitectDocument
+    ///   - geo: the geometry of the CanvasView
+    ///   - selectedTool: type of the desired element
+    ///   - completion: closure
+    func createAndAddElement(
+        to document: inout SnapArchitectDocument,
+        at geo: GeometryProxy,
+        _ selectedTool: Any?,
+        completion: @escaping () -> Void
+    ) {
+        guard let event = NSApp.currentEvent, let selectedTool = selectedTool as? OOPElementType else { return }
         let clickLocation = getMouseClick(geo, event: event)
-        return .init(.accessPublic, type.rawValue, type, clickLocation, CGSize(width: 100, height: 100))
+        let element = OOPElementRepresentation(.accessPublic, selectedTool.rawValue, selectedTool, clickLocation, CGSize(width: 100, height: 100))
+        
+        if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
+            document.diagrams[diagramIndex].entityRepresentations.append(element)
+            completion()
+        }
     }
     
     func getElementCorners(_ element: OOPElementRepresentation) -> (topLeft: CGPoint, bottomLeft: CGPoint, bottomRight: CGPoint, topRight: CGPoint) {
@@ -131,7 +147,7 @@ final class CanvasViewModel: ObservableObject {
     ///   - elements: an array containing OOPElementRepresentations
     ///   - connections: an array containing OOPConnectionRepresentations
     /// - Returns: a new OOPConnectionRepresentation between two elements
-    func createConnection(
+    private func createConnection(
         from start: CGPoint,
         to prededictedEnd: CGPoint,
         location: CGPoint,
@@ -146,6 +162,34 @@ final class CanvasViewModel: ObservableObject {
         if checkIfConnectionExists(startElement, endElement, connections) { return nil }
         
         return .init(type: connectionType, startElement: startElement, endElement: endElement)
+    }
+    
+    /// Adds a new connection to the document
+    /// - Parameters:
+    ///   - document: a SnapArchitectDocument
+    ///   - selectedTool: the desired connection type
+    ///   - dragValue: the value of a drag gesture that is used to calculate the start and end element of the connection
+    ///   - completion: closure
+    func addConnection(
+        to document: inout SnapArchitectDocument,
+        _ selectedTool: Any?,
+        _ dragValue: DragGesture.Value,
+        completion: () -> Void
+    ) {
+        guard let selectedTool = selectedTool as? OOPConnectionType else { return }
+        if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
+            if let connection = createConnection(
+                from: dragValue.startLocation,
+                to: dragValue.predictedEndLocation,
+                location: dragValue.location,
+                connectionType: selectedTool,
+                elements: document.diagrams[diagramIndex].entityRepresentations,
+                connections: document.diagrams[diagramIndex].entityConnections
+            ) {
+                document.diagrams[diagramIndex].entityConnections.append(connection)
+                completion()
+            }
+        }
     }
     
     func updateConnections(for element: inout OOPElementRepresentation, in document: inout SnapArchitectDocument) {
