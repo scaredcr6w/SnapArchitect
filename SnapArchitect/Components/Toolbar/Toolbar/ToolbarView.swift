@@ -20,8 +20,7 @@ struct ToolbarConnectionItem: Identifiable, Hashable {
 }
 
 struct ToolbarView: View {
-    @Binding var selectedTool: Any?
-    @Binding var selectedElement: OOPElementRepresentation?
+    @EnvironmentObject private var toolManager: ToolManager
     @State private var expandedCategories: Set<String> = []
     @State private var elementDisclosureGruopExpanded: Bool = true
     @State private var connectionDisclosureGruopExpanded: Bool = true
@@ -49,12 +48,12 @@ struct ToolbarView: View {
             ForEach(category) { toolbarItem in
                 ToolbarItemView(
                     toolbarItem.elementName,
-                    toolbarItem.elementType == selectedTool as? OOPElementType
+                    toolbarItem.elementType == toolManager.selectedTool as? OOPElementType
                 )
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    selectedTool = toolbarItem.elementType
+                    toolManager.selectedTool = toolbarItem.elementType
                 }
             }
         }
@@ -68,12 +67,12 @@ struct ToolbarView: View {
             ForEach(category) { toolbarItem in
                 ToolbarItemView(
                     toolbarItem.elementName,
-                    toolbarItem.elementType == selectedTool as? OOPConnectionType
+                    toolbarItem.elementType == toolManager.selectedTool as? OOPConnectionType
                 )
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    selectedTool = toolbarItem.elementType
+                    toolManager.selectedTool = toolbarItem.elementType
                 }
             }
         }

@@ -15,6 +15,7 @@ class ToolManager: ObservableObject {
         }
     }
     @Published var selectedElement: OOPElementRepresentation? = nil
+    @Published var selectedConnection: OOPConnectionRepresentation? = nil
     
     private var cursorPushed: Bool = false
     

@@ -14,10 +14,11 @@ struct SnapArchitectApp: App {
     
     var body: some Scene {
         DocumentGroup(newDocument: SnapArchitectDocument()) { file in
-            EditorView(document: file.$document, selectedTool: $toolManager.selectedTool, selectedElement: $toolManager.selectedElement)
+            EditorView(document: file.$document)
+                .environmentObject(toolManager)
                 .onAppear {
                     if let window = NSApplication.shared.windows.last {
-                        maximizeWindow(window)
+                        maximizeWindow(window) 
                     }
                     keyPressManager.setupKeyListeners(file.$document, toolManager)
                 }

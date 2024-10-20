@@ -9,14 +9,13 @@ import SwiftUI
 
 struct EditorView: View {
     @Binding var document: SnapArchitectDocument
-    @Binding var selectedTool: Any?
-    @Binding var selectedElement: OOPElementRepresentation?
+    @EnvironmentObject private var toolManager: ToolManager
     
     @ViewBuilder
     private func toolbar(windowHeight: CGFloat) -> some View {
         VStack {
             if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }),
-               let element = selectedElement,
+               let element = toolManager.selectedElement,
                let elementIndex = document.diagrams[diagramIndex].entityRepresentations.firstIndex(where: { $0.id == element.id }) {
                 let bindingElement = $document.diagrams[diagramIndex].entityRepresentations[elementIndex]
                 EditElementView(element: bindingElement)
@@ -37,11 +36,11 @@ struct EditorView: View {
             let windowHeight = windowGeo.size.height
             HStack(spacing: 0) {
                 NavigationSplitView {
-                    ToolbarView(selectedTool: $selectedTool, selectedElement: $selectedElement)
+                    ToolbarView()
                         .navigationSplitViewColumnWidth(270)
                     
                 } detail: {
-                    CanvasView(document: $document, selectedTool: $selectedTool, selectedElement: $selectedElement)
+                    CanvasView(document: $document)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
                 toolbar(windowHeight: windowHeight)
@@ -49,6 +48,6 @@ struct EditorView: View {
             }
         }
         .frame(minWidth: 800, minHeight: 600)
-        
+        .environmentObject(toolManager)
     }
 }

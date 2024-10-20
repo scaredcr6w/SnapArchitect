@@ -14,12 +14,11 @@ struct CanvasView: View {
     @AppStorage("gridSize") private var gridSize: Double = 10
     @StateObject private var viewModel = CanvasViewModel()
     @Binding var document: SnapArchitectDocument
-    @Binding var selectedTool: Any?
-    @Binding var selectedElement: OOPElementRepresentation?
+    @EnvironmentObject private var toolManager: ToolManager
 
     private func addConnection(_ dragValue: DragGesture.Value) {
         if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
-            if let selectedTool = selectedTool as? OOPConnectionType {
+            if let selectedTool = toolManager.selectedTool as? OOPConnectionType {
                 if let connection = viewModel.createConnection(
                     from: dragValue.startLocation,
                     to: dragValue.predictedEndLocation,
@@ -29,7 +28,7 @@ struct CanvasView: View {
                     connections: document.diagrams[diagramIndex].entityConnections
                 ) {
                     document.diagrams[diagramIndex].entityConnections.append(connection)
-                    self.selectedTool = nil
+                    toolManager.selectedTool = nil
                 }
             }
         }
@@ -37,15 +36,15 @@ struct CanvasView: View {
     
     private func addElement(_ geo: GeometryProxy) {
         if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
-            if let selectedTool = selectedTool as? OOPElementType {
+            if let selectedTool = toolManager.selectedTool as? OOPElementType {
                 if let newElement = viewModel.createElement(at: geo, selectedTool) {
                     document.diagrams[diagramIndex].entityRepresentations.append(newElement)
-                    selectedElement = nil
-                    self.selectedTool = nil
+                    toolManager.selectedElement = nil
+                    toolManager.selectedTool = nil
                 }
             }
         }
-        selectedElement = nil
+        toolManager.selectedElement = nil
     }
     
     @ViewBuilder
@@ -54,15 +53,15 @@ struct CanvasView: View {
             ForEach($document.diagrams[diagramIndex].entityRepresentations) { $object in
                 ClassView(
                     representation: $object,
-                    isSelected: selectedElement?.id == object.id
+                    isSelected: toolManager.selectedElement?.id == object.id
                 )
                 .onTapGesture {
-                    selectedElement = object
+                    toolManager.selectedElement = object
                 }
                 .gesture(
                     DragGesture()
                         .onChanged { value in
-                            if object.id == selectedElement?.id {
+                            if object.id == toolManager.selectedElement?.id {
                                 object.position = value.location
                                 viewModel.updateConnections(for: &object, in: &document)
                             } else {
@@ -76,7 +75,7 @@ struct CanvasView: View {
                             }
                         }
                 )
-                .onChange(of: selectedElement) { _, newValue in
+                .onChange(of: toolManager.selectedElement) { _, newValue in
                     if let newValue = newValue {
                         if let index = document.diagrams[diagramIndex].entityRepresentations.firstIndex(where: { $0.id == newValue.id }) {
                             document.diagrams[diagramIndex].entityRepresentations[index] = newValue
