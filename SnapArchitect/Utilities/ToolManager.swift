@@ -14,8 +14,20 @@ class ToolManager: ObservableObject {
             updateMouseCursor()
         }
     }
-    @Published var selectedElement: OOPElementRepresentation? = nil
-    @Published var selectedConnection: OOPConnectionRepresentation? = nil
+    @Published var selectedElement: OOPElementRepresentation? = nil {
+        didSet {
+            if selectedConnection != nil{
+                selectedConnection = nil
+            }
+        }
+    }
+    @Published var selectedConnection: OOPConnectionRepresentation? = nil {
+        didSet {
+            if selectedElement != nil {
+                selectedElement = nil
+            }
+        }
+    }
     
     private var cursorPushed: Bool = false
     

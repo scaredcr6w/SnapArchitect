@@ -27,6 +27,19 @@ class KeyPressManager: ObservableObject {
         }
     }
     
+    private func deleteConnection(
+        _ document: Binding<SnapArchitectDocument>,
+        _ selectedConnection: OOPConnectionRepresentation?
+    ) {
+        if let diagramIndex = document.wrappedValue.diagrams.firstIndex(where: { $0.isSelected }) {
+            if let selectedConnection = selectedConnection {
+                document.wrappedValue.diagrams[diagramIndex].entityConnections.removeAll(
+                    where: { $0 == selectedConnection }
+                )
+            }
+        }
+    }
+    
     func setupKeyListeners(
         _ document: Binding<SnapArchitectDocument>,
         _ toolManager: ToolManager
@@ -35,7 +48,12 @@ class KeyPressManager: ObservableObject {
         
         eventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
             if event.modifierFlags.contains(.command) && event.keyCode == 51 {
-                self.deleteElement(document, toolManager.selectedElement)
+                if let selectedElement = toolManager.selectedElement {
+                    self.deleteElement(document, selectedElement)
+                }
+                if let selectedConnection = toolManager.selectedConnection {
+                    self.deleteConnection(document, selectedConnection)
+                }
             }
             if event.keyCode == 53 {
                 toolManager.selectedTool = nil
