@@ -10,6 +10,7 @@ import SwiftUI
 struct Composition: View, Connection {
     var startElement: OOPElementRepresentation
     var endElement: OOPElementRepresentation
+    var isSelected: Bool
     
     var body: some View {
         ZStack {
@@ -27,6 +28,14 @@ struct Composition: View, Connection {
                 .rotationEffect(Angle(degrees: angle(from: startElement.position, to: endPosition)))
                 .position(endPosition)
         }
+        .overlay(
+            Group {
+                if isSelected {
+                    handleView
+                        .position(getClosestEdgeCenter())
+                }
+            }
+        )
     }
 }
 

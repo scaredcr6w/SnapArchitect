@@ -91,19 +91,68 @@ struct CanvasView: View {
         if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
             ForEach(document.diagrams[diagramIndex].entityConnections) { connection in
                 if connection.type == .association {
-                    Association(startElement: connection.startElement, endElement: connection.endElement)
+                    Association(
+                        startElement: connection.startElement,
+                        endElement: connection.endElement,
+                        isSelected: connection.id == toolManager.selectedConnection?.id
+                    )
+                    .onTapGesture {
+                        toolManager.selectedConnection = connection
+                    }
                 } else if connection.type == .directedAssociation {
-                    DirectedAssociation(startElement: connection.startElement, endElement: connection.endElement)
+                    DirectedAssociation(
+                        startElement: connection.startElement,
+                        endElement: connection.endElement,
+                        isSelected: connection.id == toolManager.selectedConnection?.id
+                    )
+                    .onTapGesture {
+                        toolManager.selectedConnection = connection
+                    }
                 } else if connection.type == .composition {
-                    Composition(startElement: connection.startElement, endElement: connection.endElement)
+                    Composition(
+                        startElement: connection.startElement,
+                        endElement: connection.endElement,
+                        isSelected: connection.id == toolManager.selectedConnection?.id
+                    )
+                    .onTapGesture {
+                        toolManager.selectedConnection = connection
+                    }
                 } else if connection.type == .aggregation {
-                    Aggregation(startElement: connection.startElement, endElement: connection.endElement)
+                    Aggregation(
+                        startElement: connection.startElement,
+                        endElement: connection.endElement,
+                        isSelected: connection.id == toolManager.selectedConnection?.id
+                    )
+                    .onTapGesture {
+                        toolManager.selectedConnection = connection
+                    }
                 } else if connection.type == .dependency {
-                    Dependency(startElement: connection.startElement, endElement: connection.endElement)
+                    Dependency(
+                        startElement: connection.startElement,
+                        endElement: connection.endElement,
+                        isSelected: connection.id == toolManager.selectedConnection?.id
+                    )
+                    .onTapGesture {
+                        toolManager.selectedConnection = connection
+                    }
                 } else if connection.type == .generalization {
-                    Generalization(startElement: connection.startElement, endElement: connection.endElement)
+                    Generalization(
+                        startElement: connection.startElement,
+                        endElement: connection.endElement,
+                        isSelected: connection.id == toolManager.selectedConnection?.id
+                    )
+                    .onTapGesture {
+                        toolManager.selectedConnection = connection
+                    }
                 } else if connection.type == .protocolRealization {
-                    ProtocolRealization(startElement: connection.startElement, endElement: connection.endElement)
+                    ProtocolRealization(
+                        startElement: connection.startElement,
+                        endElement: connection.endElement,
+                        isSelected: connection.id == toolManager.selectedConnection?.id
+                    )
+                    .onTapGesture {
+                        toolManager.selectedConnection = connection
+                    }
                 }
             }
         }

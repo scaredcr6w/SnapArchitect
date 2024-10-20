@@ -11,9 +11,16 @@ import SwiftUI
 protocol Connection {
     var startElement: OOPElementRepresentation { get set }
     var endElement: OOPElementRepresentation { get set }
+    var isSelected: Bool { get set }
 }
 
 extension Connection {
+    var handleView: some View {
+        Circle()
+            .stroke(.accent, lineWidth: 1.5)
+            .frame(width: 10, height: 10)
+            .contentShape(Circle())
+    }
     /// Gets a rectangle's edge's center points
     /// - Parameters:
     ///   - elementPosition: the position of the element
