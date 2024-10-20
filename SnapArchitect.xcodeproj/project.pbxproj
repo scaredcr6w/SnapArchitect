@@ -14,6 +14,7 @@
 		0F60CA732CAA85500059777E /* Dependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F60CA722CAA85500059777E /* Dependency.swift */; };
 		0F60CA752CAA855C0059777E /* Generalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F60CA742CAA855C0059777E /* Generalization.swift */; };
 		0F60CA772CAA85780059777E /* ProtocolRealization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F60CA762CAA85780059777E /* ProtocolRealization.swift */; };
+		0F9D16362CC002E60083CA6E /* CanvasGridShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9D16352CC002E60083CA6E /* CanvasGridShape.swift */; };
 		0FA4833B2C87167500E66C7C /* DirectedAssociation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA4833A2C87167500E66C7C /* DirectedAssociation.swift */; };
 		0FA4833D2C8716A100E66C7C /* Association.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA4833C2C8716A100E66C7C /* Association.swift */; };
 		0FC6ABE22C7F232B00986158 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABE12C7F232B00986158 /* CanvasView.swift */; };
@@ -59,6 +60,7 @@
 		0F60CA742CAA855C0059777E /* Generalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generalization.swift; sourceTree = "<group>"; };
 		0F60CA762CAA85780059777E /* ProtocolRealization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolRealization.swift; sourceTree = "<group>"; };
 		0F6B9B6F2CABEEF0008B56D4 /* SnapArchitectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SnapArchitectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F9D16352CC002E60083CA6E /* CanvasGridShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasGridShape.swift; sourceTree = "<group>"; };
 		0FA4833A2C87167500E66C7C /* DirectedAssociation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectedAssociation.swift; sourceTree = "<group>"; };
 		0FA4833C2C8716A100E66C7C /* Association.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Association.swift; sourceTree = "<group>"; };
 		0FC6ABE12C7F232B00986158 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 			children = (
 				0FC6ABE12C7F232B00986158 /* CanvasView.swift */,
 				0FC6ABE32C7F233500986158 /* CanvasViewModel.swift */,
+				0F9D16352CC002E60083CA6E /* CanvasGridShape.swift */,
 			);
 			path = Canvas;
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 				0FA4833B2C87167500E66C7C /* DirectedAssociation.swift in Sources */,
 				0FDF53682CA731AF002CB42A /* Aggregation.swift in Sources */,
 				0FE7A2A22CA6C6F600E96724 /* Composition.swift in Sources */,
+				0F9D16362CC002E60083CA6E /* CanvasGridShape.swift in Sources */,
 				0F01733F2C80C82B0051FD9A /* ToolbarItemView.swift in Sources */,
 				0FD4DA042C7DAEC100A0279D /* SnapArchitectApp.swift in Sources */,
 				0F3E20362CAD52120036B33A /* Color+.swift in Sources */,
