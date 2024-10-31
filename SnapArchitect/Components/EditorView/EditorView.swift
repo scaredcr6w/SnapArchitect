@@ -14,16 +14,22 @@ struct EditorView: View {
     @ViewBuilder
     private func rightSidebar(windowHeight: CGFloat) -> some View {
         VStack {
-            if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }),
-               let element = toolManager.selectedElement,
-               let elementIndex = document.diagrams[diagramIndex].entityRepresentations.firstIndex(where: { $0.id == element.id }) {
-                let bindingElement = $document.diagrams[diagramIndex].entityRepresentations[elementIndex]
-                EditElementView(element: bindingElement)
+            if toolManager.selectedElements.count > 1 {
+                Text("Multiple elements selected")
+                    .font(.title2)
                     .frame(height: windowHeight / 2)
-            } else {
+            } else if toolManager.selectedElements.isEmpty {
                 Text("No element selected")
                     .font(.title2)
                     .frame(height: windowHeight / 2)
+            } else {
+                if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }),
+                   let element = toolManager.selectedElements.last,
+                   let elementIndex = document.diagrams[diagramIndex].entityRepresentations.firstIndex(where: { $0.id == element.id }) {
+                    let bindingElement = $document.diagrams[diagramIndex].entityRepresentations[elementIndex]
+                    EditElementView(element: bindingElement)
+                        .frame(height: windowHeight / 2)
+                }
             }
             Divider()
             ProjectNavigatorView(document: $document)

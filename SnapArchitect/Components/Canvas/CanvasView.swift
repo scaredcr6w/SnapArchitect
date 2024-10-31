@@ -22,21 +22,23 @@ struct CanvasView: View {
             ForEach($document.diagrams[diagramIndex].entityRepresentations) { $object in
                 ClassView(
                     representation: $object,
-                    isSelected: toolManager.selectedElement?.id == object.id
+                    isSelected: $object.isSelected
                 )
                 .onTapGesture {
-                    toolManager.selectedElement = object
+                    toolManager.selectedElements.removeAll()
+                    toolManager.selectedElements.append(object)
+                    synchronizeSelection()
                 }
                 .gesture(
                     DragGesture()
                         .onChanged { value in
-                            if object.id == toolManager.selectedElement?.id {
+                            if object.isSelected {
                                 object.position = value.location
                                 viewModel.updateConnections(for: &object, in: &document)
                             } else {
                                 viewModel.addConnection(to: &document, toolManager.selectedTool, value) {
                                     toolManager.selectedTool = nil
-                                    toolManager.selectedConnection = nil
+                                    toolManager.selectedConnections.removeAll()
                                 }
                             }
                         }
@@ -47,7 +49,7 @@ struct CanvasView: View {
                             }
                         }
                 )
-                .onChange(of: toolManager.selectedElement) { _, newValue in
+                .onChange(of: toolManager.selectedElements.first(where: { $0 == object })) { _, newValue in
                     if let newValue = newValue {
                         if let index = document.diagrams[diagramIndex].entityRepresentations.firstIndex(where: { $0.id == newValue.id }) {
                             document.diagrams[diagramIndex].entityRepresentations[index] = newValue
@@ -61,69 +63,83 @@ struct CanvasView: View {
     @ViewBuilder
     private func drawConnections() -> some View {
         if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
-            ForEach(document.diagrams[diagramIndex].entityConnections) { connection in
+            ForEach($document.diagrams[diagramIndex].entityConnections) { $connection in
                 if connection.type == .association {
                     Association(
                         startElement: connection.startElement,
                         endElement: connection.endElement,
-                        isSelected: connection.id == toolManager.selectedConnection?.id
+                        isSelected: connection.isSelected
                     )
                     .onTapGesture {
-                        toolManager.selectedConnection = connection
+                        toolManager.selectedConnections.removeAll()
+                        toolManager.selectedConnections.append(connection)
+                        synchronizeConnectionSelection()
                     }
                 } else if connection.type == .directedAssociation {
                     DirectedAssociation(
                         startElement: connection.startElement,
                         endElement: connection.endElement,
-                        isSelected: connection.id == toolManager.selectedConnection?.id
+                        isSelected: connection.isSelected
                     )
                     .onTapGesture {
-                        toolManager.selectedConnection = connection
+                        toolManager.selectedConnections.removeAll()
+                        toolManager.selectedConnections.append(connection)
+                        synchronizeConnectionSelection()
                     }
                 } else if connection.type == .composition {
                     Composition(
                         startElement: connection.startElement,
                         endElement: connection.endElement,
-                        isSelected: connection.id == toolManager.selectedConnection?.id
+                        isSelected: connection.isSelected
                     )
                     .onTapGesture {
-                        toolManager.selectedConnection = connection
+                        toolManager.selectedConnections.removeAll()
+                        toolManager.selectedConnections.append(connection)
+                        synchronizeConnectionSelection()
                     }
                 } else if connection.type == .aggregation {
                     Aggregation(
                         startElement: connection.startElement,
                         endElement: connection.endElement,
-                        isSelected: connection.id == toolManager.selectedConnection?.id
+                        isSelected: connection.isSelected
                     )
                     .onTapGesture {
-                        toolManager.selectedConnection = connection
+                        toolManager.selectedConnections.removeAll()
+                        toolManager.selectedConnections.append(connection)
+                        synchronizeConnectionSelection()
                     }
                 } else if connection.type == .dependency {
                     Dependency(
                         startElement: connection.startElement,
                         endElement: connection.endElement,
-                        isSelected: connection.id == toolManager.selectedConnection?.id
+                        isSelected: connection.isSelected
                     )
                     .onTapGesture {
-                        toolManager.selectedConnection = connection
+                        toolManager.selectedConnections.removeAll()
+                        toolManager.selectedConnections.append(connection)
+                        synchronizeConnectionSelection()
                     }
                 } else if connection.type == .generalization {
                     Generalization(
                         startElement: connection.startElement,
                         endElement: connection.endElement,
-                        isSelected: connection.id == toolManager.selectedConnection?.id
+                        isSelected: connection.isSelected
                     )
                     .onTapGesture {
-                        toolManager.selectedConnection = connection
+                        toolManager.selectedConnections.removeAll()
+                        toolManager.selectedConnections.append(connection)
+                        synchronizeConnectionSelection()
                     }
                 } else if connection.type == .protocolRealization {
                     ProtocolRealization(
                         startElement: connection.startElement,
                         endElement: connection.endElement,
-                        isSelected: connection.id == toolManager.selectedConnection?.id
+                        isSelected: connection.isSelected
                     )
                     .onTapGesture {
-                        toolManager.selectedConnection = connection
+                        toolManager.selectedConnections.removeAll()
+                        toolManager.selectedConnections.append(connection)
+                        synchronizeConnectionSelection()
                     }
                 }
             }
@@ -157,18 +173,40 @@ struct CanvasView: View {
                 .gesture(
                     TapGesture()
                         .onEnded { _ in
-                            viewModel.createAndAddElement(
-                                to: &document,
-                                at: geo,
-                                toolManager.selectedTool as? OOPElementType
-                            ) {
-                                toolManager.selectedElement = nil
-                                toolManager.selectedTool = nil
+                            if toolManager.selectedTool != nil {
+                                viewModel.createAndAddElement(
+                                    to: &document,
+                                    at: geo,
+                                    toolManager.selectedTool as? OOPElementType
+                                ) {
+                                    toolManager.selectedElements.removeAll()
+                                    toolManager.selectedTool = nil
+                                }
+                            } else {
+                                toolManager.selectedElements.removeAll()
+                                synchronizeSelection()
+                                synchronizeConnectionSelection()
                             }
                         }
                 )
             }
             .scrollIndicators(.hidden)
+        }
+    }
+    
+    private func synchronizeSelection() {
+        if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
+            for index in document.diagrams[diagramIndex].entityRepresentations.indices {
+                document.diagrams[diagramIndex].entityRepresentations[index].isSelected = toolManager.selectedElements.contains(where: { $0.id == document.diagrams[diagramIndex].entityRepresentations[index].id })
+            }
+        }
+    }
+    
+    private func synchronizeConnectionSelection() {
+        if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
+            for index in document.diagrams[diagramIndex].entityConnections.indices {
+                document.diagrams[diagramIndex].entityConnections[index].isSelected = toolManager.selectedConnections.contains(where: { $0.id == document.diagrams[diagramIndex].entityConnections[index].id })
+            }
         }
     }
 }

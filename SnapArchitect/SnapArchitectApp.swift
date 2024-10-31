@@ -38,11 +38,4 @@ struct SnapArchitectApp: App {
             window.setFrame(screenRect, display: true, animate: true)
         }
     }
-    
-    func setEditWindowSize(_ window: NSWindow) {
-        if window.screen != nil {
-            let screenRect = NSRect(x: 500, y: 500, width: 250, height: 300)
-            window.setFrame(screenRect, display: true, animate: true)
-        }
-    }
 }

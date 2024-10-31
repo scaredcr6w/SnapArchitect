@@ -81,6 +81,7 @@ struct OOPElementRepresentation: OOPElement {
     var size: CGSize
     var attributes: [OOPElementAttribute]
     var functions: [OOPElementFunction]
+    var isSelected: Bool = false
     
     init(
         _ access: OOPAccessModifier,
@@ -106,6 +107,7 @@ struct OOPConnectionRepresentation: Identifiable, Hashable, Codable{
     var type: OOPConnectionType
     var startElement: OOPElementRepresentation
     var endElement: OOPElementRepresentation
+    var isSelected: Bool = false
     
     init(type: OOPConnectionType, startElement: OOPElementRepresentation, endElement: OOPElementRepresentation) {
         self.type = type

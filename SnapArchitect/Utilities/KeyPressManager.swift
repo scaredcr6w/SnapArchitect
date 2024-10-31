@@ -13,30 +13,29 @@ class KeyPressManager: ObservableObject {
     
     private func deleteElement(
         _ document: Binding<SnapArchitectDocument>,
-        _ selectedElement: OOPElementRepresentation?
+        _ elements: [OOPElementRepresentation]
     ) {
         if let diagramIndex = document.wrappedValue.diagrams.firstIndex(where: { $0.isSelected }) {
-            if let selectedElement = selectedElement {
-                document.wrappedValue.diagrams[diagramIndex].entityRepresentations.removeAll(
-                    where: { $0 == selectedElement }
-                )
-                document.wrappedValue.diagrams[diagramIndex].entityConnections.removeAll(
-                    where: { $0.startElement == selectedElement || $0.endElement == selectedElement }
-                )
+            document.wrappedValue.diagrams[diagramIndex].entityRepresentations.removeAll(
+                where: { $0.isSelected }
+            )
+            
+            for element in elements {
+                document.wrappedValue.diagrams[diagramIndex].entityConnections.removeAll { connection in
+                    connection.startElement.id == element.id || connection.endElement.id == element.id
+                }
             }
         }
     }
     
     private func deleteConnection(
         _ document: Binding<SnapArchitectDocument>,
-        _ selectedConnection: OOPConnectionRepresentation?
+        _ selectedConnections: [OOPConnectionRepresentation]
     ) {
         if let diagramIndex = document.wrappedValue.diagrams.firstIndex(where: { $0.isSelected }) {
-            if let selectedConnection = selectedConnection {
-                document.wrappedValue.diagrams[diagramIndex].entityConnections.removeAll(
-                    where: { $0 == selectedConnection }
-                )
-            }
+            document.wrappedValue.diagrams[diagramIndex].entityConnections.removeAll(
+                where: { $0.isSelected }
+            )
         }
     }
     
@@ -48,11 +47,11 @@ class KeyPressManager: ObservableObject {
         
         eventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
             if event.modifierFlags.contains(.command) && event.keyCode == 51 {
-                if let selectedElement = toolManager.selectedElement {
-                    self.deleteElement(document, selectedElement)
+                if !toolManager.selectedElements.isEmpty {
+                    self.deleteElement(document, toolManager.selectedElements)
                 }
-                if let selectedConnection = toolManager.selectedConnection {
-                    self.deleteConnection(document, selectedConnection)
+                if !toolManager.selectedConnections.isEmpty {
+                    self.deleteConnection(document, toolManager.selectedConnections)
                 }
             }
             if event.keyCode == 53 {

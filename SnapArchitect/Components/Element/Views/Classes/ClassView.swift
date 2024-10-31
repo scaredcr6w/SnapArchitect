@@ -12,7 +12,7 @@ struct ClassView: View {
     @AppStorage("gridSize") private var gridSize: Double = 10
     @Binding var representation: OOPElementRepresentation
     @State var backgroundColor: Color = .white
-    var isSelected: Bool
+    @Binding var isSelected: Bool
     let minWidth: CGFloat = 100
     let minHeight: CGFloat = 50
     
