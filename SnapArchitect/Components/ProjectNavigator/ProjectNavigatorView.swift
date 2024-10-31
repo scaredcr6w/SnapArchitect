@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProjectNavigatorView: View {
+    @EnvironmentObject private var toolManager: ToolManager
     @Binding var document: SnapArchitectDocument
     @State private var selectedDiagram = Set<UUID>()
     
@@ -25,6 +26,8 @@ struct ProjectNavigatorView: View {
                         }
                         .onTapGesture {
                             selectedDiagram.removeAll()
+                            toolManager.selectedElements.removeAll()
+                            toolManager.selectedConnections.removeAll()
                             selectedDiagram.insert(diagram.id)
                             
                             for index in document.diagrams.indices {

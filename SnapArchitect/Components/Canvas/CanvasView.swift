@@ -15,6 +15,8 @@ struct CanvasView: View {
     @AppStorage("gridSize") private var gridSize: Double = 10
     @StateObject private var viewModel = CanvasViewModel()
     @Binding var document: SnapArchitectDocument
+    
+    @State private var startLocation: CGPoint? = nil
 
     @ViewBuilder
     private func drawElements() -> some View {
@@ -157,6 +159,14 @@ struct CanvasView: View {
                         }
                         drawConnections()
                         drawElements()
+                        
+                        if toolManager.isDragging {
+                            Rectangle()
+                                .strokeBorder(Color.blue, lineWidth: 2)
+                                .background(Color.blue.opacity(0.2))
+                                .frame(width: toolManager.selectionRect.width, height: toolManager.selectionRect.height)
+                                .position(x: toolManager.selectionRect.midX, y: toolManager.selectionRect.midY)
+                        }
                     }
                     .frame(width: geo.size.width * 3, height: geo.size.height * 3)
                 }
@@ -187,6 +197,31 @@ struct CanvasView: View {
                                 synchronizeSelection()
                                 synchronizeConnectionSelection()
                             }
+                        }
+                )
+                .gesture(
+                    DragGesture()
+                        .onChanged { value in
+                            if startLocation == nil {
+                                startLocation = value.startLocation
+                                toolManager.isDragging = true
+                            }
+                            
+                            if let start = startLocation {
+                                let rect = CGRect(
+                                    x: min(start.x, value.location.x),
+                                    y: min(start.y, value.location.y),
+                                    width: abs(start.x - value.location.x),
+                                    height: abs(start.y - value.location.y)
+                                )
+                                
+                                toolManager.selectionRect = rect
+                                toolManager.dragSelection(with: rect, in: &document)
+                            }
+                        }
+                        .onEnded { _ in
+                            startLocation = nil
+                            toolManager.isDragging = false
                         }
                 )
             }
