@@ -14,10 +14,9 @@ class ToolManager: ObservableObject {
             updateMouseCursor()
         }
     }
-    @Published var selectedElements: [OOPElementRepresentation] = []
-    @Published var selectedConnections: [OOPConnectionRepresentation] = []
     @Published var selectionRect: CGRect = .zero
     @Published var isDragging: Bool = false
+    @Published var dragStartLocation: CGPoint? = nil
     
     private var cursorPushed: Bool = false
     
@@ -46,13 +45,23 @@ class ToolManager: ObservableObject {
         }
     }
     
+    func deselectAll(in document: inout SnapArchitectDocument) {
+        if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
+            for index in document.diagrams[diagramIndex].entityRepresentations.indices {
+                document.diagrams[diagramIndex].entityRepresentations[index].isSelected = false
+            }
+            
+            for index in document.diagrams[diagramIndex].entityConnections.indices {
+                document.diagrams[diagramIndex].entityConnections[index].isSelected = false
+            }
+        }
+    }
+    
     func dragSelection(with rect: CGRect, in document: inout SnapArchitectDocument) {
         if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
             for index in document.diagrams[diagramIndex].entityRepresentations.indices {
                 let element = document.diagrams[diagramIndex].entityRepresentations[index]
                 if rect.contains(element.position) {
-                    selectedElements.append(element)
-                    selectedElements[index].isSelected = true
                     document.diagrams[diagramIndex].entityRepresentations[index].isSelected = true
                 }
             }
@@ -60,8 +69,6 @@ class ToolManager: ObservableObject {
             for index in document.diagrams[diagramIndex].entityConnections.indices {
                 let connection = document.diagrams[diagramIndex].entityConnections[index]
                 if rect.contains(connection.startElement.position) || rect.contains(connection.endElement.position) {
-                    selectedConnections.append(connection)
-                    selectedConnections[index].isSelected = true
                     document.diagrams[diagramIndex].entityConnections[index].isSelected = true
                 }
             }

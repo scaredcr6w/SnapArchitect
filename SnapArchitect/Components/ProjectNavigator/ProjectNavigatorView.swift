@@ -26,8 +26,6 @@ struct ProjectNavigatorView: View {
                         }
                         .onTapGesture {
                             selectedDiagram.removeAll()
-                            toolManager.selectedElements.removeAll()
-                            toolManager.selectedConnections.removeAll()
                             selectedDiagram.insert(diagram.id)
                             
                             for index in document.diagrams.indices {

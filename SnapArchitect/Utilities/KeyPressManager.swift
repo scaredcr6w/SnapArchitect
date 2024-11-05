@@ -12,25 +12,17 @@ class KeyPressManager: ObservableObject {
     private var eventMonitor: Any?
     
     private func deleteElement(
-        _ document: Binding<SnapArchitectDocument>,
-        _ elements: [OOPElementRepresentation]
+        _ document: Binding<SnapArchitectDocument>
     ) {
         if let diagramIndex = document.wrappedValue.diagrams.firstIndex(where: { $0.isSelected }) {
             document.wrappedValue.diagrams[diagramIndex].entityRepresentations.removeAll(
                 where: { $0.isSelected }
             )
-            
-            for element in elements {
-                document.wrappedValue.diagrams[diagramIndex].entityConnections.removeAll { connection in
-                    connection.startElement.id == element.id || connection.endElement.id == element.id
-                }
-            }
         }
     }
     
     private func deleteConnection(
-        _ document: Binding<SnapArchitectDocument>,
-        _ selectedConnections: [OOPConnectionRepresentation]
+        _ document: Binding<SnapArchitectDocument>
     ) {
         if let diagramIndex = document.wrappedValue.diagrams.firstIndex(where: { $0.isSelected }) {
             document.wrappedValue.diagrams[diagramIndex].entityConnections.removeAll(
@@ -47,11 +39,15 @@ class KeyPressManager: ObservableObject {
         
         eventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
             if event.modifierFlags.contains(.command) && event.keyCode == 51 {
-                if !toolManager.selectedElements.isEmpty {
-                    self.deleteElement(document, toolManager.selectedElements)
-                }
-                if !toolManager.selectedConnections.isEmpty {
-                    self.deleteConnection(document, toolManager.selectedConnections)
+                if let diagramIndex = document.wrappedValue.diagrams.firstIndex(where: { $0.isSelected }) {
+                    let selectedElementsCount = document.wrappedValue.diagrams[diagramIndex].entityRepresentations.lazy.filter({ $0.isSelected }).count
+                    let selectedConnectionCount = document.wrappedValue.diagrams[diagramIndex].entityConnections.lazy.filter({ $0.isSelected }).count
+                    if selectedElementsCount > 0 {
+                        self.deleteElement(document)
+                    }
+                    if selectedConnectionCount > 0 {
+                        self.deleteConnection(document)
+                    }
                 }
             }
             if event.keyCode == 53 {

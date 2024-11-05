@@ -16,7 +16,6 @@ struct CanvasView: View {
     @StateObject private var viewModel = CanvasViewModel()
     @Binding var document: SnapArchitectDocument
     
-    @State private var startLocation: CGPoint? = nil
 
     @ViewBuilder
     private func drawElements() -> some View {
@@ -27,9 +26,8 @@ struct CanvasView: View {
                     isSelected: $object.isSelected
                 )
                 .onTapGesture {
-                    toolManager.selectedElements.removeAll()
-                    toolManager.selectedElements.append(object)
-                    synchronizeSelection()
+                    toolManager.deselectAll(in: &document)
+                    object.isSelected = true
                 }
                 .gesture(
                     DragGesture()
@@ -40,7 +38,6 @@ struct CanvasView: View {
                             } else {
                                 viewModel.addConnection(to: &document, toolManager.selectedTool, value) {
                                     toolManager.selectedTool = nil
-                                    toolManager.selectedConnections.removeAll()
                                 }
                             }
                         }
@@ -51,7 +48,7 @@ struct CanvasView: View {
                             }
                         }
                 )
-                .onChange(of: toolManager.selectedElements.first(where: { $0 == object })) { _, newValue in
+                .onChange(of: document.diagrams[diagramIndex].entityRepresentations.first(where: { $0 == object })) { _, newValue in
                     if let newValue = newValue {
                         if let index = document.diagrams[diagramIndex].entityRepresentations.firstIndex(where: { $0.id == newValue.id }) {
                             document.diagrams[diagramIndex].entityRepresentations[index] = newValue
@@ -73,9 +70,8 @@ struct CanvasView: View {
                         isSelected: connection.isSelected
                     )
                     .onTapGesture {
-                        toolManager.selectedConnections.removeAll()
-                        toolManager.selectedConnections.append(connection)
-                        synchronizeConnectionSelection()
+                        toolManager.deselectAll(in: &document)
+                        connection.isSelected = true
                     }
                 } else if connection.type == .directedAssociation {
                     DirectedAssociation(
@@ -84,9 +80,8 @@ struct CanvasView: View {
                         isSelected: connection.isSelected
                     )
                     .onTapGesture {
-                        toolManager.selectedConnections.removeAll()
-                        toolManager.selectedConnections.append(connection)
-                        synchronizeConnectionSelection()
+                        toolManager.deselectAll(in: &document)
+                        connection.isSelected = true
                     }
                 } else if connection.type == .composition {
                     Composition(
@@ -95,9 +90,8 @@ struct CanvasView: View {
                         isSelected: connection.isSelected
                     )
                     .onTapGesture {
-                        toolManager.selectedConnections.removeAll()
-                        toolManager.selectedConnections.append(connection)
-                        synchronizeConnectionSelection()
+                        toolManager.deselectAll(in: &document)
+                        connection.isSelected = true
                     }
                 } else if connection.type == .aggregation {
                     Aggregation(
@@ -106,9 +100,8 @@ struct CanvasView: View {
                         isSelected: connection.isSelected
                     )
                     .onTapGesture {
-                        toolManager.selectedConnections.removeAll()
-                        toolManager.selectedConnections.append(connection)
-                        synchronizeConnectionSelection()
+                        toolManager.deselectAll(in: &document)
+                        connection.isSelected = true
                     }
                 } else if connection.type == .dependency {
                     Dependency(
@@ -117,9 +110,8 @@ struct CanvasView: View {
                         isSelected: connection.isSelected
                     )
                     .onTapGesture {
-                        toolManager.selectedConnections.removeAll()
-                        toolManager.selectedConnections.append(connection)
-                        synchronizeConnectionSelection()
+                        toolManager.deselectAll(in: &document)
+                        connection.isSelected = true
                     }
                 } else if connection.type == .generalization {
                     Generalization(
@@ -128,9 +120,8 @@ struct CanvasView: View {
                         isSelected: connection.isSelected
                     )
                     .onTapGesture {
-                        toolManager.selectedConnections.removeAll()
-                        toolManager.selectedConnections.append(connection)
-                        synchronizeConnectionSelection()
+                        toolManager.deselectAll(in: &document)
+                        connection.isSelected = true
                     }
                 } else if connection.type == .protocolRealization {
                     ProtocolRealization(
@@ -139,9 +130,8 @@ struct CanvasView: View {
                         isSelected: connection.isSelected
                     )
                     .onTapGesture {
-                        toolManager.selectedConnections.removeAll()
-                        toolManager.selectedConnections.append(connection)
-                        synchronizeConnectionSelection()
+                        toolManager.deselectAll(in: &document)
+                        connection.isSelected = true
                     }
                 }
             }
@@ -162,8 +152,8 @@ struct CanvasView: View {
                         
                         if toolManager.isDragging {
                             Rectangle()
-                                .strokeBorder(Color.blue, lineWidth: 2)
-                                .background(Color.blue.opacity(0.2))
+                                .strokeBorder(Color.accentColor, lineWidth: 2)
+                                .background(Color.accentColor.opacity(0.2))
                                 .frame(width: toolManager.selectionRect.width, height: toolManager.selectionRect.height)
                                 .position(x: toolManager.selectionRect.midX, y: toolManager.selectionRect.midY)
                         }
@@ -189,25 +179,22 @@ struct CanvasView: View {
                                     at: geo,
                                     toolManager.selectedTool as? OOPElementType
                                 ) {
-                                    toolManager.selectedElements.removeAll()
                                     toolManager.selectedTool = nil
                                 }
                             } else {
-                                toolManager.selectedElements.removeAll()
-                                synchronizeSelection()
-                                synchronizeConnectionSelection()
+                                toolManager.deselectAll(in: &document)
                             }
                         }
                 )
                 .gesture(
                     DragGesture()
                         .onChanged { value in
-                            if startLocation == nil {
-                                startLocation = value.startLocation
+                            if toolManager.dragStartLocation == nil {
+                                toolManager.dragStartLocation = value.startLocation
                                 toolManager.isDragging = true
                             }
                             
-                            if let start = startLocation {
+                            if let start = toolManager.dragStartLocation {
                                 let rect = CGRect(
                                     x: min(start.x, value.location.x),
                                     y: min(start.y, value.location.y),
@@ -220,28 +207,12 @@ struct CanvasView: View {
                             }
                         }
                         .onEnded { _ in
-                            startLocation = nil
+                            toolManager.dragStartLocation = nil
                             toolManager.isDragging = false
                         }
                 )
             }
             .scrollIndicators(.hidden)
-        }
-    }
-    
-    private func synchronizeSelection() {
-        if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
-            for index in document.diagrams[diagramIndex].entityRepresentations.indices {
-                document.diagrams[diagramIndex].entityRepresentations[index].isSelected = toolManager.selectedElements.contains(where: { $0.id == document.diagrams[diagramIndex].entityRepresentations[index].id })
-            }
-        }
-    }
-    
-    private func synchronizeConnectionSelection() {
-        if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
-            for index in document.diagrams[diagramIndex].entityConnections.indices {
-                document.diagrams[diagramIndex].entityConnections[index].isSelected = toolManager.selectedConnections.contains(where: { $0.id == document.diagrams[diagramIndex].entityConnections[index].id })
-            }
         }
     }
 }
