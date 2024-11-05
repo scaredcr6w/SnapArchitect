@@ -9,41 +9,12 @@ import Foundation
 import AppKit
 
 class ToolManager: ObservableObject {
-    @Published var selectedTool: Any? = nil {
-        didSet {
-            updateMouseCursor()
-        }
-    }
+    @Published var selectedTool: Any? = nil
     @Published var selectionRect: CGRect = .zero
     @Published var isDragging: Bool = false
     @Published var dragStartLocation: CGPoint? = nil
     
     private var cursorPushed: Bool = false
-    
-    func updateMouseCursor() {
-        if cursorPushed {
-            NSCursor.pop()
-            cursorPushed = false
-        }
-        
-        if selectedTool is OOPElementType {
-            NSCursor.closedHand.push()
-            cursorPushed = true
-        } else if selectedTool is OOPConnectionType {
-            NSCursor.crosshair.push()
-            cursorPushed = true
-        } else {
-            resetMouseCursor()
-        }
-    }
-    
-    func resetMouseCursor() {
-        NSCursor.arrow.set()
-        if cursorPushed {
-            NSCursor.pop()
-            cursorPushed = false
-        }
-    }
     
     func deselectAll(in document: inout SnapArchitectDocument) {
         if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {

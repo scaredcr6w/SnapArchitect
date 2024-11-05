@@ -213,6 +213,13 @@ struct CanvasView: View {
                 )
             }
             .scrollIndicators(.hidden)
+            .onHover { inside in
+                if inside && toolManager.selectedTool != nil {
+                    NSCursor.crosshair.push()
+                } else {
+                    NSCursor.pop()
+                }
+            }
         }
     }
 }
