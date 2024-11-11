@@ -16,6 +16,10 @@ extension View {
     func corner(size: CGSize, anchor: UnitPoint, color: Color) -> some View {
         overlay(CornerRect(size: size, anchor: anchor)).foregroundStyle(color)
     }
+    
+    func zoomGesture(using zoomManager: ZoomManager, geometrySize: CGSize) -> some View {
+        self.modifier(ZoomGesture(zoomManager: zoomManager, geometrySize: geometrySize))
+    }
 }
 
 struct CornerRect: Shape {

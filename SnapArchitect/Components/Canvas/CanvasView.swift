@@ -15,8 +15,8 @@ struct CanvasView: View {
     @AppStorage("gridSize") private var gridSize: Double = 10
     @StateObject private var viewModel = CanvasViewModel()
     @Binding var document: SnapArchitectDocument
+    @StateObject private var zoomManager = ZoomManager()
     
-
     @ViewBuilder
     private func drawElements() -> some View {
         if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
@@ -141,25 +141,23 @@ struct CanvasView: View {
     var body: some View {
         GeometryReader { geo in
             ScrollView([.horizontal, .vertical]) {
-                VStack {
-                    ZStack {
-                        if showGrid {
-                            CanvasGridShape(gridSize: gridSize)
-                                .stroke(Color.gray.opacity(0.5), lineWidth: 0.5)
-                        }
-                        drawConnections()
-                        drawElements()
-                        
-                        if toolManager.isDragging {
-                            Rectangle()
-                                .strokeBorder(Color.accentColor, lineWidth: 2)
-                                .background(Color.accentColor.opacity(0.2))
-                                .frame(width: toolManager.selectionRect.width, height: toolManager.selectionRect.height)
-                                .position(x: toolManager.selectionRect.midX, y: toolManager.selectionRect.midY)
-                        }
+                ZStack {
+                    if showGrid {
+                        CanvasGridShape(gridSize: gridSize)
+                            .stroke(Color.gray.opacity(0.5), lineWidth: 0.5)
                     }
-                    .frame(width: geo.size.width * 3, height: geo.size.height * 3)
+                    drawConnections()
+                    drawElements()
+                    
+                    if toolManager.isDragging {
+                        Rectangle()
+                            .strokeBorder(Color.accentColor, lineWidth: 2)
+                            .background(Color.accentColor.opacity(0.2))
+                            .frame(width: toolManager.selectionRect.width, height: toolManager.selectionRect.height)
+                            .position(x: toolManager.selectionRect.midX, y: toolManager.selectionRect.midY)
+                    }
                 }
+                .frame(width: geo.size.width * 3, height: geo.size.height * 3)
                 .background(backgroundColor)
                 .background(GeometryReader { innerGeo in
                     Color.clear
