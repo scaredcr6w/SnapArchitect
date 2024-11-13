@@ -8,8 +8,7 @@
 import Foundation
 import SwiftUI
 
-final class CanvasViewModel: ObservableObject {
-    
+final class CanvasViewModel: ObservableObject {    
     @Published var xScrollOffset: CGFloat = 0
     @Published var yScrollOffset: CGFloat = 0
     
@@ -172,11 +171,10 @@ final class CanvasViewModel: ObservableObject {
     ///   - completion: closure
     func addConnection(
         to document: inout SnapArchitectDocument,
-        _ selectedTool: Any?,
         _ dragValue: DragGesture.Value,
         completion: () -> Void
     ) {
-        guard let selectedTool = selectedTool as? OOPConnectionType else { return }
+        guard let selectedTool = ToolManager.selectedTool as? OOPConnectionType else { return }
         if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
             if let connection = createConnection(
                 from: dragValue.startLocation,

@@ -32,12 +32,14 @@ class KeyPressManager: ObservableObject {
     }
     
     func setupKeyListeners(
-        _ document: Binding<SnapArchitectDocument>,
-        _ toolManager: ToolManager
+        _ document: Binding<SnapArchitectDocument>
     ) {
         removeKeyPressListener()
         
         eventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
+            if ToolManager.isEditing {
+                return event
+            }
             if event.modifierFlags.contains(.command) && event.keyCode == 51 {
                 if let diagramIndex = document.wrappedValue.diagrams.firstIndex(where: { $0.isSelected }) {
                     let selectedElementsCount = document.wrappedValue.diagrams[diagramIndex].entityRepresentations.lazy.filter({ $0.isSelected }).count
@@ -51,7 +53,7 @@ class KeyPressManager: ObservableObject {
                 }
             }
             if event.keyCode == 53 {
-                toolManager.selectedTool = nil
+                ToolManager.selectedTool = nil
             }
             return event
         }

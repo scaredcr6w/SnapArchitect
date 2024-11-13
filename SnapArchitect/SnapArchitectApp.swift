@@ -20,7 +20,7 @@ struct SnapArchitectApp: App {
                     if let window = NSApplication.shared.windows.last {
                         maximizeWindow(window) 
                     }
-                    keyPressManager.setupKeyListeners(file.$document, toolManager)
+                    keyPressManager.setupKeyListeners(file.$document)
                 }
                 .onDisappear {
                     keyPressManager.removeKeyPressListener()

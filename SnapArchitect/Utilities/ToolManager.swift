@@ -9,14 +9,19 @@ import Foundation
 import AppKit
 
 class ToolManager: ObservableObject {
-    @Published var selectedTool: Any? = nil
-    @Published var selectionRect: CGRect = .zero
-    @Published var isDragging: Bool = false
-    @Published var dragStartLocation: CGPoint? = nil
+    public static var selectedTool: Any? = nil {
+        didSet {
+            NotificationCenter.default.post(name: .toolSelected, object: nil)
+        }
+    }
+    public static var selectionRect: CGRect = .zero
+    public static var isDragging: Bool = false
+    public static var isEditing: Bool = false
+    public static var dragStartLocation: CGPoint? = nil
     
     private var cursorPushed: Bool = false
     
-    func deselectAll(in document: inout SnapArchitectDocument) {
+    static func deselectAll(in document: inout SnapArchitectDocument) {
         if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
             for index in document.diagrams[diagramIndex].entityRepresentations.indices {
                 document.diagrams[diagramIndex].entityRepresentations[index].isSelected = false
@@ -28,7 +33,7 @@ class ToolManager: ObservableObject {
         }
     }
     
-    func dragSelection(with rect: CGRect, in document: inout SnapArchitectDocument) {
+    static func dragSelection(with rect: CGRect, in document: inout SnapArchitectDocument) {
         if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
             for index in document.diagrams[diagramIndex].entityRepresentations.indices {
                 let element = document.diagrams[diagramIndex].entityRepresentations[index]

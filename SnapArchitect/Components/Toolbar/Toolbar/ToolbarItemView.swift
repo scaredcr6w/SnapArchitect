@@ -9,11 +9,13 @@ import SwiftUI
 
 struct ToolbarItemView: View {
     let elementName: String
-    var isSelected: Bool
+    let elementType: Any?
     
-    init(_ elementName: String, _ isSelected: Bool) {
+    @State private var isSelected: Bool = false
+    
+    init(_ elementName: String, _ elementType: Any?) {
         self.elementName = elementName
-        self.isSelected = isSelected
+        self.elementType = elementType
     }
     
     var body: some View {
@@ -25,9 +27,26 @@ struct ToolbarItemView: View {
                 .padding(.horizontal)
         }
         .frame(height: 20)
+        .onAppear {
+            updateSelection()
+            NotificationCenter.default.addObserver(forName: .toolSelected, object: nil, queue: .main) { _ in
+                updateSelection()
+            }
+        }
+        .onDisappear {
+            NotificationCenter.default.removeObserver(self, name: .toolSelected, object: nil)
+        }
     }
-}
-
-#Preview {
-    ToolbarItemView("Enumeration", true)
+    
+    private func updateSelection() {
+        if let elementType = elementType as? OOPElementType,
+           let selectedTool = ToolManager.selectedTool as? OOPElementType {
+            isSelected = (selectedTool == elementType)
+        } else if let elementType = elementType as? OOPConnectionType,
+                  let selectedTool = ToolManager.selectedTool as? OOPConnectionType {
+            isSelected = (selectedTool == elementType)
+        } else {
+            isSelected = false
+        }
+    }
 }

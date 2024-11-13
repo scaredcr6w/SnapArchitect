@@ -9,7 +9,6 @@ import SwiftUI
 
 struct EditorView: View {
     @Binding var document: SnapArchitectDocument
-    @EnvironmentObject private var toolManager: ToolManager
     
     @ViewBuilder
     private func rightSidebar(windowHeight: CGFloat) -> some View {
@@ -56,6 +55,5 @@ struct EditorView: View {
             }
         }
         .frame(minWidth: 800, minHeight: 600)
-        .environmentObject(toolManager)
     }
 }

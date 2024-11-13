@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ProjectNavigatorView: View {
-    @EnvironmentObject private var toolManager: ToolManager
     @Binding var document: SnapArchitectDocument
     @State private var selectedDiagram = Set<UUID>()
     

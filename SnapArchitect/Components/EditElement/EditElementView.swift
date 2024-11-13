@@ -17,6 +17,7 @@ struct EditElementView: View {
     @State private var newFunctionReturnType: String = ""
     @State private var newFunctionBody: String = ""
     @State private var selectedAccessModifier: OOPAccessModifier = .accessPublic
+    @FocusState private var isTextFieldFocused: Bool
     
     private func addAttribute() {
         let attribute = OOPElementAttribute(
@@ -55,6 +56,10 @@ struct EditElementView: View {
                 Section {
                     TextField("", text: $element.name, prompt: Text(element.name))
                         .padding(.horizontal)
+                        .focused($isTextFieldFocused)
+                        .onChange(of: isTextFieldFocused) { _, focused in
+                            ToolManager.isEditing = focused
+                        }
                 } header: {
                     Text("Edit name")
                         .font(.title3)
@@ -131,6 +136,9 @@ struct EditElementView: View {
                     }
                 }
                 
+            }
+            .onDisappear {
+                ToolManager.isEditing = false
             }
             Spacer()
         }
