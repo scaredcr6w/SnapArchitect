@@ -19,12 +19,9 @@ struct CanvasView: View {
         DragGesture()
             .onChanged { value in
                 if element.wrappedValue.isSelected {
-                    element.wrappedValue.position = value.location
-                    viewModel.updateConnections(for: &element.wrappedValue)
+                    viewModel.updateElementPosition(element, value: value)
                 } else {
-                    viewModel.addConnection(value) {
-                        ToolManager.shared.selectedTool = nil
-                    }
+                    viewModel.addConnection(value)
                 }
             }
             .onEnded { _ in
@@ -145,12 +142,12 @@ struct CanvasView: View {
                     drawConnections()
                     drawElements()
                     
-                    if ToolManager.shared.isDragging {
+                    if viewModel.isDraging {
                         Rectangle()
                             .strokeBorder(Color.accentColor, lineWidth: 2)
                             .background(Color.accentColor.opacity(0.2))
-                            .frame(width: ToolManager.shared.selectionRect.width, height: ToolManager.shared.selectionRect.height)
-                            .position(x: ToolManager.shared.selectionRect.midX, y: ToolManager.shared.selectionRect.midY)
+                            .frame(width: viewModel.selectionRect.width, height: viewModel.selectionRect.height)
+                            .position(x: viewModel.selectionRect.midX, y: viewModel.selectionRect.midY)
                     }
                 }
                 .frame(width: geo.size.width * 3, height: geo.size.height * 3)
@@ -171,23 +168,21 @@ struct CanvasView: View {
                                 viewModel.createAndAddElement(
                                     at: geo,
                                     ToolManager.shared.selectedTool as? OOPElementType
-                                ) {
-                                    ToolManager.shared.selectedTool = nil
-                                }
+                                )
                             } else {
-                                ToolManager.deselectAll()
+                                viewModel.deselectAll()
                             }
                         }
                 )
                 .gesture(
                     DragGesture()
                         .onChanged { value in
-                            if ToolManager.shared.dragStartLocation == nil {
-                                ToolManager.shared.dragStartLocation = value.startLocation
-                                ToolManager.shared.isDragging = true
+                            if viewModel.dragStartLocation == nil {
+                                viewModel.dragStartLocation = value.startLocation
+                                viewModel.isDraging = true
                             }
                             
-                            if let start = ToolManager.shared.dragStartLocation {
+                            if let start = viewModel.dragStartLocation {
                                 let rect = CGRect(
                                     x: min(start.x, value.location.x),
                                     y: min(start.y, value.location.y),
@@ -195,13 +190,13 @@ struct CanvasView: View {
                                     height: abs(start.y - value.location.y)
                                 )
                                 
-                                ToolManager.shared.selectionRect = rect
-                                ToolManager.dragSelection(with: rect)
+                                viewModel.selectionRect = rect
+                                viewModel.dragSelection(with: rect)
                             }
                         }
                         .onEnded { _ in
-                            ToolManager.shared.dragStartLocation = nil
-                            ToolManager.shared.isDragging = false
+                            viewModel.dragStartLocation = nil
+                            viewModel.isDraging = false
                         }
                 )
             }

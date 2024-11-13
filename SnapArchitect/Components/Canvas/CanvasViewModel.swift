@@ -12,6 +12,9 @@ final class CanvasViewModel: ObservableObject {
     @Published var document: SnapArchitectDocument
     @Published var xScrollOffset: CGFloat = 0
     @Published var yScrollOffset: CGFloat = 0
+    @Published var selectionRect: CGRect = .zero
+    @Published var dragStartLocation: CGPoint? = nil
+    @Published var isDraging: Bool = false
     
     init(document: SnapArchitectDocument) {
         self.document = document
@@ -20,6 +23,27 @@ final class CanvasViewModel: ObservableObject {
     func updateScrollOffsets(geo: GeometryProxy) {
         xScrollOffset = geo.frame(in: .global).minX
         yScrollOffset = geo.frame(in: .global).minY
+    }
+    
+    func updateSelectionRect(_ rect: CGRect) {
+        selectionRect = rect
+    }
+    
+    func dragSelection(with rect: CGRect) {
+        guard let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) else { return }
+        for index in document.diagrams[diagramIndex].entityRepresentations.indices {
+            let element = document.diagrams[diagramIndex].entityRepresentations[index]
+            if rect.contains(element.position) {
+                document.diagrams[diagramIndex].entityRepresentations[index].isSelected = true
+            }
+        }
+        
+        for index in document.diagrams[diagramIndex].entityConnections.indices {
+            let connection = document.diagrams[diagramIndex].entityConnections[index]
+            if rect.contains(connection.startElement.position) || rect.contains(connection.endElement.position) {
+                document.diagrams[diagramIndex].entityConnections[index].isSelected = true
+            }
+        }
     }
     
     func getMouseClick(_ geo: GeometryProxy, event: NSEvent) -> CGPoint {
@@ -31,13 +55,17 @@ final class CanvasViewModel: ObservableObject {
         return clickPosition
     }
     
-    func selectElement(element: inout OOPElementRepresentation) {
+    func deselectAll() {
         ToolManager.deselectAll()
+    }
+    
+    func selectElement(element: inout OOPElementRepresentation) {
+        deselectAll()
         element.isSelected = true
     }
     
     func selectConnection(connection: inout OOPConnectionRepresentation) {
-        ToolManager.deselectAll()
+        deselectAll()
         connection.isSelected = true
     }
     
@@ -49,8 +77,7 @@ final class CanvasViewModel: ObservableObject {
     ///   - completion: closure
     func createAndAddElement(
         at geo: GeometryProxy,
-        _ selectedTool: Any?,
-        completion: @escaping () -> Void
+        _ selectedTool: Any?
     ) {
         guard let event = NSApp.currentEvent, let selectedTool = selectedTool as? OOPElementType else { return }
         let clickLocation = getMouseClick(geo, event: event)
@@ -58,7 +85,7 @@ final class CanvasViewModel: ObservableObject {
         
         if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
             document.diagrams[diagramIndex].entityRepresentations.append(element)
-            completion()
+            ToolManager.shared.selectedTool = nil
         }
     }
     
@@ -184,8 +211,7 @@ final class CanvasViewModel: ObservableObject {
     ///   - dragValue: the value of a drag gesture that is used to calculate the start and end element of the connection
     ///   - completion: closure
     func addConnection(
-        _ dragValue: DragGesture.Value,
-        completion: () -> Void
+        _ dragValue: DragGesture.Value
     ) {
         guard let selectedTool = ToolManager.shared.selectedTool as? OOPConnectionType else { return }
         if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
@@ -198,7 +224,7 @@ final class CanvasViewModel: ObservableObject {
                 connections: document.diagrams[diagramIndex].entityConnections
             ) {
                 document.diagrams[diagramIndex].entityConnections.append(connection)
-                completion()
+                ToolManager.shared.selectedTool = nil
             }
         }
     }
@@ -215,5 +241,8 @@ final class CanvasViewModel: ObservableObject {
         }
     }
     
-    
+    func updateElementPosition(_ element: Binding<OOPElementRepresentation>, value: DragGesture.Value) {
+        element.wrappedValue.position = value.location
+        self.updateConnections(for: &element.wrappedValue)
+    }
 }

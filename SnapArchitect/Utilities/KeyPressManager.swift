@@ -12,8 +12,15 @@ class KeyPressManager: ObservableObject {
     private var eventMonitor: Any?
     
     private func deleteElement() {
+        guard let document = ToolManager.shared.document else { return }
         guard let diagramIndex = ToolManager.shared.document?.diagrams.firstIndex(where: { $0.isSelected }) else { return }
-        ToolManager.shared.document?.diagrams[diagramIndex].entityRepresentations.removeAll { $0.isSelected }
+        document.diagrams[diagramIndex].entityRepresentations.removeAll { $0.isSelected }
+        
+        for element in document.diagrams[diagramIndex].entityRepresentations {
+            document.diagrams[diagramIndex].entityConnections.removeAll { connection in
+                connection.startElement.id == element.id || connection.endElement.id == element.id
+            }
+        }
     }
     
     private func deleteConnection() {
