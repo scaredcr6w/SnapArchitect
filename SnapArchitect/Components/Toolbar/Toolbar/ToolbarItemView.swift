@@ -40,10 +40,10 @@ struct ToolbarItemView: View {
     
     private func updateSelection() {
         if let elementType = elementType as? OOPElementType,
-           let selectedTool = ToolManager.selectedTool as? OOPElementType {
+           let selectedTool = ToolManager.shared.selectedTool as? OOPElementType {
             isSelected = (selectedTool == elementType)
         } else if let elementType = elementType as? OOPConnectionType,
-                  let selectedTool = ToolManager.selectedTool as? OOPConnectionType {
+                  let selectedTool = ToolManager.shared.selectedTool as? OOPConnectionType {
             isSelected = (selectedTool == elementType)
         } else {
             isSelected = false

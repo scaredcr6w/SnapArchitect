@@ -12,56 +12,60 @@ struct CanvasView: View {
     @AppStorage("showGrid") private var showGrid: Bool = false
     @AppStorage("snapToGrid") private var snapToGrid: Bool = false
     @AppStorage("gridSize") private var gridSize: Double = 10
-    @StateObject private var viewModel = CanvasViewModel()
-    @Binding var document: SnapArchitectDocument
+    @EnvironmentObject private var viewModel: CanvasViewModel
     @StateObject private var zoomManager = ZoomManager()
+    
+    private func handleDragGesture(_ element: Binding<OOPElementRepresentation>) -> some Gesture {
+        DragGesture()
+            .onChanged { value in
+                if element.wrappedValue.isSelected {
+                    element.wrappedValue.position = value.location
+                    viewModel.updateConnections(for: &element.wrappedValue)
+                } else {
+                    viewModel.addConnection(value) {
+                        ToolManager.shared.selectedTool = nil
+                    }
+                }
+            }
+            .onEnded { _ in
+                if snapToGrid {
+                    let snappedCorners = viewModel.getSnappedElementCorners(element.wrappedValue, gridSize: gridSize)
+                    viewModel.adjustPositionFromCorners(snappedCorners, element: &element.wrappedValue)
+                }
+            }
+    }
+    
+    private func handleEntityChange(newValue: OOPElementRepresentation, diagramIndex: Int) {
+        if let index = viewModel.document.diagrams[diagramIndex].entityRepresentations.firstIndex(where: { $0.id == newValue.id }) {
+            viewModel.document.diagrams[diagramIndex].entityRepresentations[index] = newValue
+        }
+    }
     
     @ViewBuilder
     private func drawElements() -> some View {
-        if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
-            ForEach($document.diagrams[diagramIndex].entityRepresentations) { $object in
-                ClassView(
-                    representation: $object,
-                    isSelected: $object.isSelected
-                )
-                .onTapGesture {
-                    ToolManager.deselectAll(in: &document)
-                    object.isSelected = true
-                }
-                .gesture(
-                    DragGesture()
-                        .onChanged { value in
-                            if object.isSelected {
-                                object.position = value.location
-                                viewModel.updateConnections(for: &object, in: &document)
-                            } else {
-                                viewModel.addConnection(to: &document, value) {
-                                    ToolManager.selectedTool = nil
-                                }
-                            }
-                        }
-                        .onEnded { _ in
-                            if snapToGrid {
-                                let snappedCorners = viewModel.getSnappedElementCorners(object, gridSize: gridSize)
-                                viewModel.adjustPositionFromCorners(snappedCorners, element: &object)
-                            }
-                        }
-                )
-                .onChange(of: document.diagrams[diagramIndex].entityRepresentations.first(where: { $0 == object })) { _, newValue in
-                    if let newValue = newValue {
-                        if let index = document.diagrams[diagramIndex].entityRepresentations.firstIndex(where: { $0.id == newValue.id }) {
-                            document.diagrams[diagramIndex].entityRepresentations[index] = newValue
-                        }
+        if let diagramIndex = viewModel.document.diagrams.firstIndex(where: { $0.isSelected }) {
+            ForEach(viewModel.document.diagrams[diagramIndex].entityRepresentations.indices, id: \.self) { index in
+                ElementView(element: $viewModel.document.diagrams[diagramIndex].entityRepresentations[index])
+                    .onTapGesture {
+                        viewModel.selectElement(element: &viewModel.document.diagrams[diagramIndex].entityRepresentations[index])
                     }
-                }
+                    .gesture(
+                        handleDragGesture(
+                            $viewModel.document.diagrams[diagramIndex].entityRepresentations[index]
+                        )
+                    )
+                    .onChange(of: viewModel.document.diagrams[diagramIndex].entityRepresentations[index]) { _, newValue in
+                        handleEntityChange(newValue: newValue, diagramIndex: diagramIndex)
+                    }
             }
         }
     }
     
     @ViewBuilder
     private func drawConnections() -> some View {
-        if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
-            ForEach($document.diagrams[diagramIndex].entityConnections) { $connection in
+        if let diagramIndex = viewModel.document.diagrams.firstIndex(where: { $0.isSelected }) {
+            ForEach(viewModel.document.diagrams[diagramIndex].entityConnections.indices, id: \.self) { index in
+                var connection = viewModel.document.diagrams[diagramIndex].entityConnections[index]
                 if connection.type == .association {
                     Association(
                         startElement: connection.startElement,
@@ -69,8 +73,7 @@ struct CanvasView: View {
                         isSelected: connection.isSelected
                     )
                     .onTapGesture {
-                        ToolManager.deselectAll(in: &document)
-                        connection.isSelected = true
+                        viewModel.selectConnection(connection: &connection)
                     }
                 } else if connection.type == .directedAssociation {
                     DirectedAssociation(
@@ -79,8 +82,7 @@ struct CanvasView: View {
                         isSelected: connection.isSelected
                     )
                     .onTapGesture {
-                        ToolManager.deselectAll(in: &document)
-                        connection.isSelected = true
+                        viewModel.selectConnection(connection: &connection)
                     }
                 } else if connection.type == .composition {
                     Composition(
@@ -89,8 +91,7 @@ struct CanvasView: View {
                         isSelected: connection.isSelected
                     )
                     .onTapGesture {
-                        ToolManager.deselectAll(in: &document)
-                        connection.isSelected = true
+                        viewModel.selectConnection(connection: &connection)
                     }
                 } else if connection.type == .aggregation {
                     Aggregation(
@@ -99,8 +100,7 @@ struct CanvasView: View {
                         isSelected: connection.isSelected
                     )
                     .onTapGesture {
-                        ToolManager.deselectAll(in: &document)
-                        connection.isSelected = true
+                        viewModel.selectConnection(connection: &connection)
                     }
                 } else if connection.type == .dependency {
                     Dependency(
@@ -109,8 +109,7 @@ struct CanvasView: View {
                         isSelected: connection.isSelected
                     )
                     .onTapGesture {
-                        ToolManager.deselectAll(in: &document)
-                        connection.isSelected = true
+                        viewModel.selectConnection(connection: &connection)
                     }
                 } else if connection.type == .generalization {
                     Generalization(
@@ -119,8 +118,7 @@ struct CanvasView: View {
                         isSelected: connection.isSelected
                     )
                     .onTapGesture {
-                        ToolManager.deselectAll(in: &document)
-                        connection.isSelected = true
+                        viewModel.selectConnection(connection: &connection)
                     }
                 } else if connection.type == .protocolRealization {
                     ProtocolRealization(
@@ -129,8 +127,7 @@ struct CanvasView: View {
                         isSelected: connection.isSelected
                     )
                     .onTapGesture {
-                        ToolManager.deselectAll(in: &document)
-                        connection.isSelected = true
+                        viewModel.selectConnection(connection: &connection)
                     }
                 }
             }
@@ -148,12 +145,12 @@ struct CanvasView: View {
                     drawConnections()
                     drawElements()
                     
-                    if ToolManager.isDragging {
+                    if ToolManager.shared.isDragging {
                         Rectangle()
                             .strokeBorder(Color.accentColor, lineWidth: 2)
                             .background(Color.accentColor.opacity(0.2))
-                            .frame(width: ToolManager.selectionRect.width, height: ToolManager.selectionRect.height)
-                            .position(x: ToolManager.selectionRect.midX, y: ToolManager.selectionRect.midY)
+                            .frame(width: ToolManager.shared.selectionRect.width, height: ToolManager.shared.selectionRect.height)
+                            .position(x: ToolManager.shared.selectionRect.midX, y: ToolManager.shared.selectionRect.midY)
                     }
                 }
                 .frame(width: geo.size.width * 3, height: geo.size.height * 3)
@@ -170,28 +167,27 @@ struct CanvasView: View {
                 .gesture(
                     TapGesture()
                         .onEnded { _ in
-                            if ToolManager.selectedTool != nil {
+                            if ToolManager.shared.selectedTool != nil {
                                 viewModel.createAndAddElement(
-                                    to: &document,
                                     at: geo,
-                                    ToolManager.selectedTool as? OOPElementType
+                                    ToolManager.shared.selectedTool as? OOPElementType
                                 ) {
-                                    ToolManager.selectedTool = nil
+                                    ToolManager.shared.selectedTool = nil
                                 }
                             } else {
-                                ToolManager.deselectAll(in: &document)
+                                ToolManager.deselectAll()
                             }
                         }
                 )
                 .gesture(
                     DragGesture()
                         .onChanged { value in
-                            if ToolManager.dragStartLocation == nil {
-                                ToolManager.dragStartLocation = value.startLocation
-                                ToolManager.isDragging = true
+                            if ToolManager.shared.dragStartLocation == nil {
+                                ToolManager.shared.dragStartLocation = value.startLocation
+                                ToolManager.shared.isDragging = true
                             }
                             
-                            if let start = ToolManager.dragStartLocation {
+                            if let start = ToolManager.shared.dragStartLocation {
                                 let rect = CGRect(
                                     x: min(start.x, value.location.x),
                                     y: min(start.y, value.location.y),
@@ -199,24 +195,32 @@ struct CanvasView: View {
                                     height: abs(start.y - value.location.y)
                                 )
                                 
-                                ToolManager.selectionRect = rect
-                                ToolManager.dragSelection(with: rect, in: &document)
+                                ToolManager.shared.selectionRect = rect
+                                ToolManager.dragSelection(with: rect)
                             }
                         }
                         .onEnded { _ in
-                            ToolManager.dragStartLocation = nil
-                            ToolManager.isDragging = false
+                            ToolManager.shared.dragStartLocation = nil
+                            ToolManager.shared.isDragging = false
                         }
                 )
             }
             .scrollIndicators(.hidden)
             .onHover { inside in
-                if inside && ToolManager.selectedTool != nil {
+                if inside && ToolManager.shared.selectedTool != nil {
                     NSCursor.crosshair.push()
                 } else {
                     NSCursor.pop()
                 }
             }
         }
+    }
+}
+
+struct ElementView: View {
+    @Binding var element: OOPElementRepresentation
+    
+    var body: some View {
+        ClassView(representation: $element, isSelected: $element.isSelected)
     }
 }

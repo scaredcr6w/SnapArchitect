@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EditorView: View {
-    @Binding var document: SnapArchitectDocument
+    @EnvironmentObject var document: SnapArchitectDocument
     
     @ViewBuilder
     private func rightSidebar(windowHeight: CGFloat) -> some View {
@@ -33,7 +33,7 @@ struct EditorView: View {
                 }
             }
             Divider()
-            ProjectNavigatorView(document: $document)
+            ProjectNavigatorView()
                 .frame(height: windowHeight / 2)
         }
     }
@@ -47,7 +47,7 @@ struct EditorView: View {
                         .navigationSplitViewColumnWidth(270)
                     
                 } detail: {
-                    CanvasView(document: $document)
+                    CanvasView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
                 rightSidebar(windowHeight: windowHeight)

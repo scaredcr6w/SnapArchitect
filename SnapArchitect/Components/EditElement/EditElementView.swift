@@ -58,7 +58,7 @@ struct EditElementView: View {
                         .padding(.horizontal)
                         .focused($isTextFieldFocused)
                         .onChange(of: isTextFieldFocused) { _, focused in
-                            ToolManager.isEditing = focused
+                            ToolManager.shared.isEditing = focused
                         }
                 } header: {
                     Text("Edit name")
@@ -138,7 +138,7 @@ struct EditElementView: View {
                 
             }
             .onDisappear {
-                ToolManager.isEditing = false
+                ToolManager.shared.isEditing = false
             }
             Spacer()
         }

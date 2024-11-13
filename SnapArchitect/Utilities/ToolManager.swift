@@ -9,31 +9,44 @@ import Foundation
 import AppKit
 
 class ToolManager: ObservableObject {
-    public static var selectedTool: Any? = nil {
+    static let shared = ToolManager()
+    
+    // MARK: Published Properties
+    @Published var selectedTool: Any? = nil {
         didSet {
             NotificationCenter.default.post(name: .toolSelected, object: nil)
         }
     }
-    public static var selectionRect: CGRect = .zero
-    public static var isDragging: Bool = false
-    public static var isEditing: Bool = false
-    public static var dragStartLocation: CGPoint? = nil
+    @Published var selectionRect: CGRect = .zero
+    @Published var isDragging: Bool = false
+    @Published var isEditing: Bool = false
+    @Published var dragStartLocation: CGPoint? = nil
     
-    private var cursorPushed: Bool = false
+    var document: SnapArchitectDocument?
     
-    static func deselectAll(in document: inout SnapArchitectDocument) {
-        if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
-            for index in document.diagrams[diagramIndex].entityRepresentations.indices {
-                document.diagrams[diagramIndex].entityRepresentations[index].isSelected = false
-            }
-            
-            for index in document.diagrams[diagramIndex].entityConnections.indices {
-                document.diagrams[diagramIndex].entityConnections[index].isSelected = false
-            }
+    private init() {}
+    
+    // MARK: - Singleton Methods
+    static func deselectAll() {
+        shared.deselectAllElements()
+    }
+    
+    private func deselectAllElements() {
+        guard let diagramIndex = document?.diagrams.firstIndex(where: { $0.isSelected }) else { return }
+        document?.diagrams[diagramIndex].entityRepresentations.indices.forEach { index in
+            document?.diagrams[diagramIndex].entityRepresentations[index].isSelected = false
+        }
+        document?.diagrams[diagramIndex].entityConnections.indices.forEach { index in
+            document?.diagrams[diagramIndex].entityConnections[index].isSelected = false
         }
     }
     
-    static func dragSelection(with rect: CGRect, in document: inout SnapArchitectDocument) {
+    static func dragSelection(with rect: CGRect) {
+        shared.dragSelection(rect)
+    }
+    
+    private func dragSelection(_ rect: CGRect) {
+        guard let document = document else { return }
         if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
             for index in document.diagrams[diagramIndex].entityRepresentations.indices {
                 let element = document.diagrams[diagramIndex].entityRepresentations[index]

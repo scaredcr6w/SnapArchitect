@@ -10,17 +10,18 @@ import SwiftUI
 @main
 struct SnapArchitectApp: App {
     @StateObject var keyPressManager = KeyPressManager()
-    @StateObject var toolManager = ToolManager()
     
     var body: some Scene {
-        DocumentGroup(newDocument: SnapArchitectDocument()) { file in
-            EditorView(document: file.$document)
-                .environmentObject(toolManager)
+        DocumentGroup(newDocument: { SnapArchitectDocument() }) { file in
+            let canvasViewModel = CanvasViewModel(document: file.document)
+            EditorView()
+                .environmentObject(canvasViewModel)
                 .onAppear {
                     if let window = NSApplication.shared.windows.last {
-                        maximizeWindow(window) 
+                        maximizeWindow(window)
                     }
-                    keyPressManager.setupKeyListeners(file.$document)
+                    ToolManager.shared.document = file.document
+                    keyPressManager.setupKeyListeners()
                 }
                 .onDisappear {
                     keyPressManager.removeKeyPressListener()

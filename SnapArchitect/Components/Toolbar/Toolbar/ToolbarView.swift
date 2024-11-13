@@ -52,7 +52,7 @@ struct ToolbarView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    ToolManager.selectedTool = toolbarItem.elementType
+                    ToolManager.shared.selectedTool = toolbarItem.elementType
                 }
             }
         }
@@ -71,7 +71,7 @@ struct ToolbarView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    ToolManager.selectedTool = toolbarItem.elementType
+                    ToolManager.shared.selectedTool = toolbarItem.elementType
                 }
             }
         }

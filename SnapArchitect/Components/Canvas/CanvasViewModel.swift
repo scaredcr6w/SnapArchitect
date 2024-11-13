@@ -8,9 +8,14 @@
 import Foundation
 import SwiftUI
 
-final class CanvasViewModel: ObservableObject {    
+final class CanvasViewModel: ObservableObject {
+    @Published var document: SnapArchitectDocument
     @Published var xScrollOffset: CGFloat = 0
     @Published var yScrollOffset: CGFloat = 0
+    
+    init(document: SnapArchitectDocument) {
+        self.document = document
+    }
     
     func updateScrollOffsets(geo: GeometryProxy) {
         xScrollOffset = geo.frame(in: .global).minX
@@ -26,6 +31,16 @@ final class CanvasViewModel: ObservableObject {
         return clickPosition
     }
     
+    func selectElement(element: inout OOPElementRepresentation) {
+        ToolManager.deselectAll()
+        element.isSelected = true
+    }
+    
+    func selectConnection(connection: inout OOPConnectionRepresentation) {
+        ToolManager.deselectAll()
+        connection.isSelected = true
+    }
+    
     /// Creates a new OOPElementrRepresentation and adds it to the document
     /// - Parameters:
     ///   - document: a SnapArchitectDocument
@@ -33,7 +48,6 @@ final class CanvasViewModel: ObservableObject {
     ///   - selectedTool: type of the desired element
     ///   - completion: closure
     func createAndAddElement(
-        to document: inout SnapArchitectDocument,
         at geo: GeometryProxy,
         _ selectedTool: Any?,
         completion: @escaping () -> Void
@@ -170,11 +184,10 @@ final class CanvasViewModel: ObservableObject {
     ///   - dragValue: the value of a drag gesture that is used to calculate the start and end element of the connection
     ///   - completion: closure
     func addConnection(
-        to document: inout SnapArchitectDocument,
         _ dragValue: DragGesture.Value,
         completion: () -> Void
     ) {
-        guard let selectedTool = ToolManager.selectedTool as? OOPConnectionType else { return }
+        guard let selectedTool = ToolManager.shared.selectedTool as? OOPConnectionType else { return }
         if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
             if let connection = createConnection(
                 from: dragValue.startLocation,
@@ -190,7 +203,7 @@ final class CanvasViewModel: ObservableObject {
         }
     }
     
-    func updateConnections(for element: inout OOPElementRepresentation, in document: inout SnapArchitectDocument) {
+    func updateConnections(for element: inout OOPElementRepresentation) {
         if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
             for index in document.diagrams[diagramIndex].entityConnections.indices {
                 if document.diagrams[diagramIndex].entityConnections[index].startElement.id == element.id {
@@ -201,4 +214,6 @@ final class CanvasViewModel: ObservableObject {
             }
         }
     }
+    
+    
 }

@@ -34,25 +34,33 @@ struct SnapArchitectDiagram: Codable, Identifiable, Hashable {
     }
 }
 
-struct SnapArchitectDocument: FileDocument, Codable {
-    var diagrams: [SnapArchitectDiagram]
-    init(diagrams: [SnapArchitectDiagram] = [.init(isSelected: true, entityRepresentations: [], entityConnections: [])]) {
+class SnapArchitectDocument: ReferenceFileDocument {
+    typealias Snapshot = [SnapArchitectDiagram]
+    
+    @Published var diagrams: Snapshot
+    
+    init(diagrams: Snapshot = [.init(isSelected: true, entityRepresentations: [], entityConnections: [])]) {
         self.diagrams = diagrams
     }
-
+    
     static var readableContentTypes: [UTType] { [.quickArchitectDocument] }
-
-    init(configuration: ReadConfiguration) throws {
+    
+    required init(configuration: ReadConfiguration) throws {
         guard let data = configuration.file.regularFileContents else {
             throw CocoaError(.fileReadCorruptFile)
         }
-        let decoder = JSONDecoder()
-        self = try decoder.decode(SnapArchitectDocument.self, from: data)
+        
+        diagrams = try JSONDecoder().decode(Snapshot.self, from: data)
+        
     }
     
-    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        let encoder = JSONEncoder()
-        let data = try encoder.encode(self)
-        return .init(regularFileWithContents: data)
+    func snapshot(contentType: UTType) throws -> Snapshot {
+        return diagrams
+    }
+    
+    func fileWrapper(snapshot: Snapshot, configuration: WriteConfiguration) throws -> FileWrapper {
+        let data = try JSONEncoder().encode(snapshot)
+        return FileWrapper(regularFileWithContents: data)
     }
 }
+

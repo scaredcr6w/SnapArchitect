@@ -11,49 +11,45 @@ import SwiftUI
 class KeyPressManager: ObservableObject {
     private var eventMonitor: Any?
     
-    private func deleteElement(
-        _ document: Binding<SnapArchitectDocument>
-    ) {
-        if let diagramIndex = document.wrappedValue.diagrams.firstIndex(where: { $0.isSelected }) {
-            document.wrappedValue.diagrams[diagramIndex].entityRepresentations.removeAll(
-                where: { $0.isSelected }
-            )
-        }
+    private func deleteElement() {
+        guard let diagramIndex = ToolManager.shared.document?.diagrams.firstIndex(where: { $0.isSelected }) else { return }
+        ToolManager.shared.document?.diagrams[diagramIndex].entityRepresentations.removeAll { $0.isSelected }
     }
     
-    private func deleteConnection(
-        _ document: Binding<SnapArchitectDocument>
-    ) {
-        if let diagramIndex = document.wrappedValue.diagrams.firstIndex(where: { $0.isSelected }) {
-            document.wrappedValue.diagrams[diagramIndex].entityConnections.removeAll(
-                where: { $0.isSelected }
-            )
-        }
+    private func deleteConnection() {
+        guard let diagramIndex = ToolManager.shared.document?.diagrams.firstIndex(where: { $0.isSelected }) else { return }
+        ToolManager.shared.document?.diagrams[diagramIndex].entityConnections.removeAll { $0.isSelected }
     }
     
-    func setupKeyListeners(
-        _ document: Binding<SnapArchitectDocument>
-    ) {
+    func setupKeyListeners() {
         removeKeyPressListener()
         
         eventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
-            if ToolManager.isEditing {
+            if ToolManager.shared.isEditing {
                 return event
             }
             if event.modifierFlags.contains(.command) && event.keyCode == 51 {
-                if let diagramIndex = document.wrappedValue.diagrams.firstIndex(where: { $0.isSelected }) {
-                    let selectedElementsCount = document.wrappedValue.diagrams[diagramIndex].entityRepresentations.lazy.filter({ $0.isSelected }).count
-                    let selectedConnectionCount = document.wrappedValue.diagrams[diagramIndex].entityConnections.lazy.filter({ $0.isSelected }).count
+                if let diagramIndex = ToolManager.shared.document?.diagrams.firstIndex(where: { $0.isSelected }) {
+                    let selectedElementsCount =
+                    ToolManager.shared.document?.diagrams[diagramIndex].entityRepresentations.lazy.filter(
+                        { $0.isSelected }
+                    ).count ?? 0
+                    
+                    let selectedConnectionCount =
+                    ToolManager.shared.document?.diagrams[diagramIndex].entityConnections.lazy.filter(
+                        { $0.isSelected }
+                    ).count ?? 0
+                    
                     if selectedElementsCount > 0 {
-                        self.deleteElement(document)
+                        self.deleteElement()
                     }
                     if selectedConnectionCount > 0 {
-                        self.deleteConnection(document)
+                        self.deleteConnection()
                     }
                 }
             }
             if event.keyCode == 53 {
-                ToolManager.selectedTool = nil
+                ToolManager.shared.selectedTool = nil
             }
             return event
         }
