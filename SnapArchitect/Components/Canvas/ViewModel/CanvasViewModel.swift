@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 final class CanvasViewModel: ObservableObject {
+    // MARK: Properties
     @AppStorage("canvasBackgorundColor") var backgroundColor: Color = .white
     @AppStorage("showGrid") var showGrid: Bool = false
     @AppStorage("snapToGrid") var snapToGrid: Bool = false
@@ -49,14 +50,11 @@ final class CanvasViewModel: ObservableObject {
         return clickPosition
     }
     
-    
     /// Creates a new OOPElementrRepresentation and adds it to the document
     /// - Parameters:
-    ///   - document: a SnapArchitectDocument
     ///   - geo: the geometry of the CanvasView
     ///   - selectedTool: type of the desired element
-    ///   - completion: closure
-    func createAndAddElement(
+    func newElement(
         at geo: GeometryProxy,
         _ selectedTool: Any?
     ) {
@@ -68,6 +66,38 @@ final class CanvasViewModel: ObservableObject {
             document.diagrams[diagramIndex].entityRepresentations.append(element)
             ToolManager.shared.selectedTool = nil
         }
+    }
+    
+    /// Creates a connection between two OOPElementRepresentations
+    /// - Parameters:
+    ///   - start: the point, from which the closest element is being determinted. This will be used as the connection's start element.
+    ///   - prededictedEnd: the point, from which the closest element is being determinted. This will be used as the connection's end element.
+    ///   - location: the point of the Drag gesture's current point, that is used to find the closest end element more accurately
+    /// - Returns: a new OOPConnectionRepresentation between two elements
+    func newConnection(
+        from start: CGPoint,
+        to prededictedEnd: CGPoint,
+        location: CGPoint
+    ) {
+        guard let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) else { return }
+        guard let selectedTool = ToolManager.shared.selectedTool as? OOPConnectionType else { return }
+        
+        let elements = document.diagrams[diagramIndex].entityRepresentations
+        
+        guard !elements.isEmpty else { return }
+        guard distance(from: prededictedEnd, to: location) <= 10 else { return }
+        guard let startElement = findClosestElement(to: start, elements) else { return }
+        guard let endElement = findClosestElement(to: location, elements) else { return }
+        if checkIfConnectionExists(startElement, endElement) { return }
+        
+        document.diagrams[diagramIndex].entityConnections.append(
+            .init(
+                type: selectedTool,
+                startElement: startElement,
+                endElement: endElement
+            )
+        )
+        ToolManager.shared.selectedTool = nil
     }
     
     func snapToGrid(_ point: CGPoint, gridSize: Double) -> CGPoint {
@@ -132,69 +162,20 @@ final class CanvasViewModel: ObservableObject {
     /// - Parameters:
     ///   - startElement: an OOPElementRepresentation
     ///   - endElement: an OOPElementRepresentation
-    ///   - connections: an array containing OOPConnectionRepresentations
     /// - Returns: whether there is or isn't a connection between the given elements
     func checkIfConnectionExists(
         _ startElement: OOPElementRepresentation,
-        _ endElement: OOPElementRepresentation,
-        _ connections: [OOPConnectionRepresentation]
+        _ endElement: OOPElementRepresentation
     ) -> Bool {
+        guard let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) else { return false }
+        let connections = document.diagrams[diagramIndex].entityConnections
+        
         if connections.contains(where: { $0.startElement == startElement && $0.endElement == endElement }) {
             return true
         } else if connections.contains(where: { $0.startElement == endElement && $0.endElement == startElement }) {
             return true
         } else {
             return false
-        }
-    }
-    
-    /// Creates a connection between two OOPElementRepresentations
-    /// - Parameters:
-    ///   - start: the point, from which the closest element is being determinted. This will be used as the connection's start element.
-    ///   - prededictedEnd: the point, from which the closest element is being determinted. This will be used as the connection's end element.
-    ///   - location: the point of the Drag gesture's current point, that is used to find the closest end element more accurately
-    ///   - elements: an array containing OOPElementRepresentations
-    ///   - connections: an array containing OOPConnectionRepresentations
-    /// - Returns: a new OOPConnectionRepresentation between two elements
-    func createConnection(
-        from start: CGPoint,
-        to prededictedEnd: CGPoint,
-        location: CGPoint,
-        connectionType: OOPConnectionType,
-        elements: [OOPElementRepresentation],
-        connections: [OOPConnectionRepresentation]
-    ) -> OOPConnectionRepresentation? {
-        guard !elements.isEmpty else { return nil }
-        guard distance(from: prededictedEnd, to: location) <= 10 else { return nil }
-        guard let startElement = findClosestElement(to: start, elements) else { return nil }
-        guard let endElement = findClosestElement(to: location, elements) else { return nil }
-        if checkIfConnectionExists(startElement, endElement, connections) { return nil }
-        
-        return .init(type: connectionType, startElement: startElement, endElement: endElement)
-    }
-    
-    /// Adds a new connection to the document
-    /// - Parameters:
-    ///   - document: a SnapArchitectDocument
-    ///   - selectedTool: the desired connection type
-    ///   - dragValue: the value of a drag gesture that is used to calculate the start and end element of the connection
-    ///   - completion: closure
-    func addConnection(
-        _ dragValue: DragGesture.Value
-    ) {
-        guard let selectedTool = ToolManager.shared.selectedTool as? OOPConnectionType else { return }
-        if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
-            if let connection = createConnection(
-                from: dragValue.startLocation,
-                to: dragValue.predictedEndLocation,
-                location: dragValue.location,
-                connectionType: selectedTool,
-                elements: document.diagrams[diagramIndex].entityRepresentations,
-                connections: document.diagrams[diagramIndex].entityConnections
-            ) {
-                document.diagrams[diagramIndex].entityConnections.append(connection)
-                ToolManager.shared.selectedTool = nil
-            }
         }
     }
     
@@ -221,7 +202,11 @@ final class CanvasViewModel: ObservableObject {
                 if element.wrappedValue.isSelected {
                     updateElementPosition(element, value: value)
                 } else {
-                    addConnection(value)
+                    newConnection(
+                        from: value.startLocation,
+                        to: value.predictedEndLocation,
+                        location: value.location
+                    )
                 }
             }
             .onEnded { [self] _ in
@@ -237,6 +222,4 @@ final class CanvasViewModel: ObservableObject {
             document.diagrams[diagramIndex].entityRepresentations[index] = newValue
         }
     }
-    
-    
 }

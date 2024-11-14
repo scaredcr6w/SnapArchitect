@@ -95,7 +95,7 @@ struct CanvasView: View {
                     TapGesture()
                         .onEnded { _ in
                             if ToolManager.shared.selectedTool != nil {
-                                viewModel.createAndAddElement(
+                                viewModel.newElement(
                                     at: geo,
                                     ToolManager.shared.selectedTool as? OOPElementType
                                 )
