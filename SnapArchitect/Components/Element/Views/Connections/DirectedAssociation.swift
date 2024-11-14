@@ -8,25 +8,23 @@
 import SwiftUI
 
 struct DirectedAssociation: View, Connection {
-    var startElement: OOPElementRepresentation
-    var endElement: OOPElementRepresentation
-    var isSelected: Bool
+    var connection: Binding<OOPConnectionRepresentation>
     
     var body: some View {
         let endPosition = getClosestEdgeCenter()
         ZStack {
             Path() { path in
-                path.move(to: startElement.position)
+                path.move(to: connection.startElement.wrappedValue.position)
                 path.addLine(to: endPosition)
             }
             .stroke(Color.black, lineWidth: 1)
             
-            twoEdgeArrowHead(from: startElement.position, to: endPosition)
+            twoEdgeArrowHead(from: connection.startElement.wrappedValue.position, to: endPosition)
                 .stroke(Color.black, lineWidth: 1)
         }
         .overlay(
             Group {
-                if isSelected {
+                if connection.wrappedValue.isSelected {
                     handleView
                         .position(getClosestEdgeCenter())
                 }

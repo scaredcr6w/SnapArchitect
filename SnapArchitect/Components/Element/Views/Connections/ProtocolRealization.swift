@@ -8,27 +8,25 @@
 import SwiftUI
 
 struct ProtocolRealization: View, Connection {
-    var startElement: OOPElementRepresentation
-    var endElement: OOPElementRepresentation
-    var isSelected: Bool
+    var connection: Binding<OOPConnectionRepresentation>
     
     var body: some View {
         ZStack {
             let endPosition = getClosestEdgeCenter()
             Path() { path in
-                path.move(to: startElement.position)
+                path.move(to: connection.startElement.wrappedValue.position)
                 path.addLine(to: endPosition)
             }
             .stroke(style: .init(lineWidth: 1, dash: [20]))
             .foregroundStyle(.black)
             
-            threeEdgeArrowHead(from: startElement.position, to: endPosition)
+            threeEdgeArrowHead(from: connection.startElement.wrappedValue.position, to: endPosition)
                 .fill(Color.white)
                 .stroke(Color.black, lineWidth: 1)
         }
         .overlay(
             Group {
-                if isSelected {
+                if connection.wrappedValue.isSelected {
                     handleView
                         .position(getClosestEdgeCenter())
                 }

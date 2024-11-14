@@ -9,9 +9,7 @@ import Foundation
 import SwiftUI
 
 protocol Connection {
-    var startElement: OOPElementRepresentation { get set }
-    var endElement: OOPElementRepresentation { get set }
-    var isSelected: Bool { get set }
+    var connection: Binding<OOPConnectionRepresentation> { get set }
 }
 
 extension Connection {
@@ -58,9 +56,12 @@ extension Connection {
     /// Gets the connection endPoint's closest edge's center point
     /// - Returns: The CGPoint of the endPoint's closest edge's center point
     func getClosestEdgeCenter() -> CGPoint {
-        let endElementEdgeCenter = getEdgeCenters(elementPosition: endElement.position, elementSize: endElement.size)
+        let endElementEdgeCenter = getEdgeCenters(
+            elementPosition: connection.endElement.wrappedValue.position,
+            elementSize: connection.endElement.wrappedValue.size
+        )
         
-        let referencePoint = startElement.position
+        let referencePoint = connection.startElement.wrappedValue.position
         
         let topDistance = distance(from: endElementEdgeCenter.top, to: referencePoint)
         let bottomDistance = distance(from: endElementEdgeCenter.bottom, to: referencePoint)
