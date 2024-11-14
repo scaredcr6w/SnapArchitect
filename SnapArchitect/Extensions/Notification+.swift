@@ -9,4 +9,5 @@ import Foundation
 
 extension Notification.Name {
     static let toolSelected = Notification.Name("toolSelected")
+    static let documentDidChange = Notification.Name("documentDidChange")
 }

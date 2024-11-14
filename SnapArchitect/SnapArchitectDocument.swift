@@ -36,14 +36,17 @@ struct SnapArchitectDiagram: Codable, Identifiable, Hashable {
 
 class SnapArchitectDocument: ReferenceFileDocument {
     typealias Snapshot = [SnapArchitectDiagram]
+    static var readableContentTypes: [UTType] { [.quickArchitectDocument] }
     
-    @Published var diagrams: Snapshot
+    @Published var diagrams: Snapshot {
+        didSet {
+            NotificationCenter.default.post(name: .documentDidChange, object: nil)
+        }
+    }
     
     init(diagrams: Snapshot = [.init(isSelected: true, entityRepresentations: [], entityConnections: [])]) {
         self.diagrams = diagrams
     }
-    
-    static var readableContentTypes: [UTType] { [.quickArchitectDocument] }
     
     required init(configuration: ReadConfiguration) throws {
         guard let data = configuration.file.regularFileContents else {

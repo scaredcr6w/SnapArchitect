@@ -9,6 +9,11 @@ import Foundation
 import SwiftUI
 
 final class CanvasViewModel: ObservableObject {
+    @AppStorage("canvasBackgorundColor") var backgroundColor: Color = .white
+    @AppStorage("showGrid") var showGrid: Bool = false
+    @AppStorage("snapToGrid") var snapToGrid: Bool = false
+    @AppStorage("gridSize") var gridSize: Double = 10
+    
     @Published var document: SnapArchitectDocument
     @Published var xScrollOffset: CGFloat = 0
     @Published var yScrollOffset: CGFloat = 0
@@ -19,6 +24,15 @@ final class CanvasViewModel: ObservableObject {
     
     init(document: SnapArchitectDocument) {
         self.document = document
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDocumentChange), name: .documentDidChange, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .documentDidChange, object: nil)
+    }
+    
+    @objc private func handleDocumentChange() {
+        objectWillChange.send()
     }
     
     func updateScrollOffsets(geo: GeometryProxy) {
@@ -200,4 +214,29 @@ final class CanvasViewModel: ObservableObject {
         element.wrappedValue.position = value.location
         self.updateConnections(for: &element.wrappedValue)
     }
+    
+    func handleDragGesture(_ element: Binding<OOPElementRepresentation>) -> some Gesture {
+        DragGesture()
+            .onChanged { [self] value in
+                if element.wrappedValue.isSelected {
+                    updateElementPosition(element, value: value)
+                } else {
+                    addConnection(value)
+                }
+            }
+            .onEnded { [self] _ in
+                if snapToGrid {
+                    let snappedCorners = getSnappedElementCorners(element.wrappedValue, gridSize: gridSize)
+                    adjustPositionFromCorners(snappedCorners, element: &element.wrappedValue)
+                }
+            }
+    }
+    
+    func handleEntityChange(newValue: OOPElementRepresentation, diagramIndex: Int) {
+        if let index = document.diagrams[diagramIndex].entityRepresentations.firstIndex(where: { $0.id == newValue.id }) {
+            document.diagrams[diagramIndex].entityRepresentations[index] = newValue
+        }
+    }
+    
+    
 }

@@ -8,35 +8,8 @@
 import SwiftUI
 
 struct CanvasView: View {
-    @AppStorage("canvasBackgorundColor") private var backgroundColor: Color = .white
-    @AppStorage("showGrid") private var showGrid: Bool = false
-    @AppStorage("snapToGrid") private var snapToGrid: Bool = false
-    @AppStorage("gridSize") private var gridSize: Double = 10
     @EnvironmentObject private var viewModel: CanvasViewModel
     @StateObject private var zoomManager = ZoomManager()
-    
-    private func handleDragGesture(_ element: Binding<OOPElementRepresentation>) -> some Gesture {
-        DragGesture()
-            .onChanged { value in
-                if element.wrappedValue.isSelected {
-                    viewModel.updateElementPosition(element, value: value)
-                } else {
-                    viewModel.addConnection(value)
-                }
-            }
-            .onEnded { _ in
-                if snapToGrid {
-                    let snappedCorners = viewModel.getSnappedElementCorners(element.wrappedValue, gridSize: gridSize)
-                    viewModel.adjustPositionFromCorners(snappedCorners, element: &element.wrappedValue)
-                }
-            }
-    }
-    
-    private func handleEntityChange(newValue: OOPElementRepresentation, diagramIndex: Int) {
-        if let index = viewModel.document.diagrams[diagramIndex].entityRepresentations.firstIndex(where: { $0.id == newValue.id }) {
-            viewModel.document.diagrams[diagramIndex].entityRepresentations[index] = newValue
-        }
-    }
     
     @ViewBuilder
     private func drawElements() -> some View {
@@ -47,14 +20,34 @@ struct CanvasView: View {
                         viewModel.selectElement(element: &viewModel.document.diagrams[diagramIndex].entityRepresentations[index])
                     }
                     .gesture(
-                        handleDragGesture(
+                        viewModel.handleDragGesture(
                             $viewModel.document.diagrams[diagramIndex].entityRepresentations[index]
                         )
                     )
                     .onChange(of: viewModel.document.diagrams[diagramIndex].entityRepresentations[index]) { _, newValue in
-                        handleEntityChange(newValue: newValue, diagramIndex: diagramIndex)
+                        viewModel.handleEntityChange(newValue: newValue, diagramIndex: diagramIndex)
                     }
             }
+        }
+    }
+    
+    @ViewBuilder
+    private func createConnectionView(_ connection: Binding<OOPConnectionRepresentation>) -> some View {
+        switch connection.wrappedValue.type {
+        case .association:
+            Association(connection: connection)
+        case .directedAssociation:
+            DirectedAssociation(connection: connection)
+        case .aggregation:
+            Aggregation(connection: connection)
+        case .composition:
+            Composition(connection: connection)
+        case .dependency:
+            Dependency(connection: connection)
+        case .generalization:
+            Generalization(connection: connection)
+        case .protocolRealization:
+            ProtocolRealization(connection: connection)
         }
     }
     
@@ -62,71 +55,10 @@ struct CanvasView: View {
     private func drawConnections() -> some View {
         if let diagramIndex = viewModel.document.diagrams.firstIndex(where: { $0.isSelected }) {
             ForEach(viewModel.document.diagrams[diagramIndex].entityConnections.indices, id: \.self) { index in
-                var connection = viewModel.document.diagrams[diagramIndex].entityConnections[index]
-                if connection.type == .association {
-                    Association(
-                        startElement: connection.startElement,
-                        endElement: connection.endElement,
-                        isSelected: connection.isSelected
-                    )
+                createConnectionView($viewModel.document.diagrams[diagramIndex].entityConnections[index])
                     .onTapGesture {
-                        viewModel.selectConnection(connection: &connection)
+                        viewModel.selectConnection(connection: &viewModel.document.diagrams[diagramIndex].entityConnections[index])
                     }
-                } else if connection.type == .directedAssociation {
-                    DirectedAssociation(
-                        startElement: connection.startElement,
-                        endElement: connection.endElement,
-                        isSelected: connection.isSelected
-                    )
-                    .onTapGesture {
-                        viewModel.selectConnection(connection: &connection)
-                    }
-                } else if connection.type == .composition {
-                    Composition(
-                        startElement: connection.startElement,
-                        endElement: connection.endElement,
-                        isSelected: connection.isSelected
-                    )
-                    .onTapGesture {
-                        viewModel.selectConnection(connection: &connection)
-                    }
-                } else if connection.type == .aggregation {
-                    Aggregation(
-                        startElement: connection.startElement,
-                        endElement: connection.endElement,
-                        isSelected: connection.isSelected
-                    )
-                    .onTapGesture {
-                        viewModel.selectConnection(connection: &connection)
-                    }
-                } else if connection.type == .dependency {
-                    Dependency(
-                        startElement: connection.startElement,
-                        endElement: connection.endElement,
-                        isSelected: connection.isSelected
-                    )
-                    .onTapGesture {
-                        viewModel.selectConnection(connection: &connection)
-                    }
-                } else if connection.type == .generalization {
-                    Generalization(
-                        startElement: connection.startElement,
-                        endElement: connection.endElement,
-                        isSelected: connection.isSelected
-                    )
-                    .onTapGesture {
-                        viewModel.selectConnection(connection: &connection)
-                    }
-                } else if connection.type == .protocolRealization {
-                    ProtocolRealization(
-                        startElement: connection.startElement,
-                        endElement: connection.endElement,
-                        isSelected: connection.isSelected
-                    )
-                    .onTapGesture {
-                        viewModel.selectConnection(connection: &connection)
-                    }
-                }
             }
         }
     }
@@ -135,8 +67,8 @@ struct CanvasView: View {
         GeometryReader { geo in
             ScrollView([.horizontal, .vertical]) {
                 ZStack {
-                    if showGrid {
-                        CanvasGridShape(gridSize: gridSize)
+                    if viewModel.showGrid {
+                        CanvasGridShape(gridSize: viewModel.gridSize)
                             .stroke(Color.gray.opacity(0.5), lineWidth: 0.5)
                     }
                     drawConnections()
@@ -151,7 +83,7 @@ struct CanvasView: View {
                     }
                 }
                 .frame(width: geo.size.width * 3, height: geo.size.height * 3)
-                .background(backgroundColor)
+                .background(viewModel.backgroundColor)
                 .background(GeometryReader { innerGeo in
                     Color.clear
                         .onAppear {

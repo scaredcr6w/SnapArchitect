@@ -10,7 +10,13 @@ import SwiftUI
 
 extension CanvasViewModel {
     func deselectAll() {
-        ToolManager.deselectAll()
+        guard let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) else { return }
+        document.diagrams[diagramIndex].entityRepresentations.indices.forEach { index in
+            document.diagrams[diagramIndex].entityRepresentations[index].isSelected = false
+        }
+        document.diagrams[diagramIndex].entityConnections.indices.forEach { index in
+            document.diagrams[diagramIndex].entityConnections[index].isSelected = false
+        }
     }
     
     func selectElement(element: inout OOPElementRepresentation) {
