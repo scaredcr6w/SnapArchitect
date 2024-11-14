@@ -177,26 +177,10 @@ struct CanvasView: View {
                 .gesture(
                     DragGesture()
                         .onChanged { value in
-                            if viewModel.dragStartLocation == nil {
-                                viewModel.dragStartLocation = value.startLocation
-                                viewModel.isDraging = true
-                            }
-                            
-                            if let start = viewModel.dragStartLocation {
-                                let rect = CGRect(
-                                    x: min(start.x, value.location.x),
-                                    y: min(start.y, value.location.y),
-                                    width: abs(start.x - value.location.x),
-                                    height: abs(start.y - value.location.y)
-                                )
-                                
-                                viewModel.selectionRect = rect
-                                viewModel.dragSelection(with: rect)
-                            }
+                            viewModel.startDragSelection(value)
                         }
                         .onEnded { _ in
-                            viewModel.dragStartLocation = nil
-                            viewModel.isDraging = false
+                            viewModel.endDragSelection()
                         }
                 )
             }

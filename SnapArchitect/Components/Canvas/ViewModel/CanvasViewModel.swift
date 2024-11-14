@@ -12,6 +12,7 @@ final class CanvasViewModel: ObservableObject {
     @Published var document: SnapArchitectDocument
     @Published var xScrollOffset: CGFloat = 0
     @Published var yScrollOffset: CGFloat = 0
+    
     @Published var selectionRect: CGRect = .zero
     @Published var dragStartLocation: CGPoint? = nil
     @Published var isDraging: Bool = false
@@ -25,27 +26,6 @@ final class CanvasViewModel: ObservableObject {
         yScrollOffset = geo.frame(in: .global).minY
     }
     
-    func updateSelectionRect(_ rect: CGRect) {
-        selectionRect = rect
-    }
-    
-    func dragSelection(with rect: CGRect) {
-        guard let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) else { return }
-        for index in document.diagrams[diagramIndex].entityRepresentations.indices {
-            let element = document.diagrams[diagramIndex].entityRepresentations[index]
-            if rect.contains(element.position) {
-                document.diagrams[diagramIndex].entityRepresentations[index].isSelected = true
-            }
-        }
-        
-        for index in document.diagrams[diagramIndex].entityConnections.indices {
-            let connection = document.diagrams[diagramIndex].entityConnections[index]
-            if rect.contains(connection.startElement.position) || rect.contains(connection.endElement.position) {
-                document.diagrams[diagramIndex].entityConnections[index].isSelected = true
-            }
-        }
-    }
-    
     func getMouseClick(_ geo: GeometryProxy, event: NSEvent) -> CGPoint {
         let windowLocation = event.locationInWindow
         let clickPosition = CGPoint(
@@ -55,19 +35,6 @@ final class CanvasViewModel: ObservableObject {
         return clickPosition
     }
     
-    func deselectAll() {
-        ToolManager.deselectAll()
-    }
-    
-    func selectElement(element: inout OOPElementRepresentation) {
-        deselectAll()
-        element.isSelected = true
-    }
-    
-    func selectConnection(connection: inout OOPConnectionRepresentation) {
-        deselectAll()
-        connection.isSelected = true
-    }
     
     /// Creates a new OOPElementrRepresentation and adds it to the document
     /// - Parameters:
@@ -89,16 +56,6 @@ final class CanvasViewModel: ObservableObject {
         }
     }
     
-    func getElementCorners(_ element: OOPElementRepresentation) -> (topLeft: CGPoint, bottomLeft: CGPoint, bottomRight: CGPoint, topRight: CGPoint) {
-        let center = element.position
-        let tLeft = CGPoint(x: center.x - element.size.width / 2, y: center.y - element.size.height / 2)
-        let bLeft = CGPoint(x: center.x - element.size.width / 2, y: center.y + element.size.height / 2)
-        let tRight = CGPoint(x: center.x + element.size.width / 2, y: center.y - element.size.height / 2)
-        let bRight = CGPoint(x: center.x + element.size.width / 2, y: center.y + element.size.height / 2)
-        
-        return (topLeft: tLeft, bottomLeft: bLeft, bottomRight: bRight, topRight: tRight)
-    }
-    
     func snapToGrid(_ point: CGPoint, gridSize: Double) -> CGPoint {
         let snappedX = round(point.x / gridSize) * gridSize
         let snappedY = round(point.y / gridSize) * gridSize
@@ -117,12 +74,10 @@ final class CanvasViewModel: ObservableObject {
     }
     
     func adjustPositionFromCorners(_ corners: (topLeft: CGPoint, bottomLeft: CGPoint, bottomRight: CGPoint, topRight: CGPoint), element: inout OOPElementRepresentation) {
-        // Compute the new center from the snapped corners
         let centerX = (corners.topLeft.x + corners.bottomRight.x) / 2
         let centerY = (corners.topLeft.y + corners.bottomRight.y) / 2
         let newPosition = CGPoint(x: centerX, y: centerY)
         
-        // Update the element's position
         element.position = newPosition
     }
     

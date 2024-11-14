@@ -19,7 +19,6 @@
 		0FA4833B2C87167500E66C7C /* DirectedAssociation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA4833A2C87167500E66C7C /* DirectedAssociation.swift */; };
 		0FA4833D2C8716A100E66C7C /* Association.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA4833C2C8716A100E66C7C /* Association.swift */; };
 		0FC6ABE22C7F232B00986158 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABE12C7F232B00986158 /* CanvasView.swift */; };
-		0FC6ABE42C7F233500986158 /* CanvasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABE32C7F233500986158 /* CanvasViewModel.swift */; };
 		0FC6ABE62C7F308400986158 /* OOPElementModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABE52C7F308400986158 /* OOPElementModel.swift */; };
 		0FC6ABE92C7F447800986158 /* ClassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABE82C7F447800986158 /* ClassView.swift */; };
 		0FC6ABEE2C7F542400986158 /* CG+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABED2C7F542400986158 /* CG+Hashable.swift */; };
@@ -66,7 +65,6 @@
 		0FA4833A2C87167500E66C7C /* DirectedAssociation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectedAssociation.swift; sourceTree = "<group>"; };
 		0FA4833C2C8716A100E66C7C /* Association.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Association.swift; sourceTree = "<group>"; };
 		0FC6ABE12C7F232B00986158 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
-		0FC6ABE32C7F233500986158 /* CanvasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModel.swift; sourceTree = "<group>"; };
 		0FC6ABE52C7F308400986158 /* OOPElementModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOPElementModel.swift; sourceTree = "<group>"; };
 		0FC6ABE82C7F447800986158 /* ClassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassView.swift; sourceTree = "<group>"; };
 		0FC6ABED2C7F542400986158 /* CG+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CG+Hashable.swift"; sourceTree = "<group>"; };
@@ -91,6 +89,7 @@
 		0F9327E82CA2C4CB009AB117 /* EditorView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = EditorView; sourceTree = "<group>"; };
 		0F9327F22CA41F10009AB117 /* Utilities */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Utilities; sourceTree = "<group>"; };
 		0FBED4B52CABF4BF00D68D13 /* ProjectNavigator */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ProjectNavigator; sourceTree = "<group>"; };
+		0FCB4A7E2CE5E4DB0026FA43 /* ViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModel; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,8 +165,8 @@
 		0FC6ABE02C7F08E900986158 /* Canvas */ = {
 			isa = PBXGroup;
 			children = (
+				0FCB4A7E2CE5E4DB0026FA43 /* ViewModel */,
 				0FC6ABE12C7F232B00986158 /* CanvasView.swift */,
-				0FC6ABE32C7F233500986158 /* CanvasViewModel.swift */,
 				0F9D16352CC002E60083CA6E /* CanvasGridShape.swift */,
 			);
 			path = Canvas;
@@ -338,6 +337,7 @@
 				0F9327E82CA2C4CB009AB117 /* EditorView */,
 				0F9327F22CA41F10009AB117 /* Utilities */,
 				0FBED4B52CABF4BF00D68D13 /* ProjectNavigator */,
+				0FCB4A7E2CE5E4DB0026FA43 /* ViewModel */,
 			);
 			name = SnapArchitect;
 			productName = QuickArchitect;
@@ -433,7 +433,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FC6ABFB2C80523700986158 /* ToolbarView.swift in Sources */,
-				0FC6ABE42C7F233500986158 /* CanvasViewModel.swift in Sources */,
 				0FD4DA062C7DAEC100A0279D /* SnapArchitectDocument.swift in Sources */,
 				0F60CA752CAA855C0059777E /* Generalization.swift in Sources */,
 				0FA4833B2C87167500E66C7C /* DirectedAssociation.swift in Sources */,
