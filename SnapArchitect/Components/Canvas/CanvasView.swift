@@ -14,17 +14,15 @@ struct CanvasView: View {
     @ViewBuilder
     private func drawElements() -> some View {
         if let diagramIndex = viewModel.document.diagrams.firstIndex(where: { $0.isSelected }) {
-            ForEach(viewModel.document.diagrams[diagramIndex].entityRepresentations.indices, id: \.self) { index in
-                ElementView(element: $viewModel.document.diagrams[diagramIndex].entityRepresentations[index])
+            ForEach($viewModel.document.diagrams[diagramIndex].entityRepresentations, id: \.id) { $element in
+                ElementView(element: $element)
                     .onTapGesture {
-                        viewModel.selectElement(element: &viewModel.document.diagrams[diagramIndex].entityRepresentations[index])
+                        viewModel.selectElement(element: &element)
                     }
                     .gesture(
-                        viewModel.handleDragGesture(
-                            $viewModel.document.diagrams[diagramIndex].entityRepresentations[index]
-                        )
+                        viewModel.handleDragGesture($element)
                     )
-                    .onChange(of: viewModel.document.diagrams[diagramIndex].entityRepresentations[index]) { _, newValue in
+                    .onChange(of: element) { _, newValue in
                         viewModel.handleEntityChange(newValue: newValue, diagramIndex: diagramIndex)
                     }
             }
@@ -54,10 +52,10 @@ struct CanvasView: View {
     @ViewBuilder
     private func drawConnections() -> some View {
         if let diagramIndex = viewModel.document.diagrams.firstIndex(where: { $0.isSelected }) {
-            ForEach(viewModel.document.diagrams[diagramIndex].entityConnections.indices, id: \.self) { index in
-                createConnectionView($viewModel.document.diagrams[diagramIndex].entityConnections[index])
+            ForEach($viewModel.document.diagrams[diagramIndex].entityConnections, id: \.id) { $connection in
+                createConnectionView($connection)
                     .onTapGesture {
-                        viewModel.selectConnection(connection: &viewModel.document.diagrams[diagramIndex].entityConnections[index])
+                        viewModel.selectConnection(connection: &connection)
                     }
             }
         }
