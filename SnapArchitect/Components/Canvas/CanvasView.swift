@@ -96,8 +96,7 @@ struct CanvasView: View {
                         .onEnded { _ in
                             if ToolManager.shared.selectedTool != nil {
                                 viewModel.newElement(
-                                    at: geo,
-                                    ToolManager.shared.selectedTool as? OOPElementType
+                                    geo: geo.size
                                 )
                             } else {
                                 viewModel.deselectAll()

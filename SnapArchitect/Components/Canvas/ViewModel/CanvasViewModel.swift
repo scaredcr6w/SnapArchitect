@@ -41,11 +41,14 @@ final class CanvasViewModel: ObservableObject {
         yScrollOffset = geo.frame(in: .global).minY
     }
     
-    func getMouseClick(_ geo: GeometryProxy, event: NSEvent) -> CGPoint {
+    func getMouseClick(_ geoSize: CGSize, event: NSEvent) -> CGPoint {
+        guard geoSize.width > 0, geoSize.height > 0 else { return .zero }
         let windowLocation = event.locationInWindow
+        guard windowLocation.x > 0, windowLocation.y > 0 else { return .zero }
+        
         let clickPosition = CGPoint(
             x: (windowLocation.x - xScrollOffset),
-            y: (geo.size.height - windowLocation.y - yScrollOffset)
+            y: (geoSize.height - windowLocation.y - yScrollOffset)
         )
         return clickPosition
     }
@@ -53,12 +56,10 @@ final class CanvasViewModel: ObservableObject {
     /// Creates a new OOPElementrRepresentation and adds it to the document
     /// - Parameters:
     ///   - geo: the geometry of the CanvasView
-    ///   - selectedTool: type of the desired element
     func newElement(
-        at geo: GeometryProxy,
-        _ selectedTool: Any?
+        geo: CGSize
     ) {
-        guard let event = NSApp.currentEvent, let selectedTool = selectedTool as? OOPElementType else { return }
+        guard let event = NSApp.currentEvent, let selectedTool = ToolManager.shared.selectedTool as? OOPElementType else { return }
         let clickLocation = getMouseClick(geo, event: event)
         let element = OOPElementRepresentation(.accessPublic, selectedTool.rawValue, selectedTool, clickLocation, CGSize(width: 100, height: 100))
         
@@ -98,31 +99,6 @@ final class CanvasViewModel: ObservableObject {
             )
         )
         ToolManager.shared.selectedTool = nil
-    }
-    
-    func snapToGrid(_ point: CGPoint, gridSize: Double) -> CGPoint {
-        let snappedX = round(point.x / gridSize) * gridSize
-        let snappedY = round(point.y / gridSize) * gridSize
-        return CGPoint(x: snappedX, y: snappedY)
-    }
-    
-    func getSnappedElementCorners(_ element: OOPElementRepresentation, gridSize: Double) -> (topLeft: CGPoint, bottomLeft: CGPoint, bottomRight: CGPoint, topRight: CGPoint) {
-        let center = snapToGrid(element.position, gridSize: gridSize)
-        
-        let tLeft = snapToGrid(CGPoint(x: center.x - element.size.width / 2, y: center.y - element.size.height / 2), gridSize: gridSize)
-        let bLeft = snapToGrid(CGPoint(x: center.x - element.size.width / 2, y: center.y + element.size.height / 2), gridSize: gridSize)
-        let tRight = snapToGrid(CGPoint(x: center.x + element.size.width / 2, y: center.y - element.size.height / 2), gridSize: gridSize)
-        let bRight = snapToGrid(CGPoint(x: center.x + element.size.width / 2, y: center.y + element.size.height / 2), gridSize: gridSize)
-        
-        return (topLeft: tLeft, bottomLeft: bLeft, bottomRight: bRight, topRight: tRight)
-    }
-    
-    func adjustPositionFromCorners(_ corners: (topLeft: CGPoint, bottomLeft: CGPoint, bottomRight: CGPoint, topRight: CGPoint), element: inout OOPElementRepresentation) {
-        let centerX = (corners.topLeft.x + corners.bottomRight.x) / 2
-        let centerY = (corners.topLeft.y + corners.bottomRight.y) / 2
-        let newPosition = CGPoint(x: centerX, y: centerY)
-        
-        element.position = newPosition
     }
     
     /// Calculates distance between two points
