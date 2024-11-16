@@ -12,15 +12,17 @@ import AppKit
 
 class CanvasTests {
     @Suite("Connection tests") struct ConnectionTests {
+        let documentProxy = MockDocumentProxy()
+        
         @Test("Test distance between 2 points") func testDistance() {
-            let viewModel = CanvasViewModel(document: SnapArchitectDocument())
+            let viewModel = CanvasViewModel(SnapArchitectDocument(), documentProxy)
             let point1 = CGPoint(x: 10, y: 10)
             let point2 = CGPoint(x: 20, y: 20)
             #expect(viewModel.distance(from: point1, to: point2) == 14.142135623730951)
         }
         
         @Test("Find the closest element to a given point") func testFindClosestElement() throws {
-            let viewModel = CanvasViewModel(document: SnapArchitectDocument())
+            let viewModel = CanvasViewModel(SnapArchitectDocument(), documentProxy)
             
             if let diagramIndex = viewModel.document.diagrams.firstIndex(where: { $0.isSelected }) {
                 viewModel.document.diagrams[diagramIndex].entityRepresentations.append(
@@ -46,7 +48,7 @@ class CanvasTests {
         }
         
         @Test("Check if connection exists") func testCheckIfConnectionExists() async throws {
-            let viewModel = CanvasViewModel(document: SnapArchitectDocument())
+            let viewModel = CanvasViewModel(SnapArchitectDocument(), documentProxy)
             
             if let diagramIndex = viewModel.document.diagrams.firstIndex(where: { $0.isSelected }) {
                 viewModel.document.diagrams[diagramIndex].entityRepresentations.append(
@@ -81,7 +83,7 @@ class CanvasTests {
         }
         
         @Test("Check if connection exists reversed") func testCheckIfConnectionExistsReverse() async throws {
-            let viewModel = CanvasViewModel(document: SnapArchitectDocument())
+            let viewModel = CanvasViewModel(SnapArchitectDocument(), documentProxy)
             
             if let diagramIndex = viewModel.document.diagrams.firstIndex(where: { $0.isSelected }) {
                 viewModel.document.diagrams[diagramIndex].entityRepresentations.append(
@@ -116,7 +118,7 @@ class CanvasTests {
         }
         
         @Test("Check if connection doesn't exist") func testCheckIfConnectionExistsFalse() async throws {
-            let viewModel = CanvasViewModel(document: SnapArchitectDocument())
+            let viewModel = CanvasViewModel(SnapArchitectDocument(), documentProxy)
             
             if let diagramIndex = viewModel.document.diagrams.firstIndex(where: { $0.isSelected }) {
                 viewModel.document.diagrams[diagramIndex].entityRepresentations.append(
@@ -143,7 +145,7 @@ class CanvasTests {
         }
         
         @Test("Create connection") func testCreateConnection() async throws {
-            let viewModel = CanvasViewModel(document: SnapArchitectDocument())
+            let viewModel = CanvasViewModel(SnapArchitectDocument(), documentProxy)
             
             if let diagramIndex = viewModel.document.diagrams.firstIndex(where: { $0.isSelected }) {
                 viewModel.document.diagrams[diagramIndex].entityRepresentations.append(
@@ -178,7 +180,7 @@ class CanvasTests {
         }
         
         @Test("Points are too far to create connection") func testCreateConnectionPointsTooFar() async throws {
-            let viewModel = CanvasViewModel(document: SnapArchitectDocument())
+            let viewModel = CanvasViewModel(SnapArchitectDocument(), documentProxy)
             
             if let diagramIndex = viewModel.document.diagrams.firstIndex(where: { $0.isSelected }) {
                 viewModel.document.diagrams[diagramIndex].entityRepresentations.append(
@@ -214,7 +216,7 @@ class CanvasTests {
         }
         
         @Test("Connection updates when connected start element moves") func testUpdateConnectionForStartElement() async throws {
-            let viewModel = CanvasViewModel(document: SnapArchitectDocument())
+            let viewModel = CanvasViewModel(SnapArchitectDocument(), documentProxy)
             
             var startElement = OOPElementRepresentation(
                 .accessPublic,
@@ -254,9 +256,11 @@ class CanvasTests {
     }
     
     @Suite("Element tests") struct ElementTests {
+        let documentProxy = MockDocumentProxy()
+        
         @Test("Mouse click position")
         func testMouseClickPosition() async throws {
-            let viewModel = CanvasViewModel(document: SnapArchitectDocument())
+            let viewModel = CanvasViewModel(SnapArchitectDocument(), documentProxy)
             
             let geoSize = CGSize(width: 100, height: 100)
             let mockEvent = NSEvent.mouseEvent(
@@ -276,7 +280,7 @@ class CanvasTests {
         
         @Test("Mouse click outside of canvas")
         func testMouseClickOutsideCanvas() async throws {
-            let viewModel = CanvasViewModel(document: SnapArchitectDocument())
+            let viewModel = CanvasViewModel(SnapArchitectDocument(), documentProxy)
             
             let geoSize = CGSize(width: 100, height: 100)
             let mockEvent = NSEvent.mouseEvent(
@@ -296,7 +300,7 @@ class CanvasTests {
         
         @Test("Invalid canvas geometry")
         func testInvalidCanvasGeometry() async throws {
-            let viewModel = CanvasViewModel(document: SnapArchitectDocument())
+            let viewModel = CanvasViewModel(SnapArchitectDocument(), documentProxy)
             
             let geoSize = CGSize(width: -1, height: -1)
             let mockEvent = NSEvent.mouseEvent(
@@ -316,13 +320,13 @@ class CanvasTests {
         
         @Test("Test element creation")
         func testNewElement() {
-            let viewModel = CanvasViewModel(document: SnapArchitectDocument())
+            let viewModel = CanvasViewModel(SnapArchitectDocument(), documentProxy)
             
             if let diagramIndex = viewModel.document.diagrams.firstIndex(where: { $0.isSelected }) {
                 ToolManager.shared.selectedTool = .protocolType as OOPElementType
                 
                 viewModel.newElement(
-                    geo: CGSize(width: 100, height: 100)
+                    at: CGPoint(x: 10, y: 10)
                 )
                 
                 #expect(viewModel.document.diagrams[diagramIndex].entityRepresentations.count == 1)
