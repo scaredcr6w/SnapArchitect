@@ -23,13 +23,13 @@ class EditElementViewModel: ObservableObject {
     @Published var didError: Bool = false
     @Published var errorMessage: String?
     
-    private let documentProxy: DocumentProxy
+    private let documentProxy: DocumentProtocol
     private var cancellables: Set<AnyCancellable> = []
     
     init(
         element: OOPElementRepresentation,
         document: SnapArchitectDocument,
-        documentProxy: DocumentProxy
+        documentProxy: DocumentProtocol
     ) {
         self.element = element
         self.document = document

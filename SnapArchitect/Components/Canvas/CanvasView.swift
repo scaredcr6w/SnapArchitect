@@ -96,9 +96,8 @@ struct CanvasView: View {
                     TapGesture()
                         .onEnded { _ in
                             if ToolManager.shared.selectedTool != nil {
-                                viewModel.newElement(
-                                    geo: geo.size
-                                )
+                                let clickLocation = viewModel.getCurrentClickLocation(geo: geo)
+                                viewModel.newElement(at: clickLocation)
                             } else {
                                 viewModel.deselectAll()
                             }

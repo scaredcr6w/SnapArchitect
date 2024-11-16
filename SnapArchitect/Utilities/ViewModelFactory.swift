@@ -10,7 +10,7 @@ import Foundation
 class ViewModelFactory {
     static func makeCanvasViewModel(
         _ document: SnapArchitectDocument,
-        _ documentProxy: DocumentProxy
+        _ documentProxy: DocumentProtocol
     ) -> CanvasViewModel {
         return CanvasViewModel(document, documentProxy)
     }
@@ -18,7 +18,7 @@ class ViewModelFactory {
     static func makeClassViewModel(
         for element: OOPElementRepresentation,
         _ document: SnapArchitectDocument,
-        _ documentProxy: DocumentProxy
+        _ documentProxy: DocumentProtocol
     ) -> ClassViewModel {
         return ClassViewModel(
             element,
@@ -30,7 +30,7 @@ class ViewModelFactory {
     static func makeEditElementViewModel(
         for element: OOPElementRepresentation,
         _ document: SnapArchitectDocument,
-        _ documentProxy: DocumentProxy
+        _ documentProxy: DocumentProtocol
     ) -> EditElementViewModel {
         return EditElementViewModel(
             element: element,
@@ -45,7 +45,7 @@ class ViewModelFactory {
     
     static func makeProjectNavigatorViewModel(
         _ document: SnapArchitectDocument,
-        _ documentProxy: DocumentProxy
+        _ documentProxy: DocumentProtocol
     ) -> ProjectNavigatorViewModel {
         return ProjectNavigatorViewModel(
             document,

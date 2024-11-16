@@ -23,11 +23,11 @@ final class CanvasViewModel: ObservableObject {
     @Published var dragStartLocation: CGPoint? = nil
     @Published var isDraging: Bool = false
     
-    let documentProxy: DocumentProxy
+    let documentProxy: DocumentProtocol
     
     init(
         _ document: SnapArchitectDocument,
-        _ documentProxy: DocumentProxy
+        _ documentProxy: DocumentProtocol
     ) {
         self.document = document
         self.documentProxy = documentProxy
@@ -59,25 +59,36 @@ final class CanvasViewModel: ObservableObject {
         return clickPosition
     }
     
+    func getCurrentClickLocation(geo: GeometryProxy) -> CGPoint {
+        guard let event = NSApp.currentEvent else { return .zero }
+        return getMouseClick(geo.size, event: event)
+    }
+    
     /// Creates a new OOPElementrRepresentation and adds it to the document
     /// - Parameters:
     ///   - geo: the geometry of the CanvasView
-    func newElement(
-        geo: CGSize
-    ) {
-        guard let event = NSApp.currentEvent, let selectedTool = ToolManager.shared.selectedTool as? OOPElementType else { return }
-        let clickLocation = getMouseClick(geo, event: event)
-        let element = OOPElementRepresentation(.accessPublic, selectedTool.rawValue, selectedTool, clickLocation, CGSize(width: 100, height: 100))
+    func newElement(at clickLocation: CGPoint, size: CGSize = CGSize(width: 100, height: 100)) {
+        guard let selectedTool = ToolManager.shared.selectedTool as? OOPElementType else { return }
+        
+        let newElement = OOPElementRepresentation(
+            .accessPublic,
+            selectedTool.rawValue,
+            selectedTool,
+            clickLocation,
+            size
+        )
         
         if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
-            document.diagrams[diagramIndex].entityRepresentations.append(element)
+            document.diagrams[diagramIndex].entityRepresentations.append(newElement)
+            
+            // Register Undo Action
             documentProxy.registerUndo(with: self) { target in
-                target.removeElement(element)
+                target.removeElement(newElement)
             }
+            
+            documentProxy.updateDocument()
+            ToolManager.shared.selectedTool = nil
         }
-        
-        ToolManager.shared.selectedTool = nil
-        documentProxy.updateDocument()
     }
     
     func removeElement(_ element: OOPElementRepresentation) {

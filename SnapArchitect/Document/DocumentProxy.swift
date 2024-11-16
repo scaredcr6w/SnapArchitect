@@ -8,9 +8,13 @@
 import Foundation
 import AppKit
 
-struct DocumentProxy {
+class DocumentProxy: DocumentProtocol {
     let documentController: NSDocumentController = .shared
     let undoManager: UndoManager?
+    
+    init(undoManager: UndoManager?) {
+        self.undoManager = undoManager
+    }
     
     func registerUndo<Target>(
         with target: Target,

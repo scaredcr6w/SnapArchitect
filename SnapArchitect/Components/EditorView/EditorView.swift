@@ -11,7 +11,7 @@ struct EditorView: View {
     @EnvironmentObject var document: SnapArchitectDocument
     
     @ViewBuilder
-    private func rightSidebar(windowHeight: CGFloat, _ documentProxy: DocumentProxy) -> some View {
+    private func rightSidebar(windowHeight: CGFloat, _ documentProxy: DocumentProtocol) -> some View {
         VStack {
             if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
                 let selectedElementsCount = document.diagrams[diagramIndex].entityRepresentations.lazy.filter({ $0.isSelected }).count

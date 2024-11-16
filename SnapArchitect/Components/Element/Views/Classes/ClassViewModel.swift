@@ -17,13 +17,13 @@ class ClassViewModel: ObservableObject {
     let minWidth: CGFloat = 100
     let minHeight: CGFloat = 50
     
-    private let documentProxy: DocumentProxy
+    private let documentProxy: DocumentProtocol
     private var cancellables: Set<AnyCancellable> = []
     
     init(
         _ representation: OOPElementRepresentation,
         _ document: SnapArchitectDocument,
-        _ documentProxy: DocumentProxy
+        _ documentProxy: DocumentProtocol
     ) {
         self.element = representation
         self.document = document

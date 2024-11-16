@@ -10,9 +10,9 @@ import SwiftUI
 struct DocumentReader<Content>: View where Content: View {
     @Environment(\.undoManager) var _undoManager
     
-    let content: (DocumentProxy) -> Content
+    let content: (DocumentProtocol) -> Content
     
-    init(@ViewBuilder content: @escaping (DocumentProxy) -> Content) {
+    init(@ViewBuilder content: @escaping (DocumentProtocol) -> Content) {
         self.content = content
     }
     

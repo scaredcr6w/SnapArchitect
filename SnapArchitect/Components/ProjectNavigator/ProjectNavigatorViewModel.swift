@@ -11,9 +11,12 @@ class ProjectNavigatorViewModel: ObservableObject {
     @Published var document: SnapArchitectDocument
     @Published var selectedDiagram = Set<UUID>()
     
-    private let documentProxy: DocumentProxy
+    private let documentProxy: DocumentProtocol
     
-    init(_ document: SnapArchitectDocument, _ documentProxy: DocumentProxy) {
+    init(
+        _ document: SnapArchitectDocument,
+        _ documentProxy: DocumentProtocol
+    ) {
         self.document = document
         self.documentProxy = documentProxy
     }
