@@ -49,7 +49,13 @@ struct EditElementView: View {
                                 viewModel.focusTextField(focused)
                             }
                         Button("Add") {
-                            viewModel.addAttribute()
+                            let attribute = OOPElementAttribute(
+                                access: viewModel.selectedAccessModifier,
+                                name: viewModel.newAttributeName,
+                                type: viewModel.newAttributeType
+                            )
+                            
+                            viewModel.addAttribute(attribute)
                             withAnimation(.easeInOut) {
                                 viewModel.showAddAttribute.toggle()
                             }
@@ -95,7 +101,14 @@ struct EditElementView: View {
                                 viewModel.focusTextField(focused)
                             }
                         Button("Add") {
-                            viewModel.addFunction()
+                            let function = OOPElementFunction(
+                                access: viewModel.selectedAccessModifier,
+                                name: viewModel.newFunctionName,
+                                returnType: viewModel.newFunctionReturnType,
+                                functionBody: viewModel.newFunctionBody
+                            )
+                            
+                            viewModel.addFunction(function)
                             withAnimation(.easeInOut) {
                                 viewModel.showAddFunction.toggle()
                             }

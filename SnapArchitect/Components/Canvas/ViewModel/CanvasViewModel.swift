@@ -23,8 +23,14 @@ final class CanvasViewModel: ObservableObject {
     @Published var dragStartLocation: CGPoint? = nil
     @Published var isDraging: Bool = false
     
-    init(document: SnapArchitectDocument) {
+    let documentProxy: DocumentProxy
+    
+    init(
+        _ document: SnapArchitectDocument,
+        _ documentProxy: DocumentProxy
+    ) {
         self.document = document
+        self.documentProxy = documentProxy
         NotificationCenter.default.addObserver(self, selector: #selector(handleDocumentChange), name: .documentDidChange, object: nil)
     }
     
@@ -167,8 +173,14 @@ final class CanvasViewModel: ObservableObject {
         }
     }
     
-    func updateElementPosition(_ element: Binding<OOPElementRepresentation>, value: DragGesture.Value) {
-        element.wrappedValue.position = value.location
+    func updateElementPosition(_ element: Binding<OOPElementRepresentation>, newPosition: CGPoint) {
+        let previousPosition = element.wrappedValue.position
+        documentProxy.registerUndo(with: self) { target in
+            self.updateElementPosition(element, newPosition: previousPosition)
+        }
+        
+        element.wrappedValue.position = newPosition
+        documentProxy.updateDocument()
         self.updateConnections(for: &element.wrappedValue)
     }
     
@@ -176,7 +188,7 @@ final class CanvasViewModel: ObservableObject {
         DragGesture()
             .onChanged { [self] value in
                 if element.wrappedValue.isSelected {
-                    updateElementPosition(element, value: value)
+                    updateElementPosition(element, newPosition: value.location)
                 } else {
                     newConnection(
                         from: value.startLocation,

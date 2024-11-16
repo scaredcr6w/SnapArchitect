@@ -11,8 +11,11 @@ class ProjectNavigatorViewModel: ObservableObject {
     @Published var document: SnapArchitectDocument
     @Published var selectedDiagram = Set<UUID>()
     
-    init(_ document: SnapArchitectDocument) {
+    private let documentProxy: DocumentProxy
+    
+    init(_ document: SnapArchitectDocument, _ documentProxy: DocumentProxy) {
         self.document = document
+        self.documentProxy = documentProxy
     }
     
     func loadDiagram(_ diagram: SnapArchitectDiagram) {

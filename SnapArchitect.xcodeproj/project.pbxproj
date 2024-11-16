@@ -27,7 +27,6 @@
 		0FC6ABEE2C7F542400986158 /* CG+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABED2C7F542400986158 /* CG+Hashable.swift */; };
 		0FC6ABFB2C80523700986158 /* ToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6ABFA2C80523700986158 /* ToolbarView.swift */; };
 		0FD4DA042C7DAEC100A0279D /* SnapArchitectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD4DA032C7DAEC100A0279D /* SnapArchitectApp.swift */; };
-		0FD4DA062C7DAEC100A0279D /* SnapArchitectDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD4DA052C7DAEC100A0279D /* SnapArchitectDocument.swift */; };
 		0FD4DA0A2C7DAEC300A0279D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FD4DA092C7DAEC300A0279D /* Assets.xcassets */; };
 		0FD4DA0D2C7DAEC300A0279D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FD4DA0C2C7DAEC300A0279D /* Preview Assets.xcassets */; };
 		0FDF53662CA7318E002CB42A /* DiamondShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FDF53652CA7318E002CB42A /* DiamondShape.swift */; };
@@ -77,7 +76,6 @@
 		0FC6ABFA2C80523700986158 /* ToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarView.swift; sourceTree = "<group>"; };
 		0FD4DA002C7DAEC100A0279D /* Snap Architect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Snap Architect.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FD4DA032C7DAEC100A0279D /* SnapArchitectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapArchitectApp.swift; sourceTree = "<group>"; };
-		0FD4DA052C7DAEC100A0279D /* SnapArchitectDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapArchitectDocument.swift; sourceTree = "<group>"; };
 		0FD4DA092C7DAEC300A0279D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0FD4DA0C2C7DAEC300A0279D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0FD4DA0E2C7DAEC300A0279D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -89,6 +87,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		0F24BCCC2CE9061700DB64BD /* Document */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Document; sourceTree = "<group>"; };
 		0F3E202E2CAD4FF30036B33A /* Settings */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Settings; sourceTree = "<group>"; };
 		0F41A8EB2CB55889001F286F /* SnapArchitectUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SnapArchitectUITests; sourceTree = "<group>"; };
 		0F6B9B702CABEEF0008B56D4 /* SnapArchitectTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SnapArchitectTests; sourceTree = "<group>"; };
@@ -262,8 +261,8 @@
 				0F9327F22CA41F10009AB117 /* Utilities */,
 				0FC6ABDE2C7F08D300986158 /* Components */,
 				0FC6ABEC2C7F540700986158 /* Extensions */,
+				0F24BCCC2CE9061700DB64BD /* Document */,
 				0FD4DA032C7DAEC100A0279D /* SnapArchitectApp.swift */,
-				0FD4DA052C7DAEC100A0279D /* SnapArchitectDocument.swift */,
 				0FD4DA092C7DAEC300A0279D /* Assets.xcassets */,
 				0FD4DA0E2C7DAEC300A0279D /* Info.plist */,
 				0FD4DA0F2C7DAEC300A0279D /* QuickArchitect.entitlements */,
@@ -342,6 +341,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				0F24BCCC2CE9061700DB64BD /* Document */,
 				0F3E202E2CAD4FF30036B33A /* Settings */,
 				0F9327E82CA2C4CB009AB117 /* EditorView */,
 				0F9327F22CA41F10009AB117 /* Utilities */,
@@ -442,7 +442,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FC6ABFB2C80523700986158 /* ToolbarView.swift in Sources */,
-				0FD4DA062C7DAEC100A0279D /* SnapArchitectDocument.swift in Sources */,
 				0F60CA752CAA855C0059777E /* Generalization.swift in Sources */,
 				0FA4833B2C87167500E66C7C /* DirectedAssociation.swift in Sources */,
 				0FDF53682CA731AF002CB42A /* Aggregation.swift in Sources */,

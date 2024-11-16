@@ -15,7 +15,7 @@ struct CanvasView: View {
     private func drawElements() -> some View {
         if let diagramIndex = viewModel.document.diagrams.firstIndex(where: { $0.isSelected }) {
             ForEach($viewModel.document.diagrams[diagramIndex].entityRepresentations, id: \.id) { $element in
-                let classViewModel = ViewModelFactory.makeClassViewModel(for: element, viewModel.document)
+                let classViewModel = ClassViewModel(element, viewModel.document, viewModel.documentProxy)
                 ClassView(viewModel: classViewModel)
                     .onTapGesture {
                         viewModel.selectElement(element: &element)

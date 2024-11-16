@@ -23,11 +23,17 @@ class EditElementViewModel: ObservableObject {
     @Published var didError: Bool = false
     @Published var errorMessage: String?
     
+    private let documentProxy: DocumentProxy
     private var cancellables: Set<AnyCancellable> = []
     
-    init(element: OOPElementRepresentation, document: SnapArchitectDocument) {
+    init(
+        element: OOPElementRepresentation,
+        document: SnapArchitectDocument,
+        documentProxy: DocumentProxy
+    ) {
         self.element = element
         self.document = document
+        self.documentProxy = documentProxy
         setupBindings()
     }
     
@@ -65,26 +71,29 @@ class EditElementViewModel: ObservableObject {
         }
     }
     
-    func addAttribute() {
-        let attribute = OOPElementAttribute(
-            access: selectedAccessModifier,
-            name: newAttributeName,
-            type: newAttributeType
-        )
+    func addAttribute(_ attribute: OOPElementAttribute) {
         element.attributes.append(attribute)
+        
+        documentProxy.registerUndo(with: self) { target in
+            target.removeAttribute(attribute)
+        }
+        
+        documentProxy.updateDocument()
+        
         selectedAccessModifier = .accessPublic
         newAttributeName = ""
         newAttributeType = ""
     }
     
-    func addFunction() {
-        let function = OOPElementFunction(
-            access: selectedAccessModifier,
-            name: newFunctionName,
-            returnType: newFunctionReturnType,
-            functionBody: newFunctionBody
-        )
+    func addFunction(_ function: OOPElementFunction) {
         element.functions.append(function)
+        
+        documentProxy.registerUndo(with: self) { target in
+            target.removeFunction(function)
+        }
+        
+        documentProxy.updateDocument()
+        
         selectedAccessModifier = .accessPublic
         newFunctionName = ""
         newFunctionReturnType = ""

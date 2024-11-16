@@ -11,7 +11,7 @@ struct EditorView: View {
     @EnvironmentObject var document: SnapArchitectDocument
     
     @ViewBuilder
-    private func rightSidebar(windowHeight: CGFloat) -> some View {
+    private func rightSidebar(windowHeight: CGFloat, _ documentProxy: DocumentProxy) -> some View {
         VStack {
             if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
                 let selectedElementsCount = document.diagrams[diagramIndex].entityRepresentations.lazy.filter({ $0.isSelected }).count
@@ -28,7 +28,8 @@ struct EditorView: View {
                        let elementIndex = document.diagrams[diagramIndex].entityRepresentations.firstIndex(where: { $0.id == element.id }) {
                         let editElementViewModel = ViewModelFactory.makeEditElementViewModel(
                             for: document.diagrams[diagramIndex].entityRepresentations[elementIndex],
-                            document
+                            document,
+                            documentProxy
                         )
                         EditElementView(viewModel: editElementViewModel)
                             .frame(height: windowHeight / 2)
@@ -36,30 +37,32 @@ struct EditorView: View {
                 }
             }
             Divider()
-            let projectNavigatorViewModel = ViewModelFactory.makeProjectNavigatorViewModel(document)
+            let projectNavigatorViewModel = ViewModelFactory.makeProjectNavigatorViewModel(document, documentProxy)
             ProjectNavigatorView(viewModel: projectNavigatorViewModel)
                 .frame(height: windowHeight / 2)
         }
     }
     
     var body: some View {
-        GeometryReader { windowGeo in
-            let windowHeight = windowGeo.size.height
-            HStack(spacing: 0) {
-                NavigationSplitView {
-                    let toolbarViewModel = ViewModelFactory.makeToolbarViewModel()
-                    ToolbarView(viewModel: toolbarViewModel)
-                        .navigationSplitViewColumnWidth(270)
-                    
-                } detail: {
-                    let canvasViewModel = CanvasViewModel(document: document)
-                    CanvasView(viewModel: canvasViewModel)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        DocumentReader { proxy in
+            GeometryReader { windowGeo in
+                let windowHeight = windowGeo.size.height
+                HStack(spacing: 0) {
+                    NavigationSplitView {
+                        let toolbarViewModel = ViewModelFactory.makeToolbarViewModel()
+                        ToolbarView(viewModel: toolbarViewModel)
+                            .navigationSplitViewColumnWidth(270)
+                        
+                    } detail: {
+                        let canvasViewModel = ViewModelFactory.makeCanvasViewModel(document, proxy)
+                        CanvasView(viewModel: canvasViewModel)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+                    rightSidebar(windowHeight: windowHeight, proxy)
+                        .frame(width: 270, height: windowHeight)
                 }
-                rightSidebar(windowHeight: windowHeight)
-                    .frame(width: 270, height: windowHeight)
             }
+            .frame(minWidth: 800, minHeight: 600)
         }
-        .frame(minWidth: 800, minHeight: 600)
     }
 }
