@@ -7,39 +7,11 @@
 
 import SwiftUI
 
-struct ToolbarElementItem: Identifiable, Hashable {
-    let id = UUID()
-    let elementName: String
-    var elementType: OOPElementType?
-}
-
-struct ToolbarConnectionItem: Identifiable, Hashable {
-    let id = UUID()
-    let elementName: String
-    var elementType: OOPConnectionType?
-}
-
 struct ToolbarView: View {
     @State private var expandedCategories: Set<String> = []
     @State private var elementDisclosureGruopExpanded: Bool = true
     @State private var connectionDisclosureGruopExpanded: Bool = true
-    
-    static let basicClasses = [
-        ToolbarElementItem(elementName: "Class", elementType: .classType),
-        ToolbarElementItem(elementName: "Struct", elementType: .structType),
-        ToolbarElementItem(elementName: "Protocol", elementType: .protocolType),
-        ToolbarElementItem(elementName: "Enum", elementType: .enumType)
-    ]
-    
-    static let connections = [
-        ToolbarConnectionItem(elementName: "Association", elementType: .association),
-        ToolbarConnectionItem(elementName: "Directed Association", elementType: .directedAssociation),
-        ToolbarConnectionItem(elementName: "Aggregation", elementType: .aggregation),
-        ToolbarConnectionItem(elementName: "Composition", elementType: .composition),
-        ToolbarConnectionItem(elementName: "Dependency", elementType: .dependency),
-        ToolbarConnectionItem(elementName: "Generalization", elementType: .generalization),
-        ToolbarConnectionItem(elementName: "Protocol Realization", elementType: .protocolRealization)
-    ]
+    @StateObject private var viewModel = ToolbarViewModel()
     
     @ViewBuilder
     private func disclosureGroupElementItem(_ category: [ToolbarElementItem]) -> some View {
@@ -52,7 +24,7 @@ struct ToolbarView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    ToolManager.shared.selectedTool = toolbarItem.elementType
+                    viewModel.selectTool(toolbarItem)
                 }
             }
         }
@@ -71,7 +43,7 @@ struct ToolbarView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    ToolManager.shared.selectedTool = toolbarItem.elementType
+                    viewModel.selectTool(toolbarItem)
                 }
             }
         }
@@ -88,11 +60,11 @@ struct ToolbarView: View {
                         .foregroundStyle(.gray)
                     Divider()
                     DisclosureGroup("Basic Classes", isExpanded: $elementDisclosureGruopExpanded) {
-                        disclosureGroupElementItem(ToolbarView.basicClasses)
+                        disclosureGroupElementItem(viewModel.basicClasses)
                     }
                     Divider()
                     DisclosureGroup("Connections", isExpanded: $connectionDisclosureGruopExpanded) {
-                        disclosureGroupConnectionItem(ToolbarView.connections)
+                        disclosureGroupConnectionItem(viewModel.connections)
                     }
                     Divider()
                     Spacer()

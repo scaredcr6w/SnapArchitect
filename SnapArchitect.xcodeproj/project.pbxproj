@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0F01733F2C80C82B0051FD9A /* ToolbarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F01733E2C80C82B0051FD9A /* ToolbarItemView.swift */; };
 		0F184ADB2CE4BDBB00D1A8D5 /* Notification+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F184ADA2CE4BDBB00D1A8D5 /* Notification+.swift */; };
+		0F24BC7B2CE8971F00DB64BD /* ToolbarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F24BC7A2CE8971F00DB64BD /* ToolbarViewModel.swift */; };
 		0F2BE7D42CA6A9C400D5DE1A /* ConnectionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2BE7D32CA6A9C400D5DE1A /* ConnectionProtocol.swift */; };
 		0F3E20362CAD52120036B33A /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3E20352CAD52120036B33A /* Color+.swift */; };
 		0F52DE5E2C8EDF58001EC07F /* EditElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F52DE5D2C8EDF58001EC07F /* EditElementView.swift */; };
@@ -53,6 +54,7 @@
 /* Begin PBXFileReference section */
 		0F01733E2C80C82B0051FD9A /* ToolbarItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarItemView.swift; sourceTree = "<group>"; };
 		0F184ADA2CE4BDBB00D1A8D5 /* Notification+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+.swift"; sourceTree = "<group>"; };
+		0F24BC7A2CE8971F00DB64BD /* ToolbarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarViewModel.swift; sourceTree = "<group>"; };
 		0F2BE7D32CA6A9C400D5DE1A /* ConnectionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionProtocol.swift; sourceTree = "<group>"; };
 		0F3E20352CAD52120036B33A /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 		0F41A8EA2CB55889001F286F /* SnapArchitectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SnapArchitectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -223,6 +225,7 @@
 			children = (
 				0FC6ABFA2C80523700986158 /* ToolbarView.swift */,
 				0F01733E2C80C82B0051FD9A /* ToolbarItemView.swift */,
+				0F24BC7A2CE8971F00DB64BD /* ToolbarViewModel.swift */,
 			);
 			path = Toolbar;
 			sourceTree = "<group>";
@@ -439,6 +442,7 @@
 				0FDF53682CA731AF002CB42A /* Aggregation.swift in Sources */,
 				0FE7A2A22CA6C6F600E96724 /* Composition.swift in Sources */,
 				0F9D16362CC002E60083CA6E /* CanvasGridShape.swift in Sources */,
+				0F24BC7B2CE8971F00DB64BD /* ToolbarViewModel.swift in Sources */,
 				0F01733F2C80C82B0051FD9A /* ToolbarItemView.swift in Sources */,
 				0F184ADB2CE4BDBB00D1A8D5 /* Notification+.swift in Sources */,
 				0FD4DA042C7DAEC100A0279D /* SnapArchitectApp.swift in Sources */,
