@@ -8,42 +8,8 @@
 import SwiftUI
 
 struct EditElementView: View {
-    @Binding var element: OOPElementRepresentation
-    @State private var showAddAttribute: Bool = false
-    @State private var showAddFunction: Bool = false
-    @State private var newAttributeName: String = ""
-    @State private var newAttributeType: String = ""
-    @State private var newFunctionName: String = ""
-    @State private var newFunctionReturnType: String = ""
-    @State private var newFunctionBody: String = ""
-    @State private var selectedAccessModifier: OOPAccessModifier = .accessPublic
+    @StateObject var viewModel: EditElementViewModel
     @FocusState private var isTextFieldFocused: Bool
-    
-    private func addAttribute() {
-        let attribute = OOPElementAttribute(
-            access: selectedAccessModifier,
-            name: newAttributeName,
-            type: newAttributeType
-        )
-        element.attributes.append(attribute)
-        selectedAccessModifier = .accessPublic
-        newAttributeName = ""
-        newAttributeType = ""
-    }
-    
-    private func addFunction() {
-        let function = OOPElementFunction(
-            access: selectedAccessModifier,
-            name: newFunctionName,
-            returnType: newFunctionReturnType,
-            functionBody: newFunctionBody
-        )
-        element.functions.append(function)
-        selectedAccessModifier = .accessPublic
-        newFunctionName = ""
-        newFunctionReturnType = ""
-        newFunctionBody = ""
-    }
     
     var body: some View {
         VStack {
@@ -54,7 +20,7 @@ struct EditElementView: View {
             
             Form {
                 Section {
-                    TextField("", text: $element.name, prompt: Text(element.name))
+                    TextField("", text: $viewModel.element.name, prompt: Text(viewModel.element.name))
                         .padding(.horizontal)
                         .focused($isTextFieldFocused)
                         .onChange(of: isTextFieldFocused) { _, focused in
@@ -65,26 +31,26 @@ struct EditElementView: View {
                         .font(.title3)
                 }
                 Section {
-                    if showAddAttribute {
-                        Picker("", selection: $selectedAccessModifier) {
+                    if viewModel.showAddAttribute {
+                        Picker("", selection: $viewModel.selectedAccessModifier) {
                             ForEach(OOPAccessModifier.allCases, id: \.self) { option in
                                 Text(option.stringValue)
                             }
                         }
                         .padding(.horizontal)
                         .padding(.vertical, 4)
-                        TextField("", text: $newAttributeName, prompt: Text("Name"))
+                        TextField("", text: $viewModel.newAttributeName, prompt: Text("Name"))
                             .padding(.horizontal)
-                        TextField("", text: $newAttributeType, prompt: Text("Type"))
+                        TextField("", text: $viewModel.newAttributeType, prompt: Text("Type"))
                             .padding(.horizontal)
                         Button("Add") {
-                            addAttribute()
+                            viewModel.addAttribute()
                             withAnimation(.easeInOut) {
-                                showAddAttribute.toggle()
+                                viewModel.showAddAttribute.toggle()
                             }
                         }
                     }
-                    AttributeRowView(attributes: $element.attributes)
+                    AttributeRowView(viewModel: viewModel)
                 } header: {
                     HStack {
                         Text("Edit attributes")
@@ -93,35 +59,35 @@ struct EditElementView: View {
                             .background(.clear)
                             .onTapGesture {
                                 withAnimation(.easeInOut) {
-                                    showAddAttribute.toggle()
+                                    viewModel.showAddAttribute.toggle()
                                 }
                             }
                     }
                 }
                 Section {
-                    if showAddFunction {
-                        Picker("", selection: $selectedAccessModifier) {
+                    if viewModel.showAddFunction {
+                        Picker("", selection: $viewModel.selectedAccessModifier) {
                             ForEach(OOPAccessModifier.allCases, id: \.self) { option in
                                 Text(option.stringValue)
                             }
                         }
                         .padding(.horizontal)
                         .padding(.vertical, 4)
-                        TextField("", text: $newFunctionName, prompt: Text("Name"))
+                        TextField("", text: $viewModel.newFunctionName, prompt: Text("Name"))
                             .padding(.horizontal)
-                        TextField("", text: $newFunctionReturnType, prompt: Text("Return Type"))
+                        TextField("", text: $viewModel.newFunctionReturnType, prompt: Text("Return Type"))
                             .padding(.horizontal)
-                        TextEditor(text: $newFunctionBody)
+                        TextEditor(text: $viewModel.newFunctionBody)
                             .frame(height: 100)
                             .padding(.trailing)
                         Button("Add") {
-                            addFunction()
+                            viewModel.addFunction()
                             withAnimation(.easeInOut) {
-                                showAddFunction.toggle()
+                                viewModel.showAddFunction.toggle()
                             }
                         }
                     }
-                    FunctionRowView(functions: $element.functions)
+                    FunctionRowView(viewModel: viewModel)
                 } header: {
                     HStack {
                         Text("Edit functions")
@@ -130,7 +96,7 @@ struct EditElementView: View {
                             .background(.clear)
                             .onTapGesture {
                                 withAnimation(.easeInOut) {
-                                    showAddFunction.toggle()
+                                    viewModel.showAddFunction.toggle()
                                 }
                             }
                     }
@@ -140,97 +106,106 @@ struct EditElementView: View {
             .onDisappear {
                 ToolManager.shared.isEditing = false
             }
+            .alert("Error", isPresented: $viewModel.didError) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text(viewModel.errorMessage ?? "An error occurred.")
+            }
+            
             Spacer()
         }
         .padding(.vertical)
     }
-}
-
-struct AttributeRowView: View {
-    @Binding var attributes: [OOPElementAttribute]
-    @State private var showEditor: Bool = false
-    var body: some View {
-        ScrollView {
-            ForEach($attributes) { $attribute in
-                VStack {
-                    HStack {
-                        Image(systemName: "minus.circle.fill")
-                            .padding(.horizontal, 5)
-                            .onTapGesture {
-                                attributes.removeAll { $0 == attribute }
-                            }
-                        Image(systemName: "pencil")
-                            .padding(.horizontal, 5)
-                            .onTapGesture {
-                                withAnimation(.easeInOut) {
-                                    showEditor.toggle()
-                                }
-                            }
-                        Text(attribute.name)
-                            .frame(width: 130)
-                        Divider()
-                        Text(attribute.type)
-                            .frame(width: 60)
-                    }
-                    .frame(height: 50)
-                    .frame(maxWidth: 300)
-                    
+    
+    struct AttributeRowView: View {
+        @StateObject var viewModel: EditElementViewModel
+        @State private var showEditor: Bool = false
+        
+        var body: some View {
+            ScrollView {
+                ForEach($viewModel.element.attributes) { $attribute in
                     VStack {
-                        if showEditor {
-                            TextField("", text: $attribute.name)
-                            TextField("", text: $attribute.type)
+                        HStack {
+                            Image(systemName: "minus.circle.fill")
+                                .padding(.horizontal, 5)
+                                .onTapGesture {
+                                    viewModel.removeAttribute(attribute)
+                                }
+                            Image(systemName: "pencil")
+                                .padding(.horizontal, 5)
+                                .onTapGesture {
+                                    withAnimation(.easeInOut) {
+                                        showEditor.toggle()
+                                    }
+                                }
+                            Text(attribute.name)
+                                .frame(width: 130)
+                            Divider()
+                            Text(attribute.type)
+                                .frame(width: 60)
                         }
+                        .frame(height: 50)
+                        .frame(maxWidth: 300)
+                        
+                        VStack {
+                            if showEditor {
+                                TextField("", text: $attribute.name)
+                                TextField("", text: $attribute.type)
+                            }
+                        }
+                        .frame(maxHeight: showEditor ? .none : 0)
+                        .opacity(showEditor ? 1 : 0)
+                        .animation(.easeInOut, value: showEditor)
                     }
-                    .frame(maxHeight: showEditor ? .none : 0)
-                    .opacity(showEditor ? 1 : 0)
-                    .animation(.easeInOut, value: showEditor)
                 }
             }
         }
     }
-}
 
-struct FunctionRowView: View {
-    @Binding var functions: [OOPElementFunction]
-    @State private var showEditor: Bool = false
-    var body: some View {
-        ScrollView {
-            ForEach($functions) { $function in
-                VStack {
-                    HStack {
-                        Image(systemName: "minus.circle.fill")
-                            .padding(.horizontal, 5)
-                            .onTapGesture {
-                                functions.removeAll { $0 == function }
-                            }
-                        Image(systemName: "pencil")
-                            .padding(.horizontal, 5)
-                            .onTapGesture {
-                                withAnimation(.easeInOut) {
-                                    showEditor.toggle()
-                                }
-                            }
-                        Text(function.name)
-                            .frame(width: 130)
-                        Text(function.returnType)
-                            .frame(width: 60)
-                    }
-                    .frame(height: 50)
-                    .frame(maxWidth: 300)
-                    
+    struct FunctionRowView: View {
+        @StateObject var viewModel: EditElementViewModel
+        @State private var showEditor: Bool = false
+        var body: some View {
+            ScrollView {
+                ForEach($viewModel.element.functions) { $function in
                     VStack {
-                        if showEditor {
-                            TextField("", text: $function.name)
-                            TextField("", text: $function.returnType)
-                            TextEditor(text: $function.functionBody)
-                                .frame(height: 100)
+                        HStack {
+                            Image(systemName: "minus.circle.fill")
+                                .padding(.horizontal, 5)
+                                .onTapGesture {
+                                    viewModel.removeFunction(function)
+                                }
+                            Image(systemName: "pencil")
+                                .padding(.horizontal, 5)
+                                .onTapGesture {
+                                    withAnimation(.easeInOut) {
+                                        showEditor.toggle()
+                                    }
+                                }
+                            Text(function.name)
+                                .frame(width: 130)
+                            Text(function.returnType)
+                                .frame(width: 60)
                         }
+                        .frame(height: 50)
+                        .frame(maxWidth: 300)
+                        
+                        VStack {
+                            if showEditor {
+                                TextField("", text: $function.name)
+                                TextField("", text: $function.returnType)
+                                TextEditor(text: $function.functionBody)
+                                    .frame(height: 100)
+                            }
+                        }
+                        .frame(maxHeight: showEditor ? .none : 0)
+                        .opacity(showEditor ? 1 : 0)
+                        .animation(.easeInOut, value: showEditor)
                     }
-                    .frame(maxHeight: showEditor ? .none : 0)
-                    .opacity(showEditor ? 1 : 0)
-                    .animation(.easeInOut, value: showEditor)
                 }
             }
         }
     }
+
 }
+

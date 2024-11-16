@@ -10,6 +10,7 @@
 		0F01733F2C80C82B0051FD9A /* ToolbarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F01733E2C80C82B0051FD9A /* ToolbarItemView.swift */; };
 		0F184ADB2CE4BDBB00D1A8D5 /* Notification+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F184ADA2CE4BDBB00D1A8D5 /* Notification+.swift */; };
 		0F24BC7B2CE8971F00DB64BD /* ToolbarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F24BC7A2CE8971F00DB64BD /* ToolbarViewModel.swift */; };
+		0F24BC9C2CE8CDA700DB64BD /* EditElementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F24BC9B2CE8CDA700DB64BD /* EditElementViewModel.swift */; };
 		0F2BE7D42CA6A9C400D5DE1A /* ConnectionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2BE7D32CA6A9C400D5DE1A /* ConnectionProtocol.swift */; };
 		0F3E20362CAD52120036B33A /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3E20352CAD52120036B33A /* Color+.swift */; };
 		0F52DE5E2C8EDF58001EC07F /* EditElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F52DE5D2C8EDF58001EC07F /* EditElementView.swift */; };
@@ -55,6 +56,7 @@
 		0F01733E2C80C82B0051FD9A /* ToolbarItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarItemView.swift; sourceTree = "<group>"; };
 		0F184ADA2CE4BDBB00D1A8D5 /* Notification+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+.swift"; sourceTree = "<group>"; };
 		0F24BC7A2CE8971F00DB64BD /* ToolbarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarViewModel.swift; sourceTree = "<group>"; };
+		0F24BC9B2CE8CDA700DB64BD /* EditElementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditElementViewModel.swift; sourceTree = "<group>"; };
 		0F2BE7D32CA6A9C400D5DE1A /* ConnectionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionProtocol.swift; sourceTree = "<group>"; };
 		0F3E20352CAD52120036B33A /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 		0F41A8EA2CB55889001F286F /* SnapArchitectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SnapArchitectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -123,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				0F52DE5D2C8EDF58001EC07F /* EditElementView.swift */,
+				0F24BC9B2CE8CDA700DB64BD /* EditElementViewModel.swift */,
 			);
 			path = EditElement;
 			sourceTree = "<group>";
@@ -448,6 +451,7 @@
 				0FD4DA042C7DAEC100A0279D /* SnapArchitectApp.swift in Sources */,
 				0F3E20362CAD52120036B33A /* Color+.swift in Sources */,
 				0F2BE7D42CA6A9C400D5DE1A /* ConnectionProtocol.swift in Sources */,
+				0F24BC9C2CE8CDA700DB64BD /* EditElementViewModel.swift in Sources */,
 				0FC6ABE92C7F447800986158 /* ClassView.swift in Sources */,
 				0F60CA732CAA85500059777E /* Dependency.swift in Sources */,
 				0F60CA772CAA85780059777E /* ProtocolRealization.swift in Sources */,

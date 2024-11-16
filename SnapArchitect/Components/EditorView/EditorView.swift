@@ -26,8 +26,11 @@ struct EditorView: View {
                 } else {
                     if let element = document.diagrams[diagramIndex].entityRepresentations.last(where: { $0.isSelected }),
                        let elementIndex = document.diagrams[diagramIndex].entityRepresentations.firstIndex(where: { $0.id == element.id }) {
-                        let bindingElement = $document.diagrams[diagramIndex].entityRepresentations[elementIndex]
-                        EditElementView(element: bindingElement)
+                        let editElementViewModel = EditElementViewModel(
+                            element: document.diagrams[diagramIndex].entityRepresentations[elementIndex],
+                            document: document
+                        )
+                        EditElementView(viewModel: editElementViewModel)
                             .frame(height: windowHeight / 2)
                     }
                 }
@@ -47,7 +50,8 @@ struct EditorView: View {
                         .navigationSplitViewColumnWidth(270)
                     
                 } detail: {
-                    CanvasView()
+                    let canvasViewModel = CanvasViewModel(document: document)
+                    CanvasView(viewModel: canvasViewModel)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
                 rightSidebar(windowHeight: windowHeight)

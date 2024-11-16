@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CanvasView: View {
-    @EnvironmentObject private var viewModel: CanvasViewModel
+    @StateObject var viewModel: CanvasViewModel
     @StateObject private var zoomManager = ZoomManager()
     
     @ViewBuilder

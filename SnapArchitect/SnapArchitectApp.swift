@@ -13,9 +13,8 @@ struct SnapArchitectApp: App {
     
     var body: some Scene {
         DocumentGroup(newDocument: { SnapArchitectDocument() }) { file in
-            let canvasViewModel = CanvasViewModel(document: file.document)
             EditorView()
-                .environmentObject(canvasViewModel)
+                .environmentObject(file.document)
                 .onAppear {
                     if let window = NSApplication.shared.windows.last {
                         maximizeWindow(window)
