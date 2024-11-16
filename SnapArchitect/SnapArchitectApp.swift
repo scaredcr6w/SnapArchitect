@@ -9,8 +9,6 @@ import SwiftUI
 
 @main
 struct SnapArchitectApp: App {
-    @StateObject var keyPressManager = KeyPressManager()
-    
     var body: some Scene {
         DocumentGroup(newDocument: { SnapArchitectDocument() }) { file in
             EditorView()
@@ -20,10 +18,10 @@ struct SnapArchitectApp: App {
                         maximizeWindow(window)
                     }
                     ToolManager.shared.document = file.document
-                    keyPressManager.setupKeyListeners()
+                    KeyPressManager.setup()
                 }
                 .onDisappear {
-                    keyPressManager.removeKeyPressListener()
+                    KeyPressManager.remove()
                 }
         }
         

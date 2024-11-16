@@ -8,7 +8,11 @@
 import Foundation
 import SwiftUI
 
-class KeyPressManager: ObservableObject {
+final class KeyPressManager: ObservableObject {
+    static let shared = KeyPressManager()
+    
+    private init() { }
+    
     private var eventMonitor: Any?
     
     private func deleteElement() {
@@ -28,7 +32,11 @@ class KeyPressManager: ObservableObject {
         ToolManager.shared.document?.diagrams[diagramIndex].entityConnections.removeAll { $0.isSelected }
     }
     
-    func setupKeyListeners() {
+    static func setup() {
+        shared.setupKeyListeners()
+    }
+    
+    private func setupKeyListeners() {
         removeKeyPressListener()
         
         eventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
@@ -62,7 +70,11 @@ class KeyPressManager: ObservableObject {
         }
     }
     
-    func removeKeyPressListener() {
+    static func remove() {
+        shared.removeKeyPressListener()
+    }
+    
+    private func removeKeyPressListener() {
         if let monitor = eventMonitor {
             NSEvent.removeMonitor(monitor)
             eventMonitor = nil
