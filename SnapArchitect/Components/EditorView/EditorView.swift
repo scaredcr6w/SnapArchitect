@@ -36,7 +36,8 @@ struct EditorView: View {
                 }
             }
             Divider()
-            ProjectNavigatorView()
+            let projectNavigatorViewModel = ViewModelFactory.makeProjectNavigatorViewModel(document)
+            ProjectNavigatorView(viewModel: projectNavigatorViewModel)
                 .frame(height: windowHeight / 2)
         }
     }

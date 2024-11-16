@@ -19,4 +19,8 @@ class ViewModelFactory {
     static func makeToolbarViewModel() -> ToolbarViewModel {
         return ToolbarViewModel()
     }
+    
+    static func makeProjectNavigatorViewModel(_ document: SnapArchitectDocument) -> ProjectNavigatorViewModel {
+        return ProjectNavigatorViewModel(document)
+    }
 }

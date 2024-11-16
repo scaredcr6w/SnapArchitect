@@ -8,28 +8,20 @@
 import SwiftUI
 
 struct ProjectNavigatorView: View {
-    @EnvironmentObject var document: SnapArchitectDocument
-    @State private var selectedDiagram = Set<UUID>()
+    @StateObject var viewModel: ProjectNavigatorViewModel
     
     var body: some View {
         VStack {
             Section {
-                List(document.diagrams, selection: $selectedDiagram) { diagram in
+                List(viewModel.document.diagrams, selection: $viewModel.selectedDiagram) { diagram in
                     Text(diagram.diagramName)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .contentShape(Rectangle())
                         .onAppear {
-                            if diagram.isSelected {
-                                selectedDiagram.insert(diagram.id)
-                            }
+                            viewModel.loadDiagram(diagram)
                         }
                         .onTapGesture {
-                            selectedDiagram.removeAll()
-                            selectedDiagram.insert(diagram.id)
-                            
-                            for index in document.diagrams.indices {
-                                document.diagrams[index].isSelected = (document.diagrams[index].id == diagram.id)
-                            }
+                            viewModel.switchDiagram(diagram)
                         }
                 }
                 .padding(.horizontal)
@@ -41,13 +33,7 @@ struct ProjectNavigatorView: View {
                     Image(systemName: "plus")
                         .background(.clear)
                         .onTapGesture {
-                            document.diagrams.append(
-                                .init(
-                                    isSelected: false,
-                                    entityRepresentations: [],
-                                    entityConnections: []
-                                )
-                            )
+                            viewModel.newDiagram()
                         }
                     Spacer()
                 }
