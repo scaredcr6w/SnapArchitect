@@ -26,9 +26,9 @@ struct EditorView: View {
                 } else {
                     if let element = document.diagrams[diagramIndex].entityRepresentations.last(where: { $0.isSelected }),
                        let elementIndex = document.diagrams[diagramIndex].entityRepresentations.firstIndex(where: { $0.id == element.id }) {
-                        let editElementViewModel = EditElementViewModel(
-                            element: document.diagrams[diagramIndex].entityRepresentations[elementIndex],
-                            document: document
+                        let editElementViewModel = ViewModelFactory.makeEditElementViewModel(
+                            for: document.diagrams[diagramIndex].entityRepresentations[elementIndex],
+                            document
                         )
                         EditElementView(viewModel: editElementViewModel)
                             .frame(height: windowHeight / 2)
@@ -46,7 +46,8 @@ struct EditorView: View {
             let windowHeight = windowGeo.size.height
             HStack(spacing: 0) {
                 NavigationSplitView {
-                    ToolbarView()
+                    let toolbarViewModel = ViewModelFactory.makeToolbarViewModel()
+                    ToolbarView(viewModel: toolbarViewModel)
                         .navigationSplitViewColumnWidth(270)
                     
                 } detail: {

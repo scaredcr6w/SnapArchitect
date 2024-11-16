@@ -8,151 +8,15 @@
 import SwiftUI
 
 struct ClassView: View {
-    @AppStorage("snapToGrid") private var snapToGrid: Bool = false
-    @AppStorage("gridSize") private var gridSize: Double = 10
-    @Binding var representation: OOPElementRepresentation
-    @State var backgroundColor: Color = .white
-    @Binding var isSelected: Bool
-    let minWidth: CGFloat = 100
-    let minHeight: CGFloat = 50
-    
-    private var typeString: String {
-        switch representation.type {
-        case .classType:
-            return "<< class >>"
-        case .structType:
-            return "<< struct >>"
-        case .protocolType:
-            return "<< protocol >>"
-        case .enumType:
-            return "<< enum >>"
-        }
-    }
-    
-    private func getAccessMofifier(_ access: OOPAccessModifier) -> String {
-        switch access {
-        case .accessInternal:
-            return ""
-        case .accessPublic:
-            return "+"
-        case .accessProtected:
-            return "#"
-        case .accessPrivate:
-            return "-"
-        }
-    }
-    
-    private func snapToGrid(_ value: Double, gridSize: Double) -> Double {
-        return round(value / gridSize) * gridSize
-    }
-    
-    private func topLeadingHandle(_ value: DragGesture.Value) {
-        var newWidth = max(100, representation.size.width - value.translation.width)
-        var newHeight = max(50, representation.size.height - value.translation.height)
-        var newX = representation.position.x + value.translation.width / 2
-        var newY = representation.position.y + value.translation.height / 2
-        
-        // Snap to grid if enabled
-        if snapToGrid {
-            newX = snapToGrid(newX - representation.size.width / 2, gridSize: gridSize) + representation.size.width / 2
-            newY = snapToGrid(newY - representation.size.height / 2, gridSize: gridSize) + representation.size.height / 2
-            newWidth = snapToGrid(newWidth, gridSize: gridSize)
-            newHeight = snapToGrid(newHeight, gridSize: gridSize)
-        }
-        
-        // Update size and position
-        if newWidth > minWidth {
-            representation.size.width = newWidth
-            representation.position.x = newX
-        }
-        if newHeight > minHeight {
-            representation.size.height = newHeight
-            representation.position.y = newY
-        }
-    }
-    
-    private func topTrailingHandle(_ value: DragGesture.Value) {
-        var newWidth = max(100, representation.size.width + value.translation.width)
-        var newHeight = max(50, representation.size.height - value.translation.height)
-        var newX = representation.position.x + value.translation.width / 2
-        var newY = representation.position.y + value.translation.height / 2
-        
-        // Snap to grid if enabled
-        if snapToGrid {
-            newX = snapToGrid(newX - representation.size.width / 2, gridSize: gridSize) + representation.size.width / 2
-            newY = snapToGrid(newY - representation.size.height / 2, gridSize: gridSize) + representation.size.height / 2
-            newWidth = snapToGrid(newWidth, gridSize: gridSize)
-            newHeight = snapToGrid(newHeight, gridSize: gridSize)
-        }
-        
-        // Update size and position
-        if newWidth > minWidth {
-            representation.size.width = newWidth
-            representation.position.x = newX
-        }
-        if newHeight > minHeight {
-            representation.size.height = newHeight
-            representation.position.y = newY
-        }
-    }
-    
-    private func bottomLeadingHandle(_ value: DragGesture.Value) {
-        var newWidth = max(100, representation.size.width - value.translation.width)
-        var newHeight = max(50, representation.size.height + value.translation.height)
-        var newX = representation.position.x + value.translation.width / 2
-        var newY = representation.position.y + value.translation.height / 2
-        
-        // Snap to grid if enabled
-        if snapToGrid {
-            newX = snapToGrid(newX - representation.size.width / 2, gridSize: gridSize) + representation.size.width / 2
-            newY = snapToGrid(newY - representation.size.height / 2, gridSize: gridSize) + representation.size.height / 2
-            newWidth = snapToGrid(newWidth, gridSize: gridSize)
-            newHeight = snapToGrid(newHeight, gridSize: gridSize)
-        }
-        
-        // Update size and position
-        if newWidth > minWidth {
-            representation.size.width = newWidth
-            representation.position.x = newX
-        }
-        if newHeight > minHeight {
-            representation.size.height = newHeight
-            representation.position.y = newY
-        }
-    }
-    
-    private func bottomTrailingHandle(_ value: DragGesture.Value) {
-        var newWidth = max(100, representation.size.width + value.translation.width)
-        var newHeight = max(50, representation.size.height + value.translation.height)
-        var newX = representation.position.x + value.translation.width / 2
-        var newY = representation.position.y + value.translation.height / 2
-        
-        // Snap to grid if enabled
-        if snapToGrid {
-            newX = snapToGrid(newX - representation.size.width / 2, gridSize: gridSize) + representation.size.width / 2
-            newY = snapToGrid(newY - representation.size.height / 2, gridSize: gridSize) + representation.size.height / 2
-            newWidth = snapToGrid(newWidth, gridSize: gridSize)
-            newHeight = snapToGrid(newHeight, gridSize: gridSize)
-        }
-        
-        // Update size and position
-        if newWidth > minWidth {
-            representation.size.width = newWidth
-            representation.position.x = newX
-        }
-        if newHeight > minHeight {
-            representation.size.height = newHeight
-            representation.position.y = newY
-        }
-    }
+    @ObservedObject var viewModel: ClassViewModel
     
     var body: some View {
         VStack(spacing: 0) {
             VStack {
-                Text(typeString)
+                Text(viewModel.typeString)
                     .font(.caption)
                     .foregroundStyle(Color.black)
-                Text(representation.name)
+                Text(viewModel.element.name)
                     .font(.caption)
                     .foregroundStyle(Color.black)
                 Divider()
@@ -160,9 +24,9 @@ struct ClassView: View {
             }
             VStack {
                 VStack(alignment: .leading) {
-                    ForEach(representation.attributes) { attribute in
+                    ForEach(viewModel.element.attributes) { attribute in
                         Text(
-                            "\(getAccessMofifier(attribute.access)) \(attribute.name): \(attribute.type)"
+                            "\(viewModel.getAccessMofifier(attribute.access)) \(attribute.name): \(attribute.type)"
                         )
                         .font(.caption2)
                         .foregroundStyle(.black)
@@ -172,9 +36,9 @@ struct ClassView: View {
                         .foregroundStyle(.black)
                 }
                 VStack(alignment: .leading) {
-                    ForEach(representation.functions, id: \.id) { function in
+                    ForEach(viewModel.element.functions, id: \.id) { function in
                         DisclosureGroup(
-                            "\(getAccessMofifier(function.access)) \(function.name): \(function.returnType)"
+                            "\(viewModel.getAccessMofifier(function.access)) \(function.name): \(function.returnType)"
                         ) {
                             Text(function.functionBody)
                                 .font(.caption2)
@@ -187,20 +51,20 @@ struct ClassView: View {
                 }
             }
         }
-        .frame(width: representation.size.width)
+        .frame(width: viewModel.element.size.width)
         .frame(minWidth: 100)
-        .frame(minHeight: representation.size.height, alignment: .top)
-        .background(backgroundColor)
+        .frame(minHeight: viewModel.element.size.height, alignment: .top)
+        .background(.white)
         .border(width: 1, edges: [.bottom, .top, .leading, .trailing], color: .black)
         .overlay(
             Group {
-                if isSelected {
+                if viewModel.element.isSelected {
                     //top leading
                     handleView
                         .gesture(
                             DragGesture()
                                 .onChanged { value in
-                                    topLeadingHandle(value)
+                                    viewModel.topLeadingHandle(value)
                                 }
                         )
                         .position(x: 0, y: 0)
@@ -209,33 +73,33 @@ struct ClassView: View {
                         .gesture(
                             DragGesture()
                                 .onChanged { value in
-                                    topTrailingHandle(value)
+                                    viewModel.topTrailingHandle(value)
                                 }
                         )
-                        .position(x: representation.size.width, y: 0)
+                        .position(x: viewModel.element.size.width, y: 0)
                     //bottom leading
                     handleView
                         .gesture(
                             DragGesture()
                                 .onChanged { value in
-                                    bottomLeadingHandle(value)
+                                    viewModel.bottomLeadingHandle(value)
                                 }
                         )
-                        .position(x: 0, y: representation.size.height)
+                        .position(x: 0, y: viewModel.element.size.height)
                     //bottom trailing
                     handleView
                         .gesture(
                             DragGesture()
                                 .onChanged { value in
-                                    bottomTrailingHandle(value)
+                                    viewModel.bottomTrailingHandle(value)
                                 }
                         )
-                        .position(x: representation.size.width, y: representation.size.height)
+                        .position(x: viewModel.element.size.width, y: viewModel.element.size.height)
                 }
             }
         )
         .shadow(radius: 10, x: 10, y: 10)
-        .position(representation.position)
+        .position(viewModel.element.position)
     }
     
     var handleView: some View {

@@ -11,7 +11,7 @@ struct ToolbarView: View {
     @State private var expandedCategories: Set<String> = []
     @State private var elementDisclosureGruopExpanded: Bool = true
     @State private var connectionDisclosureGruopExpanded: Bool = true
-    @StateObject private var viewModel = ToolbarViewModel()
+    @StateObject var viewModel: ToolbarViewModel
     
     @ViewBuilder
     private func disclosureGroupElementItem(_ category: [ToolbarElementItem]) -> some View {

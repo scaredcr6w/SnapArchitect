@@ -11,6 +11,7 @@
 		0F184ADB2CE4BDBB00D1A8D5 /* Notification+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F184ADA2CE4BDBB00D1A8D5 /* Notification+.swift */; };
 		0F24BC7B2CE8971F00DB64BD /* ToolbarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F24BC7A2CE8971F00DB64BD /* ToolbarViewModel.swift */; };
 		0F24BC9C2CE8CDA700DB64BD /* EditElementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F24BC9B2CE8CDA700DB64BD /* EditElementViewModel.swift */; };
+		0F24BCA02CE8EFC500DB64BD /* ClassViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F24BC9F2CE8EFC500DB64BD /* ClassViewModel.swift */; };
 		0F2BE7D42CA6A9C400D5DE1A /* ConnectionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2BE7D32CA6A9C400D5DE1A /* ConnectionProtocol.swift */; };
 		0F3E20362CAD52120036B33A /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3E20352CAD52120036B33A /* Color+.swift */; };
 		0F52DE5E2C8EDF58001EC07F /* EditElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F52DE5D2C8EDF58001EC07F /* EditElementView.swift */; };
@@ -57,6 +58,7 @@
 		0F184ADA2CE4BDBB00D1A8D5 /* Notification+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+.swift"; sourceTree = "<group>"; };
 		0F24BC7A2CE8971F00DB64BD /* ToolbarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarViewModel.swift; sourceTree = "<group>"; };
 		0F24BC9B2CE8CDA700DB64BD /* EditElementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditElementViewModel.swift; sourceTree = "<group>"; };
+		0F24BC9F2CE8EFC500DB64BD /* ClassViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassViewModel.swift; sourceTree = "<group>"; };
 		0F2BE7D32CA6A9C400D5DE1A /* ConnectionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionProtocol.swift; sourceTree = "<group>"; };
 		0F3E20352CAD52120036B33A /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 		0F41A8EA2CB55889001F286F /* SnapArchitectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SnapArchitectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				0FC6ABE82C7F447800986158 /* ClassView.swift */,
+				0F24BC9F2CE8EFC500DB64BD /* ClassViewModel.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				0F60CA772CAA85780059777E /* ProtocolRealization.swift in Sources */,
 				0FC6ABEE2C7F542400986158 /* CG+Hashable.swift in Sources */,
 				0FDF53662CA7318E002CB42A /* DiamondShape.swift in Sources */,
+				0F24BCA02CE8EFC500DB64BD /* ClassViewModel.swift in Sources */,
 				0FC6ABE22C7F232B00986158 /* CanvasView.swift in Sources */,
 				0FEA43902C85D88C00FB8B1D /* View+.swift in Sources */,
 				0FA4833D2C8716A100E66C7C /* Association.swift in Sources */,

@@ -15,7 +15,8 @@ struct CanvasView: View {
     private func drawElements() -> some View {
         if let diagramIndex = viewModel.document.diagrams.firstIndex(where: { $0.isSelected }) {
             ForEach($viewModel.document.diagrams[diagramIndex].entityRepresentations, id: \.id) { $element in
-                ElementView(element: $element)
+                let classViewModel = ViewModelFactory.makeClassViewModel(for: element, viewModel.document)
+                ClassView(viewModel: classViewModel)
                     .onTapGesture {
                         viewModel.selectElement(element: &element)
                     }
@@ -122,13 +123,5 @@ struct CanvasView: View {
                 }
             }
         }
-    }
-}
-
-struct ElementView: View {
-    @Binding var element: OOPElementRepresentation
-    
-    var body: some View {
-        ClassView(representation: $element, isSelected: $element.isSelected)
     }
 }
