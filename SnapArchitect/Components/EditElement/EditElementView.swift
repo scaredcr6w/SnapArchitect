@@ -22,9 +22,8 @@ struct EditElementView: View {
                 Section {
                     TextField("", text: $viewModel.element.name, prompt: Text(viewModel.element.name))
                         .padding(.horizontal)
-                        .focused($isTextFieldFocused)
-                        .onChange(of: isTextFieldFocused) { _, focused in
-                            ToolManager.shared.isEditing = focused
+                        .focusing($isTextFieldFocused) { focused in
+                            viewModel.focusTextField(focused)
                         }
                 } header: {
                     Text("Edit name")
@@ -41,8 +40,14 @@ struct EditElementView: View {
                         .padding(.vertical, 4)
                         TextField("", text: $viewModel.newAttributeName, prompt: Text("Name"))
                             .padding(.horizontal)
+                            .focusing($isTextFieldFocused) { focused in
+                                viewModel.focusTextField(focused)
+                            }
                         TextField("", text: $viewModel.newAttributeType, prompt: Text("Type"))
                             .padding(.horizontal)
+                            .focusing($isTextFieldFocused) { focused in
+                                viewModel.focusTextField(focused)
+                            }
                         Button("Add") {
                             viewModel.addAttribute()
                             withAnimation(.easeInOut) {
@@ -75,11 +80,20 @@ struct EditElementView: View {
                         .padding(.vertical, 4)
                         TextField("", text: $viewModel.newFunctionName, prompt: Text("Name"))
                             .padding(.horizontal)
+                            .focusing($isTextFieldFocused) { focused in
+                                viewModel.focusTextField(focused)
+                            }
                         TextField("", text: $viewModel.newFunctionReturnType, prompt: Text("Return Type"))
                             .padding(.horizontal)
+                            .focusing($isTextFieldFocused) { focused in
+                                viewModel.focusTextField(focused)
+                            }
                         TextEditor(text: $viewModel.newFunctionBody)
                             .frame(height: 100)
                             .padding(.trailing)
+                            .focusing($isTextFieldFocused) { focused in
+                                viewModel.focusTextField(focused)
+                            }
                         Button("Add") {
                             viewModel.addFunction()
                             withAnimation(.easeInOut) {
@@ -120,6 +134,7 @@ struct EditElementView: View {
     struct AttributeRowView: View {
         @StateObject var viewModel: EditElementViewModel
         @State private var showEditor: Bool = false
+        @FocusState private var isTextFieldFocused: Bool
         
         var body: some View {
             ScrollView {
@@ -150,7 +165,13 @@ struct EditElementView: View {
                         VStack {
                             if showEditor {
                                 TextField("", text: $attribute.name)
+                                    .focusing($isTextFieldFocused) { focused in
+                                        viewModel.focusTextField(focused)
+                                    }
                                 TextField("", text: $attribute.type)
+                                    .focusing($isTextFieldFocused) { focused in
+                                        viewModel.focusTextField(focused)
+                                    }
                             }
                         }
                         .frame(maxHeight: showEditor ? .none : 0)
@@ -165,6 +186,8 @@ struct EditElementView: View {
     struct FunctionRowView: View {
         @StateObject var viewModel: EditElementViewModel
         @State private var showEditor: Bool = false
+        @FocusState private var isTextFieldFocused: Bool
+        
         var body: some View {
             ScrollView {
                 ForEach($viewModel.element.functions) { $function in
@@ -193,9 +216,18 @@ struct EditElementView: View {
                         VStack {
                             if showEditor {
                                 TextField("", text: $function.name)
+                                    .focusing($isTextFieldFocused) { focused in
+                                        viewModel.focusTextField(focused)
+                                    }
                                 TextField("", text: $function.returnType)
+                                    .focusing($isTextFieldFocused) { focused in
+                                        viewModel.focusTextField(focused)
+                                    }
                                 TextEditor(text: $function.functionBody)
                                     .frame(height: 100)
+                                    .focusing($isTextFieldFocused) { focused in
+                                        viewModel.focusTextField(focused)
+                                    }
                             }
                         }
                         .frame(maxHeight: showEditor ? .none : 0)

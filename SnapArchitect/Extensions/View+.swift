@@ -20,6 +20,13 @@ extension View {
     func zoomGesture(using zoomManager: ZoomManager, geometrySize: CGSize) -> some View {
         self.modifier(ZoomGesture(zoomManager: zoomManager, geometrySize: geometrySize))
     }
+    
+    func focusing(
+        _ isFocused: FocusState<Bool>.Binding,
+        onChange: @escaping (Bool) -> Void
+    ) -> some View {
+        self.modifier(FocusModifier(isFocused: isFocused, onFocusChange: onChange))
+    }
 }
 
 struct CornerRect: Shape {

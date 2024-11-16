@@ -98,4 +98,8 @@ class EditElementViewModel: ObservableObject {
     func removeFunction(_ function: OOPElementFunction) {
         element.functions.removeAll { $0 == function }
     }
+    
+    func focusTextField(_ focused: Bool) {
+        ToolManager.shared.isEditing = focused
+    }
 }
