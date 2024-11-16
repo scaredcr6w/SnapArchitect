@@ -71,8 +71,19 @@ final class CanvasViewModel: ObservableObject {
         
         if let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) {
             document.diagrams[diagramIndex].entityRepresentations.append(element)
-            ToolManager.shared.selectedTool = nil
+            documentProxy.registerUndo(with: self) { target in
+                target.removeElement(element)
+            }
         }
+        
+        ToolManager.shared.selectedTool = nil
+        documentProxy.updateDocument()
+    }
+    
+    func removeElement(_ element: OOPElementRepresentation) {
+        guard let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) else { return }
+        document.diagrams[diagramIndex].entityRepresentations.removeAll(where: { $0 == element })
+        documentProxy.updateDocument()
     }
     
     /// Creates a connection between two OOPElementRepresentations
@@ -95,16 +106,27 @@ final class CanvasViewModel: ObservableObject {
         guard distance(from: prededictedEnd, to: location) <= 10 else { return }
         guard let startElement = findClosestElement(to: start, elements) else { return }
         guard let endElement = findClosestElement(to: location, elements) else { return }
-        if checkIfConnectionExists(startElement, endElement) { return }
-        
-        document.diagrams[diagramIndex].entityConnections.append(
-            .init(
-                type: selectedTool,
-                startElement: startElement,
-                endElement: endElement
-            )
+        guard !checkIfConnectionExists(startElement, endElement) else { return }
+        let connection = OOPConnectionRepresentation(
+            type: selectedTool,
+            startElement: startElement,
+            endElement: endElement
         )
+        
+        document.diagrams[diagramIndex].entityConnections.append(connection)
+        
+        documentProxy.registerUndo(with: self) { target in
+            target.removeConnection(connection)
+        }
+        
         ToolManager.shared.selectedTool = nil
+        documentProxy.updateDocument()
+    }
+    
+    func removeConnection(_ connection: OOPConnectionRepresentation) {
+        guard let diagramIndex = document.diagrams.firstIndex(where: { $0.isSelected }) else { return }
+        document.diagrams[diagramIndex].entityConnections.removeAll(where: { $0 == connection })
+        documentProxy.updateDocument()
     }
     
     /// Calculates distance between two points
